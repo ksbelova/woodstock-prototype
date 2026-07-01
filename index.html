@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Woodstock — прототип калькулятора</title>
+  <link rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+  <main class="start-page">
+    <section class="start-hero">
+      <p class="kicker">WOODSTOCK · Демо-версия</p>
+
+      <h1>Калькулятор стоимости изделий</h1>
+
+      <p class="lead">
+        Прототип внутреннего инструмента для проверки подробного расчёта
+        панелей, фасадов и инженерной доски.
+      </p>
+
+      <p class="note">
+        Расчёт использует цены и коэффициенты, перенесённые из предоставленных материалов и открытого каталога Woodstock. Прототип нужен,
+        чтобы проверить состав параметров, логику ветвлений, итоговую стоимость и формат
+        спецификации.
+      </p>
+    </section>
+
+    <section class="mode-section" aria-labelledby="modeTitle">
+      <h2 id="modeTitle">Режим расчёта</h2>
+
+      <div class="mode-list">
+        <a class="mode-card mode-card--active" href="pages/product-type.html">
+          <span class="mode-card__body">
+            <span class="mode-card__title">Подробный расчёт</span>
+            <span class="mode-card__text">
+              Для менеджера. Полный набор производственных параметров,
+              несколько позиций в заказе и формирование спецификации.
+            </span>
+          </span>
+
+          <span class="mode-card__action">Выбрать</span>
+        </a>
+
+        <div class="mode-card mode-card--disabled">
+          <span class="mode-card__body">
+            <span class="mode-card__title">Краткий расчёт</span>
+            <span class="mode-card__text">
+              Для клиента на сайте. Быстрая предварительная оценка стоимости.
+            </span>
+          </span>
+
+          <span class="mode-card__action">Позже</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

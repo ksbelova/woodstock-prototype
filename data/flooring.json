@@ -1,0 +1,363 @@
+{
+  "meta": {
+    "productName": "Инженерная доска",
+    "minArea": 20,
+    "vatRate": 0.22,
+    "vatIncluded": true,
+    "maxLength": 2400,
+    "maxWidth": 230,
+    "widthWarning": 130,
+    "thickness": 14,
+    "base": "ФСФ фанера 12 мм",
+    "connection": "шип-паз",
+    "defaultFinish": "3 слоя твёрдого воск-масла",
+    "productionTerm": "1,5 месяца"
+  },
+  "items": [
+    {
+      "id": "natural_afromosia_06",
+      "materialType": "natural",
+      "materialTypeName": "Натуральный шпон",
+      "name": "Афромозия 0,6 мм",
+      "species": "Афромозия",
+      "topLayer": "0,6 мм",
+      "pricePerM2": 10356
+    },
+    {
+      "id": "natural_afromosia_2",
+      "materialType": "natural",
+      "materialTypeName": "Натуральный шпон",
+      "name": "Афромозия 2 мм",
+      "species": "Афромозия",
+      "topLayer": "2 мм",
+      "pricePerM2": 17496
+    },
+    {
+      "id": "natural_black_ofram_06",
+      "materialType": "natural",
+      "materialTypeName": "Натуральный шпон",
+      "name": "Блэк Офрам 0,6 мм",
+      "species": "Блэк Офрам",
+      "topLayer": "0,6 мм",
+      "pricePerM2": 9966
+    },
+    {
+      "id": "natural_black_ofram_2",
+      "materialType": "natural",
+      "materialTypeName": "Натуральный шпон",
+      "name": "Блэк Офрам 2 мм",
+      "species": "Блэк Офрам",
+      "topLayer": "2 мм",
+      "pricePerM2": 15951
+    },
+    {
+      "id": "natural_wenge_06",
+      "materialType": "natural",
+      "materialTypeName": "Натуральный шпон",
+      "name": "Венге 0,6 мм",
+      "species": "Венге",
+      "topLayer": "0,6 мм",
+      "pricePerM2": 11679
+    },
+    {
+      "id": "natural_wenge_2",
+      "materialType": "natural",
+      "materialTypeName": "Натуральный шпон",
+      "name": "Венге 2 мм",
+      "species": "Венге",
+      "topLayer": "2 мм",
+      "pricePerM2": 19816
+    },
+    {
+      "id": "natural_european_oak_06",
+      "materialType": "natural",
+      "materialTypeName": "Натуральный шпон",
+      "name": "Дуб Европейский 0,6 мм",
+      "species": "Дуб Европейский",
+      "topLayer": "0,6 мм",
+      "pricePerM2": 10552
+    },
+    {
+      "id": "natural_european_oak_2",
+      "materialType": "natural",
+      "materialTypeName": "Натуральный шпон",
+      "name": "Дуб Европейский 2 мм",
+      "species": "Дуб Европейский",
+      "topLayer": "2 мм",
+      "pricePerM2": 16718
+    },
+    {
+      "id": "natural_iroko_06",
+      "materialType": "natural",
+      "materialTypeName": "Натуральный шпон",
+      "name": "Ироко 0,6 мм",
+      "species": "Ироко",
+      "topLayer": "0,6 мм",
+      "pricePerM2": 10008
+    },
+    {
+      "id": "natural_iroko_2",
+      "materialType": "natural",
+      "materialTypeName": "Натуральный шпон",
+      "name": "Ироко 2 мм",
+      "species": "Ироко",
+      "topLayer": "2 мм",
+      "pricePerM2": 17041
+    },
+    {
+      "id": "multi_bianche_notti_468v_06",
+      "materialType": "multishpon",
+      "materialTypeName": "Мультишпон",
+      "name": "BIANCHE NOTTI 468V 0,6 мм",
+      "species": "BIANCHE NOTTI 468V",
+      "topLayer": "0,6 мм",
+      "pricePerM2": 10371
+    },
+    {
+      "id": "multi_bianche_notti_468v_2",
+      "materialType": "multishpon",
+      "materialTypeName": "Мультишпон",
+      "name": "BIANCHE NOTTI 468V 2 мм",
+      "species": "BIANCHE NOTTI 468V",
+      "topLayer": "2 мм",
+      "pricePerM2": 17497
+    },
+    {
+      "id": "multi_bianche_notti_771m_06",
+      "materialType": "multishpon",
+      "materialTypeName": "Мультишпон",
+      "name": "BIANCHE NOTTI 771M 0,6 мм",
+      "species": "BIANCHE NOTTI 771M",
+      "topLayer": "0,6 мм",
+      "pricePerM2": 10491
+    },
+    {
+      "id": "multi_bianche_notti_771m_2",
+      "materialType": "multishpon",
+      "materialTypeName": "Мультишпон",
+      "name": "BIANCHE NOTTI 771M 2 мм",
+      "species": "BIANCHE NOTTI 771M",
+      "topLayer": "2 мм",
+      "pricePerM2": 17481
+    },
+    {
+      "id": "multi_bianche_notti_1822c_06",
+      "materialType": "multishpon",
+      "materialTypeName": "Мультишпон",
+      "name": "BIANCHE NOTTI 1822C 0,6 мм",
+      "species": "BIANCHE NOTTI 1822C",
+      "topLayer": "0,6 мм",
+      "pricePerM2": 10094
+    },
+    {
+      "id": "multi_bianche_notti_1822c_2",
+      "materialType": "multishpon",
+      "materialTypeName": "Мультишпон",
+      "name": "BIANCHE NOTTI 1822C 2 мм",
+      "species": "BIANCHE NOTTI 1822C",
+      "topLayer": "2 мм",
+      "pricePerM2": 17988
+    },
+    {
+      "id": "multi_duna_1050s_06",
+      "materialType": "multishpon",
+      "materialTypeName": "Мультишпон",
+      "name": "DUNA 1050S 0,6 мм",
+      "species": "DUNA 1050S",
+      "topLayer": "0,6 мм",
+      "pricePerM2": 10410
+    },
+    {
+      "id": "multi_duna_1050s_2",
+      "materialType": "multishpon",
+      "materialTypeName": "Мультишпон",
+      "name": "DUNA 1050S 2 мм",
+      "species": "DUNA 1050S",
+      "topLayer": "2 мм",
+      "pricePerM2": 17703
+    },
+    {
+      "id": "multi_espresso_021c_06",
+      "materialType": "multishpon",
+      "materialTypeName": "Мультишпон",
+      "name": "ESPRESSO 021C 0,6 мм",
+      "species": "ESPRESSO 021C",
+      "topLayer": "0,6 мм",
+      "pricePerM2": 10161
+    },
+    {
+      "id": "multi_espresso_021c_2",
+      "materialType": "multishpon",
+      "materialTypeName": "Мультишпон",
+      "name": "ESPRESSO 021C 2 мм",
+      "species": "ESPRESSO 021C",
+      "topLayer": "2 мм",
+      "pricePerM2": 17081
+    },
+    {
+      "id": "design_birch_27047_06",
+      "materialType": "design",
+      "materialTypeName": "Дизайн-шпон",
+      "name": "Берёза 27.047 0,6 мм",
+      "species": "Берёза 27.047",
+      "topLayer": "0,6 мм",
+      "pricePerM2": 13403
+    },
+    {
+      "id": "design_birch_27047_2",
+      "materialType": "design",
+      "materialTypeName": "Дизайн-шпон",
+      "name": "Берёза 27.047 2 мм",
+      "species": "Берёза 27.047",
+      "topLayer": "2 мм",
+      "pricePerM2": 34803
+    },
+    {
+      "id": "design_birch_27045_06",
+      "materialType": "design",
+      "materialTypeName": "Дизайн-шпон",
+      "name": "Берёза 27.045 0,6 мм",
+      "species": "Берёза 27.045",
+      "topLayer": "0,6 мм",
+      "pricePerM2": 13403
+    },
+    {
+      "id": "design_birch_27045_2",
+      "materialType": "design",
+      "materialTypeName": "Дизайн-шпон",
+      "name": "Берёза 27.045 2 мм",
+      "species": "Берёза 27.045",
+      "topLayer": "2 мм",
+      "pricePerM2": 34803
+    },
+    {
+      "id": "design_birch_27055_06",
+      "materialType": "design",
+      "materialTypeName": "Дизайн-шпон",
+      "name": "Берёза 27.055 0,6 мм",
+      "species": "Берёза 27.055",
+      "topLayer": "0,6 мм",
+      "pricePerM2": 13403
+    },
+    {
+      "id": "design_birch_27055_2",
+      "materialType": "design",
+      "materialTypeName": "Дизайн-шпон",
+      "name": "Берёза 27.055 2 мм",
+      "species": "Берёза 27.055",
+      "topLayer": "2 мм",
+      "pricePerM2": 23053
+    },
+    {
+      "id": "design_oak_13001_06",
+      "materialType": "design",
+      "materialTypeName": "Дизайн-шпон",
+      "name": "Дуб 13.001 0,6 мм",
+      "species": "Дуб 13.001",
+      "topLayer": "0,6 мм",
+      "pricePerM2": 13256
+    },
+    {
+      "id": "design_oak_13001_2",
+      "materialType": "design",
+      "materialTypeName": "Дизайн-шпон",
+      "name": "Дуб 13.001 2 мм",
+      "species": "Дуб 13.001",
+      "topLayer": "2 мм",
+      "pricePerM2": 22877
+    },
+    {
+      "id": "design_oak_13003_06",
+      "materialType": "design",
+      "materialTypeName": "Дизайн-шпон",
+      "name": "Дуб 13.003 0,6 мм",
+      "species": "Дуб 13.003",
+      "topLayer": "0,6 мм",
+      "pricePerM2": 13256
+    },
+    {
+      "id": "design_oak_13003_2",
+      "materialType": "design",
+      "materialTypeName": "Дизайн-шпон",
+      "name": "Дуб 13.003 2 мм",
+      "species": "Дуб 13.003",
+      "topLayer": "2 мм",
+      "pricePerM2": 21160
+    }
+  ],
+  "patterns": [
+    {
+      "id": "deck",
+      "name": "Палубная",
+      "wastePercent": 5
+    },
+    {
+      "id": "equal_length",
+      "name": "Равной длины",
+      "wastePercent": 7
+    },
+    {
+      "id": "french_herringbone",
+      "name": "Французская ёлка",
+      "wastePercent": 12
+    },
+    {
+      "id": "hungarian_herringbone",
+      "name": "Венгерская ёлка",
+      "wastePercent": 12
+    }
+  ],
+  "coatings": [
+    {
+      "id": "hard_wax_oil",
+      "name": "Масло / твёрдое воск-масло",
+      "note": "Для домашнего использования и мягкого режима эксплуатации. На стоимость не влияет."
+    },
+    {
+      "id": "fast_polymer_lacquer",
+      "name": "Быстрополимеризуемый лак",
+      "note": "Финишное покрытие для инженерной доски. На стоимость не влияет."
+    },
+    {
+      "id": "parquet_lacquer_5",
+      "name": "Паркетный лак, глянец 5%",
+      "gloss": 5,
+      "note": "Степень глянца указывается в спецификации. На стоимость не влияет."
+    },
+    {
+      "id": "parquet_lacquer_10",
+      "name": "Паркетный лак, глянец 10%",
+      "gloss": 10,
+      "note": "Чаще всего используется 10% глянца. На стоимость не влияет."
+    },
+    {
+      "id": "parquet_lacquer_20",
+      "name": "Паркетный лак, глянец 20%",
+      "gloss": 20,
+      "note": "Степень глянца указывается в спецификации. На стоимость не влияет."
+    },
+    {
+      "id": "parquet_lacquer_40",
+      "name": "Паркетный лак, глянец 40%",
+      "gloss": 40,
+      "note": "Степень глянца указывается в спецификации. На стоимость не влияет."
+    },
+    {
+      "id": "parquet_lacquer_60",
+      "name": "Паркетный лак, глянец 60%",
+      "gloss": 60,
+      "note": "Степень глянца указывается в спецификации. На стоимость не влияет."
+    },
+    {
+      "id": "parquet_lacquer_80",
+      "name": "Паркетный лак, глянец 80%",
+      "gloss": 80,
+      "note": "Максимальная степень глянца из зафиксированного диапазона. На стоимость не влияет."
+    },
+    {
+      "id": "custom_finish",
+      "name": "Другое покрытие / глянец по ТЗ",
+      "note": "Используется, если менеджеру нужно указать нестандартный финиш или иной процент глянца 5–80%. На стоимость не влияет."
+    }
+  ]
+}

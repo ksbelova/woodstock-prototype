@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Woodstock — параметры заказа и услуги</title>
+  <link rel="stylesheet" href="../css/main.css" />
+</head>
+<body>
+  <main class="start-page calc-page">
+    <section class="calc-head">
+      <div>
+        <p class="kicker">WOODSTOCK · Финальные параметры</p>
+        <h1>Параметры заказа и услуги</h1>
+        <p class="lead">
+          Добавьте упаковку и сервисные услуги. Система пересчитает финальный итог заказа.
+        </p>
+      </div>
+
+      <a class="back-link" href="specification.html">Назад к проверке заказа</a>
+    </section>
+
+    <section class="summary-layout">
+      <div class="summary-main">
+        <section class="summary-card">
+          <div class="summary-card__head">
+            <div>
+              <p class="kicker">Упаковка</p>
+              <h2>Расчёт упаковки</h2>
+            </div>
+          </div>
+
+          <div class="option-info-box">
+            <p>
+              Упаковка считается автоматически по общей площади позиций заказа.
+              Система определяет тариф по диапазону площади.
+            </p>
+
+            <div class="tariff-grid">
+              <span>до 3 м² — 335 ₽/м²</span>
+              <span>до 10 м² — 200 ₽/м²</span>
+              <span>до 20 м² — 150 ₽/м²</span>
+              <span>до 30 м² — 135 ₽/м²</span>
+              <span>до 40 м² — 150 ₽/м²</span>
+              <span>до 60 м² — 120 ₽/м²</span>
+              <span>до 80 м² — 125 ₽/м²</span>
+              <span>свыше 80 м² — 125 ₽/м²</span>
+            </div>
+          </div>
+
+          <label class="option-row option-row--switch">
+            <div>
+              <strong>Добавить упаковку</strong>
+              <span>
+                Стоимость = общая площадь позиций × тариф упаковки.
+              </span>
+            </div>
+
+            <select id="packagingSelect">
+              <option value="no">Нет</option>
+              <option value="standard">Стандартная упаковка</option>
+              <option value="reinforced">Усиленная упаковка</option>
+            </select>
+          </label>
+
+          <div class="option-result" id="packagingResult">
+            <div>
+              <span>Общая площадь заказа</span>
+              <strong id="packagingArea">—</strong>
+            </div>
+            <div>
+              <span>Тариф упаковки</span>
+              <strong id="packagingRate">—</strong>
+            </div>
+            <div>
+              <span>Коэффициент</span>
+              <strong id="packagingMultiplier">—</strong>
+            </div>
+            <div>
+              <span>Стоимость упаковки</span>
+              <strong id="packagingTotal">—</strong>
+            </div>
+          </div>
+
+          <p class="option-note">
+            Для усиленной упаковки в прототипе применяется коэффициент 1,3 к стандартной упаковке.
+            Коэффициент нужен для тестирования влияния типа упаковки на итог заказа.
+          </p>
+        </section>
+
+        <section class="summary-card">
+          <div class="summary-card__head">
+            <div>
+              <p class="kicker">Сервисные услуги</p>
+              <h2>Дополнительные услуги</h2>
+            </div>
+          </div>
+
+          <div class="option-info-box option-info-box--warning">
+            <p>
+              Для доставки, монтажа, замера и конструкторских услуг в предоставленных материалах
+              не найден подтверждённый тариф. В прототипе применяется демонстрационная цена
+              1 000 ₽ за выбранную услугу, чтобы показать участие услуги в финальной стоимости.
+            </p>
+          </div>
+
+          <div class="service-list">
+            <label class="service-card">
+              <input type="checkbox" value="delivery" data-service-checkbox />
+              <div>
+                <strong>Доставка</strong>
+                <span>Демонстрационный тариф — 1 000 ₽</span>
+              </div>
+            </label>
+
+            <label class="service-card">
+              <input type="checkbox" value="installation" data-service-checkbox />
+              <div>
+                <strong>Монтаж</strong>
+                <span>Демонстрационный тариф — 1 000 ₽</span>
+              </div>
+            </label>
+
+            <label class="service-card">
+              <input type="checkbox" value="measurement" data-service-checkbox />
+              <div>
+                <strong>Замер</strong>
+                <span>Демонстрационный тариф — 1 000 ₽</span>
+              </div>
+            </label>
+
+            <label class="service-card">
+              <input type="checkbox" value="design" data-service-checkbox />
+              <div>
+                <strong>Конструкторские услуги</strong>
+                <span>Демонстрационный тариф — 1 000 ₽</span>
+              </div>
+            </label>
+
+            <label class="service-card">
+              <input type="checkbox" value="other" data-service-checkbox />
+              <div>
+                <strong>Другое</strong>
+                <span>Демонстрационный тариф — 1 000 ₽</span>
+              </div>
+            </label>
+          </div>
+
+          <label class="field option-comment">
+            <span class="field__label">Комментарий к услугам</span>
+            <textarea id="servicesCommentInput" rows="4" placeholder="Например: доставка до ТК, монтаж по адресу, замер перед производством"></textarea>
+          </label>
+        </section>
+      </div>
+
+      <aside class="spec-panel">
+        <div class="spec-panel__inner">
+          <p class="kicker">Итог заказа</p>
+          <h2 class="spec-title">Финальный расчёт</h2>
+
+          <dl class="spec-list">
+            <div>
+              <dt>Номер расчёта</dt>
+              <dd id="sideOrderNumber">—</dd>
+            </div>
+            <div>
+              <dt>Позиций</dt>
+              <dd id="sideItemsCount">—</dd>
+            </div>
+            <div>
+              <dt>Площадь</dt>
+              <dd id="sideArea">—</dd>
+            </div>
+          </dl>
+
+          <div class="option-summary-list">
+            <div>
+              <span>Позиции заказа</span>
+              <strong id="itemsTotal">—</strong>
+            </div>
+            <div>
+              <span>Упаковка</span>
+              <strong id="summaryPackagingTotal">—</strong>
+            </div>
+            <div>
+              <span>Сервисные услуги</span>
+              <strong id="summaryServicesTotal">—</strong>
+            </div>
+          </div>
+
+          <div class="total-box">
+            <span>Итого с НДС</span>
+            <strong id="finalTotal">—</strong>
+            <small id="finalVat">В том числе НДС: —</small>
+          </div>
+
+          <p class="spec-note" id="optionsNote">
+            Упаковка считается по тарифу из расчётной таблицы. Сервисные услуги рассчитаны по демонстрационному тарифу прототипа.
+          </p>
+
+          <button class="next-step-button" id="saveOptionsBtn" type="button">
+            Сохранить параметры заказа
+          </button>
+
+          <a class="next-step-link" href="order-details.html" id="nextStepLink">
+            Перейти к данным клиента
+          </a>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <script src="../js/order-options.js"></script>
+</body>
+</html>

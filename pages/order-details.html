@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Woodstock — данные клиента и заказа</title>
+  <link rel="stylesheet" href="../css/main.css" />
+</head>
+<body>
+  <main class="start-page calc-page">
+    <section class="calc-head">
+      <div>
+        <p class="kicker">WOODSTOCK · Данные заказа</p>
+        <h1>Данные клиента и заказа</h1>
+        <p class="lead">
+          Заполните данные клиента, менеджера, филиала и приложите файлы.
+          После этого система сформирует итоговую заявку.
+        </p>
+      </div>
+
+      <a class="back-link" href="order-options.html">Назад к параметрам заказа</a>
+    </section>
+
+    <section class="summary-layout">
+      <div class="summary-main">
+        <section class="summary-card">
+          <div class="summary-card__head">
+            <div>
+              <p class="kicker">Данные расчёта</p>
+              <h2>Расчёт <span id="orderNumberTitle">—</span></h2>
+            </div>
+
+            <div class="summary-status">
+              <span id="orderStatusTitle">Черновик</span>
+            </div>
+          </div>
+
+          <dl class="summary-meta">
+            <div>
+              <dt>Дата</dt>
+              <dd id="orderDateMeta">—</dd>
+            </div>
+            <div>
+              <dt>Позиций</dt>
+              <dd id="itemsCountMeta">—</dd>
+            </div>
+            <div>
+              <dt>Итого с НДС</dt>
+              <dd id="finalTotalMeta">—</dd>
+            </div>
+            <div>
+              <dt>В том числе НДС</dt>
+              <dd id="finalVatMeta">—</dd>
+            </div>
+          </dl>
+        </section>
+
+        <section class="summary-card">
+          <div class="summary-card__head">
+            <div>
+              <p class="kicker">Менеджер</p>
+              <h2>Ответственный и филиал</h2>
+            </div>
+          </div>
+
+          <div class="field-grid">
+            <label class="field">
+              <span class="field__label">Менеджер / ЛПР</span>
+              <input id="managerNameInput" type="text" placeholder="Например, Иван Иванов" />
+              <span class="field__note">
+                Сотрудник, который оформляет расчёт и будет вести заявку.
+              </span>
+            </label>
+
+            <label class="field">
+              <span class="field__label">Филиал</span>
+              <select id="branchSelect">
+                <option value="">Выберите филиал</option>
+                <option value="moscow">Москва</option>
+                <option value="spb">Санкт-Петербург</option>
+                <option value="krasnodar">Краснодар</option>
+                <option value="other">Другой филиал</option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span class="field__label">Статус расчёта</span>
+              <select id="orderStatusSelect">
+                <option value="Черновик">Черновик</option>
+                <option value="Предварительный расчёт">Предварительный расчёт</option>
+                <option value="Готов к отправке клиенту">Готов к отправке клиенту</option>
+              </select>
+            </label>
+          </div>
+        </section>
+
+        <section class="summary-card">
+          <div class="summary-card__head">
+            <div>
+              <p class="kicker">Клиент</p>
+              <h2>Контактные данные</h2>
+            </div>
+          </div>
+
+          <div class="field-grid">
+            <label class="field">
+              <span class="field__label">Имя / контактное лицо</span>
+              <input id="clientNameInput" type="text" placeholder="Имя клиента или контактное лицо" />
+            </label>
+
+            <label class="field">
+              <span class="field__label">Телефон</span>
+              <input id="clientPhoneInput" type="tel" placeholder="+7 ___ ___-__-__" />
+            </label>
+
+            <label class="field">
+              <span class="field__label">Email</span>
+              <input id="clientEmailInput" type="email" placeholder="client@example.com" />
+            </label>
+          </div>
+
+          <div class="field-grid">
+            <label class="field">
+              <span class="field__label">Тип клиента</span>
+              <select id="clientTypeSelect">
+                <option value="individual">Физлицо</option>
+                <option value="company">Юрлицо</option>
+              </select>
+            </label>
+
+            <label class="field" id="companyNameField">
+              <span class="field__label">Компания</span>
+              <input id="companyNameInput" type="text" placeholder="Название компании" />
+            </label>
+
+            <label class="field" id="innField">
+              <span class="field__label">ИНН</span>
+              <input id="clientInnInput" type="text" placeholder="ИНН клиента" />
+            </label>
+          </div>
+        </section>
+
+        <section class="summary-card">
+          <div class="summary-card__head">
+            <div>
+              <p class="kicker">Файлы и требования</p>
+              <h2>Материалы к заказу</h2>
+            </div>
+          </div>
+
+          <div class="file-upload-box">
+            <label class="field">
+              <span class="field__label">Загрузить файлы</span>
+              <input id="filesInput" type="file" multiple />
+              <span class="field__note">
+                Чертежи, спецификации, ТЗ, фото, визуализации. В прототипе сохраняются названия файлов.
+              </span>
+            </label>
+
+            <div class="uploaded-files" id="uploadedFilesList">
+              Файлы не выбраны.
+            </div>
+          </div>
+
+          <label class="field">
+            <span class="field__label">Дополнительные требования к заказу</span>
+            <textarea id="orderRequirementsInput" rows="5" placeholder="Например: сроки, требования к упаковке, особенности монтажа, комментарии клиента"></textarea>
+          </label>
+
+          <label class="field">
+            <span class="field__label">Комментарий менеджера</span>
+            <textarea id="managerCommentInput" rows="4" placeholder="Внутренний комментарий менеджера"></textarea>
+          </label>
+        </section>
+      </div>
+
+      <aside class="spec-panel">
+        <div class="spec-panel__inner">
+          <p class="kicker">Итоговая заявка</p>
+          <h2 class="spec-title">Проверка данных</h2>
+
+          <dl class="spec-list">
+            <div>
+              <dt>Номер расчёта</dt>
+              <dd id="sideOrderNumber">—</dd>
+            </div>
+            <div>
+              <dt>Статус</dt>
+              <dd id="sideOrderStatus">Черновик</dd>
+            </div>
+            <div>
+              <dt>Менеджер</dt>
+              <dd id="sideManager">—</dd>
+            </div>
+            <div>
+              <dt>Филиал</dt>
+              <dd id="sideBranch">—</dd>
+            </div>
+            <div>
+              <dt>Клиент</dt>
+              <dd id="sideClient">—</dd>
+            </div>
+            <div>
+              <dt>Контакты</dt>
+              <dd id="sideContacts">—</dd>
+            </div>
+            <div>
+              <dt>Файлы</dt>
+              <dd id="sideFiles">—</dd>
+            </div>
+          </dl>
+
+          <div class="option-summary-list">
+            <div>
+              <span>Позиции заказа</span>
+              <strong id="sideItemsTotal">—</strong>
+            </div>
+            <div>
+              <span>Упаковка и услуги</span>
+              <strong id="sideOptionsTotal">—</strong>
+            </div>
+          </div>
+
+          <div class="total-box">
+            <span>Итого с НДС</span>
+            <strong id="sideFinalTotal">—</strong>
+            <small id="sideFinalVat">В том числе НДС: —</small>
+          </div>
+
+          <p class="spec-note" id="detailsNote">
+            После сохранения система зафиксирует данные заявки и подготовит финальную спецификацию.
+          </p>
+
+          <button class="next-step-button" id="finishOrderBtn" type="button">
+            Сформировать заявку
+          </button>
+
+          <a class="next-step-link" href="specification.html">
+            Вернуться к спецификации
+          </a>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <script src="../js/order-details.js"></script>
+</body>
+</html>

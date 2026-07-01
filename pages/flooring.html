@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Woodstock — расчёт инженерной доски</title>
+  <link rel="stylesheet" href="../css/main.css" />
+</head>
+<body>
+  <main class="start-page calc-page">
+    <section class="calc-head">
+      <div>
+        <p class="kicker">WOODSTOCK · Подробный расчёт</p>
+        <h1>Инженерная доска</h1>
+        <p class="lead">
+          Расчёт стоимости по породе, толщине верхнего слоя, площади помещения,
+          типу раскладки и минимальной партии.
+        </p>
+      </div>
+
+      <a class="back-link" href="product-type.html">Назад к выбору изделия</a>
+    </section>
+
+    <section class="calc-layout">
+      <form class="calc-form" id="flooringForm">
+        <div class="form-block">
+          <h2>Материал</h2>
+
+          <label class="field">
+            <span class="field__label">Тип материала</span>
+            <select id="materialTypeSelect" required>
+              <option value="">Выберите тип материала</option>
+            </select>
+            <span class="field__note">
+              Для инженерной доски доступны породы и шпоны, которые подходят по технологии производства.
+            </span>
+          </label>
+
+          <label class="field">
+            <span class="field__label">Порода / шпон</span>
+            <select id="speciesSelect" required disabled>
+              <option value="">Сначала выберите тип материала</option>
+            </select>
+            <span class="field__note">
+              Хрупкие породы и породы, требующие шпаклёвки, в прототип не включены.
+            </span>
+          </label>
+
+          <label class="field">
+            <span class="field__label">Верхний слой</span>
+            <select id="topLayerSelect" required disabled>
+              <option value="">Сначала выберите породу</option>
+            </select>
+            <span class="field__note">
+              В каталоге позиции с верхним слоем 0,6 мм и 2 мм считаются отдельно.
+            </span>
+          </label>
+        </div>
+
+        <div class="form-block">
+          <h2>Раскладка и площадь</h2>
+
+          <label class="field">
+            <span class="field__label">Тип раскладки</span>
+            <select id="patternSelect" required>
+              <option value="">Выберите тип раскладки</option>
+            </select>
+            <span class="field__note">
+              Система подставляет рекомендуемый процент отходов. Менеджер может изменить его вручную.
+            </span>
+          </label>
+
+          <label class="field">
+            <span class="field__label">Площадь помещения, м²</span>
+            <input id="roomAreaInput" type="number" min="0" step="0.01" placeholder="Введите площадь" required />
+            <span class="field__note">
+              Введите площадь помещения без запаса. Запас рассчитывается автоматически.
+            </span>
+          </label>
+
+          <label class="field">
+            <span class="field__label">Процент отходов, %</span>
+            <input id="wasteInput" type="number" min="0" step="0.1" placeholder="Заполнится после выбора раскладки" required />
+            <span class="field__note">
+              По умолчанию: палубная — 5%, равной длины — 7%, французская/венгерская ёлка — 12%.
+            </span>
+          </label>
+        </div>
+
+        <div class="form-block">
+          <h2>Параметры доски</h2>
+
+          <div class="field-grid">
+            <label class="field">
+              <span class="field__label">Длина, мм</span>
+              <input id="lengthInput" type="number" min="1" max="2400" step="1" placeholder="До 2400" />
+              <span class="field__note">До 2400 мм. Не влияет на стоимость.</span>
+            </label>
+
+            <label class="field">
+              <span class="field__label">Ширина, мм</span>
+              <input id="widthInput" type="number" min="1" max="230" step="1" placeholder="До 230" />
+              <span class="field__note">До 230 мм. Не влияет на стоимость.</span>
+            </label>
+
+            <label class="field">
+              <span class="field__label">Толщина, мм</span>
+              <input id="thicknessInput" type="number" value="14" disabled />
+              <span class="field__note">Фиксированная толщина изделия.</span>
+            </label>
+          </div>
+
+          <p class="field-warning is-hidden" id="widthWarning">
+            При ширине более 130 мм требуется уточнение у менеджера.
+          </p>
+        </div>
+
+        <div class="form-block">
+          <h2>Покрытие</h2>
+
+          <label class="field">
+            <span class="field__label">Покрытие</span>
+            <select id="coatingSelect" required>
+              <option value="">Выберите покрытие</option>
+            </select>
+            <span class="field__note">
+              Покрытие отображается в спецификации, но не влияет на стоимость.
+            </span>
+          </label>
+
+          <label class="field">
+            <span class="field__label">Комментарий / ТЗ</span>
+            <textarea id="commentInput" rows="4" placeholder="Например: уточнить партию шпона, направление раскладки, пожелания по покрытию"></textarea>
+          </label>
+        </div>
+      </form>
+
+      <aside class="spec-panel">
+        <div class="spec-panel__inner">
+          <p class="kicker">Предварительная спецификация</p>
+
+          <h2 class="spec-title">Инженерная доска</h2>
+
+          <div class="empty-spec" id="emptySpec">
+            Заполните параметры слева, чтобы увидеть расчёт.
+          </div>
+
+          <div class="spec-content is-hidden" id="specContent">
+            <dl class="spec-list">
+              <div>
+                <dt>Тип материала</dt>
+                <dd id="specMaterialType">—</dd>
+              </div>
+
+              <div>
+                <dt>Порода / шпон</dt>
+                <dd id="specSpecies">—</dd>
+              </div>
+
+              <div>
+                <dt>Верхний слой</dt>
+                <dd id="specTopLayer">—</dd>
+              </div>
+
+              <div>
+                <dt>Цена за м²</dt>
+                <dd id="specPrice">—</dd>
+              </div>
+
+              <div>
+                <dt>Раскладка</dt>
+                <dd id="specPattern">—</dd>
+              </div>
+
+              <div>
+                <dt>Площадь помещения</dt>
+                <dd id="specRoomArea">—</dd>
+              </div>
+
+              <div>
+                <dt>Отходы</dt>
+                <dd id="specWaste">—</dd>
+              </div>
+
+              <div>
+                <dt>Площадь с запасом</dt>
+                <dd id="specAreaWithWaste">—</dd>
+              </div>
+
+              <div>
+                <dt>Площадь к оплате</dt>
+                <dd id="specPaidArea">—</dd>
+              </div>
+
+              <div>
+                <dt>Параметры доски</dt>
+                <dd id="specBoardParams">—</dd>
+              </div>
+
+              <div>
+                <dt>Покрытие</dt>
+                <dd id="specCoating">—</dd>
+              </div>
+            </dl>
+
+            <div class="formula-box">
+              <span>Формула</span>
+              <p>Цена = площадь к оплате × цена выбранной позиции за м²</p>
+            </div>
+
+            <div class="total-box">
+              <span>Итого с НДС</span>
+              <strong id="specTotal">—</strong>
+              <small id="specVat">В том числе НДС: —</small>
+            </div>
+
+            <p class="spec-note" id="minAreaNote">
+              Минимальная партия — 20 м².
+            </p>
+
+            <p class="spec-note">
+              Цена предварительная. Окончательная стоимость подтверждается менеджером перед оплатой.
+            </p>
+
+            <button class="next-step-button" id="addToSpecBtn" type="button">
+              Добавить в спецификацию
+            </button>
+
+            <a class="next-step-link" href="specification.html">
+              Перейти к итоговой спецификации
+            </a>
+          </div>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <script src="../js/flooring.js"></script>
+</body>
+</html>

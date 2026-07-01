@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Woodstock — расчёт панелей и фасадов</title>
+  <link rel="stylesheet" href="../css/main.css" />
+</head>
+<body>
+  <main class="start-page calc-page">
+    <section class="calc-head">
+      <div>
+        <p class="kicker">WOODSTOCK · Подробный расчёт</p>
+        <h1 id="pageTitle">Панели / фасады</h1>
+        <p class="lead" id="pageLead">
+          Расчёт стоимости по основе, размеру, шпону, кромке, шлифовке, лаку и дополнительным операциям.
+        </p>
+      </div>
+
+      <a class="back-link" href="product-type.html">Назад к выбору изделия</a>
+    </section>
+
+    <section class="calc-layout">
+      <form class="calc-form" id="panelsFacadesForm">
+        <div class="form-block">
+          <h2>Основа</h2>
+
+          <label class="field">
+            <span class="field__label">Основа</span>
+            <select id="baseSelect" required>
+              <option value="">Выберите основу</option>
+            </select>
+            <span class="field__note">
+              Толщина и тарифы зависят от выбранной основы.
+            </span>
+          </label>
+
+          <label class="field">
+            <span class="field__label">Толщина основы, мм</span>
+            <select id="thicknessSelect" required disabled>
+              <option value="">Сначала выберите основу</option>
+            </select>
+            <span class="field__note" id="baseNote">
+              Система подгружает доступные толщины выбранной основы.
+            </span>
+          </label>
+        </div>
+
+        <div class="form-block">
+          <h2>Размер и количество</h2>
+
+          <div class="standard-size-list">
+            <span class="field__label">Стандартные размеры</span>
+
+            <p class="field__note">
+              Если введённый размер совпадает со стандартным форматом, раскрой не добавляется.
+              Если размер отличается, система автоматически добавит раскрой по периметру.
+            </p>
+
+            <div class="standard-size-values" aria-label="Стандартные размеры">
+              <span>2440 × 910 мм</span>
+              <span>2440 × 1830 мм</span>
+              <span>2440 × 2050 мм</span>
+              <span>2800 × 1032 мм</span>
+              <span>2800 × 1220 мм</span>
+              <span>2800 × 2070 мм</span>
+            </div>
+          </div>
+
+          <div class="size-rows-head">
+            <span>Размеры позиции</span>
+            <small>
+              Каждый размер будет добавлен в спецификацию отдельной строкой.
+            </small>
+          </div>
+
+          <div class="size-rows" id="sizeRows">
+            <div class="size-row" data-size-row>
+              <div class="field-grid field-grid--size-row">
+                <label class="field">
+                  <span class="field__label">Длина, мм</span>
+                  <input data-size-length type="number" min="1" step="1" placeholder="Например, 2440" />
+                </label>
+
+                <label class="field">
+                  <span class="field__label">Ширина, мм</span>
+                  <input data-size-width type="number" min="1" step="1" placeholder="Например, 1220" />
+                </label>
+
+                <label class="field">
+                  <span class="field__label">Количество, шт.</span>
+                  <input data-size-quantity type="number" min="1" step="1" placeholder="Например, 2" />
+                </label>
+
+                <div class="size-row__actions">
+                  <button class="size-row__remove" data-remove-size-row type="button" aria-label="Удалить размер">
+                    Удалить
+                  </button>
+                </div>
+              </div>
+
+              <div class="field-status is-hidden" data-size-status></div>
+            </div>
+          </div>
+
+          <button class="secondary-button add-size-row-button" id="addSizeRowBtn" type="button">
+            Добавить ещё один размер
+          </button>
+
+          <p class="field__note size-note">
+            Площадь каждой строки = длина × ширина × количество / 1 000 000.
+            При добавлении в спецификацию система создаст отдельную позицию для каждого указанного размера.
+          </p>
+        </div>
+
+        <div class="form-block">
+          <h2>Фанеровка</h2>
+
+          <label class="field">
+            <span class="field__label">Количество фанерованных сторон</span>
+            <select id="veneeredSidesSelect">
+              <option value="1">1 сторона</option>
+              <option value="2">2 стороны</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span class="field__label">Шпон — сторона А</span>
+            <select id="veneerASelect" required>
+              <option value="">Выберите шпон</option>
+            </select>
+            <span class="field__note">
+              Используются позиции из каталога панелей и фасадов.
+            </span>
+          </label>
+
+          <label class="field">
+            <span class="field__label">Сторона Б</span>
+            <select id="sideBModeSelect">
+              <option value="reverse">Не фанеруется / обратная сторона</option>
+              <option value="same">Такой же шпон, как сторона А</option>
+              <option value="other">Другой шпон</option>
+            </select>
+          </label>
+
+          <label class="field" id="reverseSideField">
+            <span class="field__label">Тип обратной стороны Б</span>
+            <select id="reverseSideSelect"></select>
+          </label>
+
+          <label class="field is-hidden" id="veneerBField">
+            <span class="field__label">Шпон — сторона Б</span>
+            <select id="veneerBSelect">
+              <option value="">Выберите шпон стороны Б</option>
+            </select>
+          </label>
+
+          <div class="field-grid">
+            <label class="field">
+              <span class="field__label">Направление волокон</span>
+              <select id="fiberDirectionSelect">
+                <option value="length">По длине</option>
+                <option value="width">По ширине</option>
+                <option value="custom">По ТЗ</option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span class="field__label">Набор / рубашка</span>
+              <select id="veneerLayoutSelect">
+                <option value="not_set">Не задан</option>
+                <option value="radial">Радиал</option>
+                <option value="tangent">Тангенс</option>
+                <option value="mixmatch">MixMatch</option>
+                <option value="bookmatch">BookMatch</option>
+                <option value="custom">По ТЗ</option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span class="field__label">Переход текстуры</span>
+              <select id="textureTransitionSelect">
+                <option value="no">Нет</option>
+                <option value="yes">Да</option>
+              </select>
+            </label>
+          </div>
+
+          <p class="field__note">
+            Если нужен переход текстуры между деталями, применяется повышающий коэффициент.
+          </p>
+        </div>
+
+        <div class="form-block">
+          <h2>Кромка</h2>
+
+          <label class="field">
+            <span class="field__label">Кромка нужна?</span>
+            <select id="edgeNeededSelect">
+              <option value="no">Нет</option>
+              <option value="yes">Да</option>
+            </select>
+          </label>
+
+          <div id="edgeFields" class="conditional-block is-hidden">
+            <label class="field">
+              <span class="field__label">Стороны кромления</span>
+              <select id="edgeSidesSelect">
+                <option value="perimeter">По периметру</option>
+                <option value="one_length">1 длина</option>
+                <option value="two_lengths">2 длины</option>
+                <option value="one_width">1 ширина</option>
+                <option value="two_widths">2 ширины</option>
+                <option value="one_length_one_width">1 длина + 1 ширина</option>
+                <option value="two_lengths_one_width">2 длины + 1 ширина</option>
+                <option value="one_length_two_widths">1 длина + 2 ширины</option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span class="field__label">Толщина кромки, мм</span>
+              <select id="edgeThicknessSelect"></select>
+              <span class="field__note">
+                0,5–1 мм и 1,5–2 мм считаются по разным тарифам.
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-block">
+          <h2>Шлифовка</h2>
+
+          <label class="field">
+            <span class="field__label">Шлифовка нужна?</span>
+            <select id="sandingNeededSelect">
+              <option value="no">Нет</option>
+              <option value="yes">Да</option>
+            </select>
+          </label>
+
+          <label class="field is-hidden" id="sandingField">
+            <span class="field__label">Количество сторон шлифовки</span>
+            <select id="sandingSelect"></select>
+          </label>
+        </div>
+
+        <div class="form-block">
+          <h2>Лак / финиш</h2>
+
+          <label class="field">
+            <span class="field__label">Лак нужен?</span>
+            <select id="lacquerNeededSelect">
+              <option value="no">Нет</option>
+              <option value="yes">Да</option>
+            </select>
+          </label>
+
+          <div id="lacquerFields" class="conditional-block is-hidden">
+            <div class="field-grid">
+              <label class="field">
+                <span class="field__label">Тип лака</span>
+                <select id="lacquerTypeSelect"></select>
+              </label>
+
+              <label class="field">
+                <span class="field__label">Степень глянца</span>
+                <select id="glossSelect"></select>
+              </label>
+
+              <label class="field">
+                <span class="field__label">Стороны покрытия</span>
+                <select id="lacquerSidesSelect">
+                  <option value="one">1 сторона</option>
+                  <option value="two">2 стороны</option>
+                </select>
+              </label>
+            </div>
+
+            <label class="field">
+              <span class="field__label">Особые требования к финишу</span>
+              <textarea id="finishCommentInput" rows="3" placeholder="Например: другой процент глянца, образец, уточнение по лаку"></textarea>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-block is-hidden" id="panelExtrasBlock">
+          <h2>Дополнительные опции для панелей</h2>
+
+          <label class="field">
+            <span class="field__label">КМ1 нужен?</span>
+            <select id="km1Select">
+              <option value="no">Нет</option>
+              <option value="yes">Да</option>
+            </select>
+            <span class="field__note">
+              КМ1 влияет на цену. В прототипе позиция помечается для проверки менеджером.
+            </span>
+          </label>
+
+          <label class="field">
+            <span class="field__label">Радиусная панель?</span>
+            <select id="radiusPanelSelect">
+              <option value="no">Нет</option>
+              <option value="yes">Да</option>
+            </select>
+            <span class="field__note">
+              Радиусная форма требует расчёта по ТЗ.
+            </span>
+          </label>
+
+          <label class="field">
+            <span class="field__label">Опции по ТЗ</span>
+            <textarea id="panelOperationsInput" rows="3" placeholder="Например: паз, бортик, шпонка, запил, отверстия"></textarea>
+          </label>
+        </div>
+
+        <div class="form-block is-hidden" id="facadeExtrasBlock">
+          <h2>Дополнительные опции для фасадов</h2>
+
+          <label class="field">
+            <span class="field__label">Присадка под петли нужна?</span>
+            <select id="hingesSelect">
+              <option value="no">Нет</option>
+              <option value="yes">Да</option>
+            </select>
+          </label>
+
+          <label class="field is-hidden" id="hingesCommentField">
+            <span class="field__label">Параметры присадки под петли</span>
+            <textarea id="hingesCommentInput" rows="3" placeholder="Количество, расположение, по ТЗ"></textarea>
+          </label>
+
+          <label class="field">
+            <span class="field__label">Тип ручки / открывания</span>
+            <select id="handleTypeSelect">
+              <option value="none">Не требуется</option>
+              <option value="separate">Отдельная ручка</option>
+              <option value="integrated">Интегрированная ручка</option>
+              <option value="custom">По ТЗ</option>
+            </select>
+          </label>
+
+          <label class="field is-hidden" id="handleCommentField">
+            <span class="field__label">Параметры ручки / открывания</span>
+            <textarea id="handleCommentInput" rows="3" placeholder="Количество, расположение, лак/эмаль, пог. м или по ТЗ"></textarea>
+          </label>
+
+          <label class="field">
+            <span class="field__label">Опции по ТЗ</span>
+            <textarea id="facadeOperationsInput" rows="3" placeholder="Например: паз, бортик, шпонка, запил, отверстия"></textarea>
+          </label>
+        </div>
+      </form>
+
+      <aside class="spec-panel">
+        <div class="spec-panel__inner">
+          <p class="kicker">Предварительная спецификация</p>
+          <h2 class="spec-title" id="specTitle">Панели / фасады</h2>
+
+          <div class="empty-spec" id="emptySpec">
+            Заполните параметры слева, чтобы увидеть расчёт.
+          </div>
+
+          <div class="spec-content is-hidden" id="specContent">
+            <dl class="spec-list">
+              <div>
+                <dt>Изделие</dt>
+                <dd id="specProductType">—</dd>
+              </div>
+              <div>
+                <dt>Основа</dt>
+                <dd id="specBase">—</dd>
+              </div>
+              <div>
+                <dt>Размеры</dt>
+                <dd id="specSize">—</dd>
+              </div>
+              <div>
+                <dt>Тип размера</dt>
+                <dd id="specSizeType">—</dd>
+              </div>
+              <div>
+                <dt>Раскрой</dt>
+                <dd id="specCutting">—</dd>
+              </div>
+              <div>
+                <dt>Количество</dt>
+                <dd id="specQuantity">—</dd>
+              </div>
+              <div>
+                <dt>Площадь</dt>
+                <dd id="specArea">—</dd>
+              </div>
+              <div>
+                <dt>Сторона А</dt>
+                <dd id="specVeneerA">—</dd>
+              </div>
+              <div>
+                <dt>Сторона Б</dt>
+                <dd id="specSideB">—</dd>
+              </div>
+              <div>
+                <dt>Кромка</dt>
+                <dd id="specEdge">—</dd>
+              </div>
+              <div>
+                <dt>Шлифовка</dt>
+                <dd id="specSanding">—</dd>
+              </div>
+              <div>
+                <dt>Лак</dt>
+                <dd id="specLacquer">—</dd>
+              </div>
+              <div>
+                <dt>Доп. опции</dt>
+                <dd id="specExtras">—</dd>
+              </div>
+            </dl>
+
+            <div class="formula-box">
+              <span>Расчёт</span>
+              <p id="specFormula">
+                Площадь × тарифы материалов и работ.
+              </p>
+            </div>
+
+            <div class="total-box">
+              <span>Итого с НДС</span>
+              <strong id="specTotal">—</strong>
+              <small id="specVat">В том числе НДС: —</small>
+            </div>
+
+            <div class="breakdown-list" id="specBreakdown"></div>
+
+            <p class="spec-note" id="specWarnings">
+              Цена предварительная. Окончательная стоимость подтверждается менеджером.
+            </p>
+
+            <button class="next-step-button" id="addToSpecBtn" type="button">
+              Добавить в спецификацию
+            </button>
+
+            <a class="next-step-link" href="specification.html">
+              Перейти к итоговой спецификации
+            </a>
+          </div>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <script src="../js/panels-facades.js"></script>
+</body>
+</html>

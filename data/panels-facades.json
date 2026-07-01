@@ -1,0 +1,617 @@
+{
+  "meta": {
+    "vatRate": 0.22,
+    "vatIncluded": true,
+    "baseCoefficient": 1.55,
+    "textureTransitionCoefficient": 2.55,
+    "premiumVeneerThreshold": 1000,
+    "premiumVeneerWorkMultiplier": 2,
+    "productionMultiplier": 1.5,
+    "edgeWasteCoefficient": 1.2,
+    "veneerReserveMultiplier": 2,
+    "cuttingThresholdMeters": 40,
+    "note": "Тарифы и формулы перенесены из Excel-модели расчёта нестандартных панелей. Если шпон дороже 1000 ₽/м², к работе со шпоном применяется коэффициент ×2. Для основ без тарифов расчёт не выполняется автоматически."
+  },
+  "standardSizes": [
+    {
+      "length": 2440,
+      "width": 910,
+      "name": "2440 × 910 мм"
+    },
+    {
+      "length": 2440,
+      "width": 1830,
+      "name": "2440 × 1830 мм"
+    },
+    {
+      "length": 2440,
+      "width": 2050,
+      "name": "2440 × 2050 мм"
+    },
+    {
+      "length": 2800,
+      "width": 1032,
+      "name": "2800 × 1032 мм"
+    },
+    {
+      "length": 2800,
+      "width": 1220,
+      "name": "2800 × 1220 мм"
+    },
+    {
+      "length": 2800,
+      "width": 2070,
+      "name": "2800 × 2070 мм"
+    }
+  ],
+  "bases": [
+    {
+      "id": "mdf",
+      "name": "МДФ",
+      "note": "Основной материал для панелей и фасадов. В интервью указано, что около 90% заказов идут на МДФ.",
+      "thicknesses": [
+        {
+          "value": "3",
+          "label": "3 мм",
+          "numericThickness": 3,
+          "oneSideRate": 1331.55,
+          "twoSideRate": 1628.55
+        },
+        {
+          "value": "6",
+          "label": "6 мм",
+          "numericThickness": 6,
+          "oneSideRate": 1493.25,
+          "twoSideRate": 1790.25
+        },
+        {
+          "value": "8",
+          "label": "8 мм",
+          "numericThickness": 8,
+          "oneSideRate": 1597.2,
+          "twoSideRate": 1894.2
+        },
+        {
+          "value": "10",
+          "label": "10 мм",
+          "numericThickness": 10,
+          "oneSideRate": 1686.3,
+          "twoSideRate": 1983.3
+        },
+        {
+          "value": "12",
+          "label": "12 мм",
+          "numericThickness": 12,
+          "oneSideRate": 1775.4,
+          "twoSideRate": 2072.4
+        },
+        {
+          "value": "16",
+          "label": "16 мм",
+          "numericThickness": 16,
+          "oneSideRate": 1955.25,
+          "twoSideRate": 2252.25
+        },
+        {
+          "value": "18",
+          "label": "18 мм",
+          "numericThickness": 18,
+          "oneSideRate": 2079,
+          "twoSideRate": 2376
+        },
+        {
+          "value": "22",
+          "label": "22 мм",
+          "numericThickness": 22,
+          "oneSideRate": 2479.95,
+          "twoSideRate": 2776.95
+        },
+        {
+          "value": "24",
+          "label": "24 мм",
+          "numericThickness": 24,
+          "oneSideRate": 2823.98,
+          "twoSideRate": 3120.98
+        },
+        {
+          "value": "25",
+          "label": "25 мм",
+          "numericThickness": 25,
+          "oneSideRate": 2968.35,
+          "twoSideRate": 3265.35
+        },
+        {
+          "value": "32",
+          "label": "32 мм",
+          "numericThickness": 32,
+          "oneSideRate": 3300,
+          "twoSideRate": 4405.5
+        },
+        {
+          "value": "35",
+          "label": "35 мм",
+          "numericThickness": 35,
+          "oneSideRate": 4049.1,
+          "twoSideRate": 5156.25
+        },
+        {
+          "value": "36",
+          "label": "36 мм",
+          "numericThickness": 36,
+          "oneSideRate": 3786.75,
+          "twoSideRate": 4900.5
+        },
+        {
+          "value": "38",
+          "label": "38 мм",
+          "numericThickness": 38,
+          "oneSideRate": 4202.55,
+          "twoSideRate": 5309.7
+        },
+        {
+          "value": "39",
+          "label": "39 мм",
+          "numericThickness": 39,
+          "oneSideRate": 4290,
+          "twoSideRate": 5403.75
+        },
+        {
+          "value": "40",
+          "label": "40 мм",
+          "numericThickness": 40,
+          "oneSideRate": 4301.55,
+          "twoSideRate": 5408.7
+        },
+        {
+          "value": "44",
+          "label": "44 мм",
+          "numericThickness": 44,
+          "oneSideRate": 4819.65,
+          "twoSideRate": 5949.9
+        },
+        {
+          "value": "48",
+          "label": "48 мм",
+          "numericThickness": 48,
+          "oneSideRate": 5138.1,
+          "twoSideRate": 6245.25
+        },
+        {
+          "value": "50",
+          "label": "50 мм",
+          "numericThickness": 50,
+          "oneSideRate": 5880.6,
+          "twoSideRate": 7172.55
+        },
+        {
+          "value": "6+6",
+          "label": "6+6 мм",
+          "numericThickness": 12,
+          "oneSideRate": 2148.3,
+          "twoSideRate": 3232.35
+        }
+      ]
+    },
+    {
+      "id": "chipboard",
+      "name": "ДСП",
+      "note": "Тарифы есть в Excel для 16, 32 и 48 мм.",
+      "thicknesses": [
+        {
+          "value": "16",
+          "label": "16 мм",
+          "numericThickness": 16,
+          "oneSideRate": 1930.5,
+          "twoSideRate": 2227.5
+        },
+        {
+          "value": "32",
+          "label": "32 мм",
+          "numericThickness": 32,
+          "oneSideRate": 3250.5,
+          "twoSideRate": 4356
+        },
+        {
+          "value": "48",
+          "label": "48 мм",
+          "numericThickness": 48,
+          "oneSideRate": 5063.85,
+          "twoSideRate": 6171
+        }
+      ]
+    },
+    {
+      "id": "gsp",
+      "name": "ГСП",
+      "note": "Есть в продуктовой схеме, но тарифы не найдены в предоставленном Excel.",
+      "manualPrice": true,
+      "thicknesses": []
+    },
+    {
+      "id": "blockboard",
+      "name": "Столярная плита",
+      "note": "Есть в продуктовой схеме, но тарифы не найдены в предоставленном Excel.",
+      "manualPrice": true,
+      "thicknesses": []
+    },
+    {
+      "id": "plywood_waterproof",
+      "name": "Фанера влагостойкая",
+      "note": "Есть в продуктовой схеме, но тарифы не найдены в предоставленном Excel.",
+      "manualPrice": true,
+      "thicknesses": []
+    },
+    {
+      "id": "plywood_light",
+      "name": "Фанера облегчённая",
+      "note": "Есть в продуктовой схеме, но тарифы не найдены в предоставленном Excel.",
+      "manualPrice": true,
+      "thicknesses": []
+    },
+    {
+      "id": "plywood_flexible",
+      "name": "Фанера гибкая",
+      "note": "Есть в продуктовой схеме, но тарифы не найдены в предоставленном Excel.",
+      "manualPrice": true,
+      "thicknesses": []
+    }
+  ],
+  "veneers": [
+    {
+      "id": "beech_bookmatch_3",
+      "name": "Бук BookMatch 3 мм",
+      "species": "Бук",
+      "layout": "BookMatch",
+      "pricePerM2": 1397
+    },
+    {
+      "id": "beech_mixmatch_3",
+      "name": "Бук MixMatch 3 мм",
+      "species": "Бук",
+      "layout": "MixMatch",
+      "pricePerM2": 1577
+    },
+    {
+      "id": "oak_bookmatch_3",
+      "name": "Дуб BookMatch 3 мм",
+      "species": "Дуб",
+      "layout": "BookMatch",
+      "pricePerM2": 2172
+    },
+    {
+      "id": "oak_mixmatch_3",
+      "name": "Дуб MixMatch 3 мм",
+      "species": "Дуб",
+      "layout": "MixMatch",
+      "pricePerM2": 2253
+    },
+    {
+      "id": "walnut_bookmatch_3",
+      "name": "Орех BookMatch 3 мм",
+      "species": "Орех",
+      "layout": "BookMatch",
+      "pricePerM2": 2538
+    },
+    {
+      "id": "walnut_mixmatch_3",
+      "name": "Орех MixMatch 3 мм",
+      "species": "Орех",
+      "layout": "MixMatch",
+      "pricePerM2": 2719
+    },
+    {
+      "id": "ash_bookmatch_3",
+      "name": "Ясень белый BookMatch 3 мм",
+      "species": "Ясень белый",
+      "layout": "BookMatch",
+      "pricePerM2": 1684
+    },
+    {
+      "id": "ash_mixmatch_3",
+      "name": "Ясень белый MixMatch 3 мм",
+      "species": "Ясень белый",
+      "layout": "MixMatch",
+      "pricePerM2": 1804
+    },
+    {
+      "id": "american_walnut_radial_mix",
+      "name": "Орех Американский Радиал Микс",
+      "species": "Орех Американский",
+      "layout": "Радиал Микс",
+      "pricePerM2": 999
+    }
+  ],
+  "reverseSides": [
+    {
+      "id": "none",
+      "name": "Не фанеруется / без обратной стороны",
+      "pricePerM2": 0
+    },
+    {
+      "id": "black_veneer",
+      "name": "Чёрный шпон",
+      "pricePerM2": 250
+    },
+    {
+      "id": "paper",
+      "name": "Бумага",
+      "pricePerM2": 50
+    }
+  ],
+  "cuttingRates": [
+    {
+      "maxThickness": 3,
+      "ratePerMeter": 66
+    },
+    {
+      "maxThickness": 4,
+      "ratePerMeter": 66
+    },
+    {
+      "maxThickness": 6,
+      "ratePerMeter": 66
+    },
+    {
+      "maxThickness": 8,
+      "ratePerMeter": 66
+    },
+    {
+      "maxThickness": 10,
+      "ratePerMeter": 66
+    },
+    {
+      "maxThickness": 12,
+      "ratePerMeter": 66
+    },
+    {
+      "maxThickness": 16,
+      "ratePerMeter": 66
+    },
+    {
+      "maxThickness": 18,
+      "ratePerMeter": 66
+    },
+    {
+      "maxThickness": 22,
+      "ratePerMeter": 77
+    },
+    {
+      "maxThickness": 25,
+      "ratePerMeter": 77
+    },
+    {
+      "maxThickness": 32,
+      "ratePerMeter": 88
+    },
+    {
+      "maxThickness": 35,
+      "ratePerMeter": 88
+    },
+    {
+      "maxThickness": 40,
+      "ratePerMeter": 93.5
+    },
+    {
+      "maxThickness": 45,
+      "ratePerMeter": 99
+    },
+    {
+      "maxThickness": 50,
+      "ratePerMeter": 110
+    },
+    {
+      "maxThickness": 53,
+      "ratePerMeter": 115.5
+    },
+    {
+      "maxThickness": 57,
+      "ratePerMeter": 121
+    },
+    {
+      "maxThickness": 60,
+      "ratePerMeter": 126.5
+    }
+  ],
+  "edge": {
+    "thicknesses": [
+      {
+        "value": 0.5,
+        "type": "thin",
+        "name": "0,5 мм"
+      },
+      {
+        "value": 1,
+        "type": "thin",
+        "name": "1 мм"
+      },
+      {
+        "value": 1.5,
+        "type": "thick",
+        "name": "1,5 мм"
+      },
+      {
+        "value": 2,
+        "type": "thick",
+        "name": "2 мм"
+      }
+    ],
+    "rates": {
+      "thin": [
+        {
+          "maxThickness": 9,
+          "rateBefore40": 160,
+          "rateAfter40": 80
+        },
+        {
+          "maxThickness": 10,
+          "rateBefore40": 300,
+          "rateAfter40": 80
+        },
+        {
+          "maxThickness": 19,
+          "rateBefore40": 160,
+          "rateAfter40": 80
+        },
+        {
+          "maxThickness": 21,
+          "rateBefore40": 170,
+          "rateAfter40": 85
+        },
+        {
+          "maxThickness": 25,
+          "rateBefore40": 180,
+          "rateAfter40": 90
+        },
+        {
+          "maxThickness": 31,
+          "rateBefore40": 190,
+          "rateAfter40": 95
+        },
+        {
+          "maxThickness": 35,
+          "rateBefore40": 200,
+          "rateAfter40": 100
+        },
+        {
+          "maxThickness": 41,
+          "rateBefore40": 220,
+          "rateAfter40": 110
+        },
+        {
+          "maxThickness": 45,
+          "rateBefore40": 230,
+          "rateAfter40": 115
+        },
+        {
+          "maxThickness": 60,
+          "rateBefore40": 250,
+          "rateAfter40": 125
+        }
+      ],
+      "thick": [
+        {
+          "maxThickness": 21,
+          "rateBefore40": 250,
+          "rateAfter40": 125
+        },
+        {
+          "maxThickness": 31,
+          "rateBefore40": 270,
+          "rateAfter40": 135
+        },
+        {
+          "maxThickness": 35,
+          "rateBefore40": 320,
+          "rateAfter40": 160
+        },
+        {
+          "maxThickness": 43,
+          "rateBefore40": 350,
+          "rateAfter40": 175
+        },
+        {
+          "maxThickness": 49,
+          "rateBefore40": 370,
+          "rateAfter40": 185
+        },
+        {
+          "maxThickness": 60,
+          "rateBefore40": 400,
+          "rateAfter40": 200
+        }
+      ]
+    }
+  },
+  "sanding": [
+    {
+      "id": "one",
+      "name": "1 сторона",
+      "sides": 1,
+      "ratePerM2": 60
+    },
+    {
+      "id": "two",
+      "name": "2 стороны",
+      "sides": 2,
+      "ratePerM2": 120
+    }
+  ],
+  "lacquer": {
+    "types": [
+      {
+        "id": "pu",
+        "name": "Полиуретан",
+        "rates": {
+          "one": 2500,
+          "two": 5000
+        }
+      },
+      {
+        "id": "acrylic",
+        "name": "Акрил",
+        "rates": {
+          "one": 3000,
+          "two": 6000
+        }
+      }
+    ],
+    "gloss": [
+      {
+        "id": "matte_10",
+        "name": "Матовый 10%",
+        "rates": {
+          "one": 0,
+          "two": 0
+        }
+      },
+      {
+        "id": "gloss_100",
+        "name": "Глянец 100%",
+        "rates": {
+          "one": 12000,
+          "two": 24000
+        }
+      },
+      {
+        "id": "one_gloss_one_matte",
+        "name": "1 глянец + 1 матовый",
+        "rates": {
+          "one": 12000,
+          "two": 15000
+        }
+      },
+      {
+        "id": "custom",
+        "name": "Другой %",
+        "rates": {
+          "one": 0,
+          "two": 0
+        }
+      }
+    ]
+  },
+  "panelExtras": {
+    "km1": {
+      "name": "КМ1",
+      "autoPrice": false,
+      "note": "КМ1 влияет на цену, но отдельный тариф в предоставленном Excel не найден."
+    },
+    "radius": {
+      "name": "Радиусная панель",
+      "autoPrice": false,
+      "note": "Радиусная панель требует расчёта по ТЗ."
+    }
+  },
+  "facadeExtras": {
+    "hinges": {
+      "name": "Присадка под петли",
+      "autoPrice": false,
+      "note": "Параметры по ТЗ: количество и расположение."
+    },
+    "handles": {
+      "name": "Ручки / открывание",
+      "autoPrice": false,
+      "note": "Отдельная ручка, интегрированная ручка или параметры по ТЗ."
+    }
+  }
+}

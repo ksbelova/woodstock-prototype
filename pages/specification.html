@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Woodstock — проверка заказа</title>
+  <link rel="stylesheet" href="../css/main.css" />
+</head>
+<body>
+  <main class="start-page calc-page">
+    <section class="calc-head">
+      <div>
+        <p class="kicker">WOODSTOCK · Проверка заказа</p>
+        <h1>Сводная спецификация</h1>
+        <p class="lead">
+          Проверьте рассчитанные позиции заказа перед добавлением упаковки,
+          сервисных услуг и данных клиента.
+        </p>
+      </div>
+    </section>
+
+    <section class="summary-layout">
+      <div class="summary-main">
+        <section class="summary-card">
+          <div class="summary-card__head">
+            <div>
+              <p class="kicker">Данные расчёта</p>
+              <h2>Расчёт <span id="orderNumber">—</span></h2>
+            </div>
+
+            <div class="summary-status">
+              <span id="orderStatus">Черновик</span>
+            </div>
+          </div>
+
+          <dl class="summary-meta">
+            <div>
+              <dt>Дата</dt>
+              <dd id="orderDate">—</dd>
+            </div>
+            <div>
+              <dt>Позиций</dt>
+              <dd id="itemsCount">—</dd>
+            </div>
+            <div>
+              <dt>Итого с НДС</dt>
+              <dd id="summaryTotal">—</dd>
+            </div>
+            <div>
+              <dt>В том числе НДС</dt>
+              <dd id="summaryVat">—</dd>
+            </div>
+          </dl>
+        </section>
+
+        <section class="summary-card">
+          <div class="summary-card__head">
+            <div>
+              <p class="kicker">Позиции заказа</p>
+              <h2>Сводная таблица</h2>
+            </div>
+
+            <button class="secondary-button" id="clearOrderBtn" type="button">
+              Очистить заказ
+            </button>
+          </div>
+
+          <div class="empty-summary" id="emptySummary">
+            <p>В заказ ещё не добавлены позиции.</p>
+            <a class="next-step-button next-step-button--inline" href="product-type.html">
+              Добавить позицию
+            </a>
+          </div>
+
+          <div class="summary-table-wrap" id="summaryTableWrap" hidden>
+            <table class="summary-table">
+              <thead>
+                <tr>
+                  <th>№</th>
+                  <th>Изделие</th>
+                  <th>Параметры</th>
+                  <th>Размер / площадь</th>
+                  <th>Материал / покрытие</th>
+                  <th>Дополнительно</th>
+                  <th>Стоимость</th>
+                  <th>Действия</th>
+                </tr>
+              </thead>
+
+              <tbody id="itemsTableBody"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <aside class="spec-panel">
+        <div class="spec-panel__inner">
+          <p class="kicker">Итог заказа</p>
+          <h2 class="spec-title">Проверка</h2>
+
+          <dl class="spec-list">
+            <div>
+              <dt>Номер расчёта</dt>
+              <dd id="sideOrderNumber">—</dd>
+            </div>
+            <div>
+              <dt>Статус</dt>
+              <dd id="sideOrderStatus">Черновик</dd>
+            </div>
+            <div>
+              <dt>Позиций</dt>
+              <dd id="sideItemsCount">—</dd>
+            </div>
+          </dl>
+
+          <div class="total-box">
+            <span>Итого по позициям с НДС</span>
+            <strong id="sideTotal">—</strong>
+            <small id="sideVat">В том числе НДС: —</small>
+          </div>
+
+          <p class="spec-note" id="summaryNote">
+            На следующем шаге можно добавить упаковку и сервисные услуги.
+          </p>
+
+          <a class="next-step-button" href="order-options.html" id="nextStepLink">
+            Перейти к параметрам заказа
+          </a>
+
+          <a class="next-step-link" href="product-type.html">
+            Добавить ещё позицию
+          </a>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <script src="../js/specification.js"></script>
+</body>
+</html>
