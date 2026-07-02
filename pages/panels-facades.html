@@ -13,7 +13,7 @@
         <p class="kicker">WOODSTOCK · Подробный расчёт</p>
         <h1 id="pageTitle">Панели / фасады</h1>
         <p class="lead" id="pageLead">
-          Расчёт стоимости по основе, размеру, шпону, кромке, шлифовке, лаку и дополнительным операциям.
+          Расчёт стоимости по основе, размеру, шпону, кромке, шлифовке, финишу и дополнительным операциям.
         </p>
       </div>
 
@@ -31,7 +31,7 @@
               <option value="">Выберите основу</option>
             </select>
             <span class="field__note">
-              Толщина и тарифы зависят от выбранной основы.
+              От основы зависит список стандартных размеров, доступные толщины и возможность автоматического расчёта.
             </span>
           </label>
 
@@ -50,27 +50,21 @@
           <h2>Размер и количество</h2>
 
           <div class="standard-size-list">
-            <span class="field__label">Стандартные размеры</span>
+            <span class="field__label">Стандартные размеры выбранной основы</span>
 
-            <p class="field__note">
-              Если введённый размер совпадает со стандартным форматом, раскрой не добавляется.
-              Если размер отличается, система автоматически добавит раскрой по периметру.
+            <p class="field__note" id="standardSizeNote">
+              Сначала выберите основу. Стандартные размеры теперь зависят от материала: МДФ, ДСП, ГСП, столярная плита и фанера имеют разные стандартные форматы.
             </p>
 
-            <div class="standard-size-values" aria-label="Стандартные размеры">
-              <span>2440 × 910 мм</span>
-              <span>2440 × 1830 мм</span>
-              <span>2440 × 2050 мм</span>
-              <span>2800 × 1032 мм</span>
-              <span>2800 × 1220 мм</span>
-              <span>2800 × 2070 мм</span>
+            <div class="standard-size-values" id="standardSizeValues" aria-label="Стандартные размеры">
+              <span>Выберите основу</span>
             </div>
           </div>
 
           <div class="size-rows-head">
             <span>Размеры позиции</span>
             <small>
-              Каждый размер будет добавлен в спецификацию отдельной строкой.
+              Каждый размер будет добавлен в спецификацию отдельной строкой. Длина определяет направление волокон шпона.
             </small>
           </div>
 
@@ -108,8 +102,7 @@
           </button>
 
           <p class="field__note size-note">
-            Площадь каждой строки = длина × ширина × количество / 1 000 000.
-            При добавлении в спецификацию система создаст отдельную позицию для каждого указанного размера.
+            Стандартный размер считается по таблице стандартных цен. Нестандартный размер считается по формуле нестандартных панелей, и система автоматически добавляет раскрой по периметру.
           </p>
         </div>
 
@@ -122,6 +115,9 @@
               <option value="1">1 сторона</option>
               <option value="2">2 стороны</option>
             </select>
+            <span class="field__note">
+              Для стандартных панелей количество сторон влияет на выбор цены из таблицы стандартных размеров.
+            </span>
           </label>
 
           <label class="field">
@@ -130,7 +126,7 @@
               <option value="">Выберите шпон</option>
             </select>
             <span class="field__note">
-              Используются позиции из каталога панелей и фасадов.
+              Если цена шпона выше 1 000 ₽/м², для нестандартных панелей применяется повышающий коэффициент к работе со шпоном.
             </span>
           </label>
 
@@ -163,18 +159,20 @@
                 <option value="width">По ширине</option>
                 <option value="custom">По ТЗ</option>
               </select>
+              <span class="field__note">В бланке заказа длина определяет направление волокон.</span>
             </label>
 
             <label class="field">
-              <span class="field__label">Набор / рубашка</span>
+              <span class="field__label">Раскладка шпона</span>
               <select id="veneerLayoutSelect">
-                <option value="not_set">Не задан</option>
-                <option value="radial">Радиал</option>
-                <option value="tangent">Тангенс</option>
-                <option value="mixmatch">MixMatch</option>
-                <option value="bookmatch">BookMatch</option>
+                <option value="not_set">Не задана</option>
+                <option value="book">Книжка</option>
+                <option value="straight">Прямая</option>
+                <option value="straight_shifted">Прямая с перекладкой</option>
+                <option value="mixed">Смешанная / микс</option>
                 <option value="custom">По ТЗ</option>
               </select>
+              <span class="field__note">Формулировки приведены к бланку заказа и спецификации.</span>
             </label>
 
             <label class="field">
@@ -183,12 +181,24 @@
                 <option value="no">Нет</option>
                 <option value="yes">Да</option>
               </select>
+              <span class="field__note">Для перехода текстуры применяется повышающий коэффициент.</span>
             </label>
           </div>
+        </div>
 
-          <p class="field__note">
-            Если нужен переход текстуры между деталями, применяется повышающий коэффициент.
-          </p>
+        <div class="form-block">
+          <h2>Раскрой</h2>
+
+          <label class="field">
+            <span class="field__label">Тип раскроя для нестандартных размеров</span>
+            <select id="cuttingModeSelect">
+              <option value="machine">На станке</option>
+              <option value="manual">Вручную</option>
+            </select>
+            <span class="field__note">
+              Раскрой добавляется только для нестандартных размеров. В тарифной таблице есть два тарифа: на станке и вручную.
+            </span>
+          </label>
         </div>
 
         <div class="form-block">
@@ -200,6 +210,9 @@
               <option value="no">Нет</option>
               <option value="yes">Да</option>
             </select>
+            <span class="field__note">
+              Порог тарифа кромления обновлён: до 35 пог. м и от 35 пог. м.
+            </span>
           </label>
 
           <div id="edgeFields" class="conditional-block is-hidden">
@@ -245,40 +258,79 @@
         </div>
 
         <div class="form-block">
-          <h2>Лак / финиш</h2>
+          <h2>Финиш</h2>
 
           <label class="field">
-            <span class="field__label">Лак нужен?</span>
-            <select id="lacquerNeededSelect">
-              <option value="no">Нет</option>
-              <option value="yes">Да</option>
+            <span class="field__label">Финиш нужен?</span>
+            <select id="finishTypeSelect">
+              <option value="none">Нет</option>
+              <option value="lacquer">Лак</option>
+              <option value="gloss_100">Глянец 100%</option>
+              <option value="enamel">Эмаль</option>
+              <option value="toning">Тонировка</option>
+              <option value="custom">По ТЗ</option>
             </select>
+            <span class="field__note">
+              Финиш обновлён по бланку заказа: лак, глянец 100%, эмаль, тонировка или параметры по ТЗ.
+            </span>
           </label>
 
-          <div id="lacquerFields" class="conditional-block is-hidden">
-            <div class="field-grid">
+          <div id="finishFields" class="conditional-block is-hidden">
+            <div class="field-grid" id="lacquerFields">
               <label class="field">
                 <span class="field__label">Тип лака</span>
                 <select id="lacquerTypeSelect"></select>
               </label>
 
               <label class="field">
-                <span class="field__label">Степень глянца</span>
-                <select id="glossSelect"></select>
+                <span class="field__label">Блеск лака</span>
+                <select id="lacquerGlossSelect"></select>
               </label>
 
               <label class="field">
                 <span class="field__label">Стороны покрытия</span>
-                <select id="lacquerSidesSelect">
+                <select id="finishSidesSelect">
                   <option value="one">1 сторона</option>
                   <option value="two">2 стороны</option>
                 </select>
               </label>
             </div>
 
+            <label class="field" id="isolatorField">
+              <span class="field__label">Изолятор</span>
+              <select id="isolatorSelect">
+                <option value="no">Нет</option>
+                <option value="yes">Да</option>
+              </select>
+              <span class="field__note">
+                Изолятор участвует в стоимости финиша.
+              </span>
+            </label>
+
+            <label class="field is-hidden" id="gloss100Field">
+              <span class="field__label">Вариант глянца 100%</span>
+              <select id="gloss100Select">
+                <option value="one">1 сторона, глянец</option>
+                <option value="oneGlossOneMatte">1 глянец + 1 матовый</option>
+                <option value="two">2 стороны, глянец + глянец</option>
+              </select>
+            </label>
+
+            <label class="field is-hidden" id="enamelField">
+              <span class="field__label">Вариант эмали</span>
+              <select id="enamelSelect">
+                <option value="ground_enamel_one">Грунт + эмаль, 1 сторона</option>
+                <option value="ground_enamel_two">Грунт + эмаль, 2 стороны</option>
+                <option value="ground_enamel_lacquer_one">Грунт + эмаль + ЛКМ, 1 сторона</option>
+                <option value="ground_enamel_lacquer_two">Грунт + эмаль + ЛКМ, 2 стороны</option>
+                <option value="ground_patina_enamel_lacquer_one">Грунт + патина + эмаль + ЛКМ, 1 сторона</option>
+                <option value="ground_patina_enamel_lacquer_two">Грунт + патина + эмаль + ЛКМ, 2 стороны</option>
+              </select>
+            </label>
+
             <label class="field">
               <span class="field__label">Особые требования к финишу</span>
-              <textarea id="finishCommentInput" rows="3" placeholder="Например: другой процент глянца, образец, уточнение по лаку"></textarea>
+              <textarea id="finishCommentInput" rows="3" placeholder="Например: другой процент глянца, образец, уточнение по лаку, эмали или тонировке"></textarea>
             </label>
           </div>
         </div>
@@ -293,7 +345,7 @@
               <option value="yes">Да</option>
             </select>
             <span class="field__note">
-              КМ1 влияет на цену. В прототипе позиция помечается для проверки менеджером.
+              КМ1 влияет на цену, но отдельный тариф в новых материалах не найден. Позиция будет помечена для проверки менеджером.
             </span>
           </label>
 
@@ -355,6 +407,7 @@
       <aside class="spec-panel">
         <div class="spec-panel__inner">
           <p class="kicker">Предварительная спецификация</p>
+
           <h2 class="spec-title" id="specTitle">Панели / фасады</h2>
 
           <div class="empty-spec" id="emptySpec">
@@ -392,7 +445,7 @@
                 <dd id="specArea">—</dd>
               </div>
               <div>
-                <dt>Сторона А</dt>
+                <dt>Шпон А</dt>
                 <dd id="specVeneerA">—</dd>
               </div>
               <div>
@@ -408,29 +461,27 @@
                 <dd id="specSanding">—</dd>
               </div>
               <div>
-                <dt>Лак</dt>
+                <dt>Финиш</dt>
                 <dd id="specLacquer">—</dd>
               </div>
               <div>
-                <dt>Доп. опции</dt>
+                <dt>Дополнительно</dt>
                 <dd id="specExtras">—</dd>
               </div>
             </dl>
 
             <div class="formula-box">
-              <span>Расчёт</span>
-              <p id="specFormula">
-                Площадь × тарифы материалов и работ.
-              </p>
-            </div>
-
-            <div class="total-box">
-              <span>Итого с НДС</span>
-              <strong id="specTotal">—</strong>
-              <small id="specVat">В том числе НДС: —</small>
+              <span>Формула</span>
+              <p id="specFormula">Каждый размер считается как отдельная позиция.</p>
             </div>
 
             <div class="breakdown-list" id="specBreakdown"></div>
+
+            <div class="total-box">
+              <span>Итого по добавляемым позициям</span>
+              <strong id="specTotal">—</strong>
+              <small id="specVat">В том числе НДС: —</small>
+            </div>
 
             <p class="spec-note" id="specWarnings">
               Цена предварительная. Окончательная стоимость подтверждается менеджером.
@@ -441,7 +492,7 @@
             </button>
 
             <a class="next-step-link" href="specification.html">
-              Перейти к итоговой спецификации
+              Перейти к проверке заказа
             </a>
           </div>
         </div>

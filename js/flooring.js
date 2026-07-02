@@ -492,9 +492,17 @@ function addToSpecification() {
     return;
   }
 
-  const savedItems = JSON.parse(
-    sessionStorage.getItem(storageKeys.items) || "[]"
-  );
+  let savedItems = [];
+
+  try {
+    savedItems = JSON.parse(sessionStorage.getItem(storageKeys.items) || "[]");
+  } catch (error) {
+    savedItems = [];
+  }
+
+  if (!Array.isArray(savedItems)) {
+    savedItems = [];
+  }
 
   if (editMode && editIndex !== null && savedItems[editIndex]) {
     savedItems[editIndex] = latestCalculation;
@@ -504,17 +512,9 @@ function addToSpecification() {
 
   sessionStorage.setItem(storageKeys.items, JSON.stringify(savedItems));
 
-  if (editMode) {
-    clearEditState();
-    window.location.href = "specification.html";
-    return;
-  }
+  clearEditState();
 
-  formElements.addToSpecBtn.textContent = "Добавлено";
-
-  setTimeout(() => {
-    formElements.addToSpecBtn.textContent = "Добавить в спецификацию";
-  }, 1200);
+  window.location.href = "specification.html";
 }
 
 function initFlooringCalculator() {

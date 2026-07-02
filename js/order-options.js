@@ -8,39 +8,23 @@ const VAT_RATE = 0.22;
 const DEMO_SERVICE_RATE = 1000;
 
 const packagingRates = [
-  {
-    maxArea: 3,
-    ratePerM2: 335
-  },
-  {
-    maxArea: 10,
-    ratePerM2: 200
-  },
-  {
-    maxArea: 20,
-    ratePerM2: 150
-  },
-  {
-    maxArea: 30,
-    ratePerM2: 135
-  },
-  {
-    maxArea: 40,
-    ratePerM2: 150
-  },
-  {
-    maxArea: 60,
-    ratePerM2: 120
-  },
-  {
-    maxArea: 80,
-    ratePerM2: 125
-  },
-  {
-    maxArea: Infinity,
-    ratePerM2: 125
-  }
+  { maxArea: 3, ratePerM2: 335 },
+  { maxArea: 10, ratePerM2: 200 },
+  { maxArea: 20, ratePerM2: 150 },
+  { maxArea: 30, ratePerM2: 135 },
+  { maxArea: 40, ratePerM2: 150 },
+  { maxArea: 60, ratePerM2: 120 },
+  { maxArea: 80, ratePerM2: 125 },
+  { maxArea: Infinity, ratePerM2: 125 }
 ];
+
+const packagingLabels = {
+  no: "Не нужна",
+  stretch: "Стрейч",
+  light: "Лёгкая",
+  hard: "Жёсткая",
+  closed: "Глухая"
+};
 
 const serviceLabels = {
   delivery: "Доставка",
@@ -52,6 +36,8 @@ const serviceLabels = {
 
 const elements = {
   packagingSelect: document.querySelector("#packagingSelect"),
+  packagingCoefficientRow: document.querySelector("#packagingCoefficientRow"),
+  packagingCoefficientInput: document.querySelector("#packagingCoefficientInput"),
   packagingArea: document.querySelector("#packagingArea"),
   packagingRate: document.querySelector("#packagingRate"),
   packagingMultiplier: document.querySelector("#packagingMultiplier"),
@@ -141,9 +127,7 @@ function getPluralLabel(count, one, few, many) {
 }
 
 function getItemsTotal(items) {
-  return items.reduce((sum, item) => {
-    return sum + (Number(item.total) || 0);
-  }, 0);
+  return items.reduce((sum, item) => sum + (Number(item.total) || 0), 0);
 }
 
 function getItemsArea(items) {
@@ -161,42 +145,45 @@ function getPackagingRate(area) {
   return matchedRate ? matchedRate.ratePerM2 : 0;
 }
 
-function getPackagingMultiplier(type) {
-  if (type === "reinforced") {
-    return 1.3;
+function getPackagingCoefficient(type) {
+  if (type === "no") {
+    return 0;
   }
 
-  if (type === "standard") {
+  const rawValue = elements.packagingCoefficientInput.value;
+  const value = Number(rawValue);
+
+  if (rawValue === "" || !Number.isFinite(value) || value < 0) {
     return 1;
   }
 
-  return 0;
+  return value;
 }
 
 function calculatePackaging(area) {
   const type = elements.packagingSelect.value;
   const enabled = type !== "no";
+
   const rate = enabled ? getPackagingRate(area) : 0;
-  const multiplier = getPackagingMultiplier(type);
+  const multiplier = getPackagingCoefficient(type);
   const total = Math.round(area * rate * multiplier);
 
-  const labels = {
-    no: "Не нужна",
-    standard: "Стандартная упаковка",
-    reinforced: "Усиленная упаковка"
-  };
+  let note = "Упаковка не выбрана.";
+
+  if (enabled) {
+    note = "Стоимость упаковки рассчитана по формуле: общая площадь заказа × тариф диапазона площади × коэффициент упаковки. Коэффициент указывается менеджером, если для выбранного типа упаковки есть отдельный подтверждённый коэффициент.";
+  }
 
   return {
     enabled,
     type,
-    name: labels[type] || "Не нужна",
+    name: packagingLabels[type] || "Не нужна",
     area,
     rate,
     multiplier,
     total,
-    note: enabled
-      ? "Тариф упаковки взят из расчётной таблицы. Система определяет тариф по общей площади заказа."
-      : "Упаковка не выбрана."
+    needsManagerCheck: enabled && type !== "hard",
+    note
   };
 }
 
@@ -215,9 +202,7 @@ function calculateServices() {
       };
     });
 
-  const total = selectedServices.reduce((sum, service) => {
-    return sum + service.total;
-  }, 0);
+  const total = selectedServices.reduce((sum, service) => sum + service.total, 0);
 
   return {
     items: selectedServices,
@@ -252,7 +237,10 @@ function calculateOrderOptions() {
     vat,
     vatRate: VAT_RATE,
     notes: [
-      "Упаковка считается по тарифу из расчётной таблицы.",
+      "Упаковка считается только на странице параметров заказа и не входит в стоимость отдельных позиций.",
+      "Стоимость упаковки = общая площадь заказа × тариф диапазона площади × коэффициент упаковки.",
+      "Коэффициент упаковки задаётся менеджером вручную, если для выбранного типа упаковки есть отдельный подтверждённый коэффициент.",
+      "Коэффициент усиленной упаковки 1,3 из старой версии не переносится автоматически на новые типы упаковки.",
       "Сервисные услуги рассчитаны по демонстрационному тарифу 1 000 ₽ за выбранную услугу."
     ]
   };
@@ -261,13 +249,16 @@ function calculateOrderOptions() {
 function renderPackaging(calculation) {
   const packaging = calculation.packaging;
 
+  elements.packagingCoefficientRow.classList.toggle("is-hidden", !packaging.enabled);
+
   elements.packagingArea.textContent = `${formatNumber(packaging.area, 3)} м²`;
+
   elements.packagingRate.textContent = packaging.enabled
     ? `${formatMoney(packaging.rate)} / м²`
     : "—";
 
   elements.packagingMultiplier.textContent = packaging.enabled
-    ? `× ${formatNumber(packaging.multiplier, 1)}`
+    ? `× ${formatNumber(packaging.multiplier, 2)}`
     : "—";
 
   elements.packagingTotal.textContent = formatMoney(packaging.total);
@@ -295,10 +286,8 @@ function renderSummary(calculation) {
 
 function renderPage() {
   currentCalculation = calculateOrderOptions();
-
   renderPackaging(currentCalculation);
   renderSummary(currentCalculation);
-
   saveOptions(currentCalculation);
 }
 
@@ -313,6 +302,16 @@ function applySavedOptions() {
     elements.packagingSelect.value = savedOptions.packaging.type;
   }
 
+  if (
+    savedOptions.packaging?.enabled &&
+    savedOptions.packaging?.multiplier !== undefined &&
+    savedOptions.packaging?.multiplier !== null
+  ) {
+    elements.packagingCoefficientInput.value = savedOptions.packaging.multiplier;
+  } else {
+    elements.packagingCoefficientInput.value = 1;
+  }
+
   if (savedOptions.services?.items?.length) {
     const selectedIds = savedOptions.services.items.map((item) => item.id);
 
@@ -321,44 +320,24 @@ function applySavedOptions() {
     });
   }
 
-  if (savedOptions.services?.comment) {
-    elements.servicesCommentInput.value = savedOptions.services.comment;
-  }
+  elements.servicesCommentInput.value = savedOptions.services?.comment || "";
 }
 
-function handleSaveClick() {
-  renderPage();
-
-  elements.saveOptionsBtn.textContent = "Параметры сохранены";
-
-  setTimeout(() => {
-    elements.saveOptionsBtn.textContent = "Сохранить параметры заказа";
-  }, 1400);
-}
-
-function handleNextStepClick(event) {
-  const items = getItems();
-
-  if (!items.length) {
-    event.preventDefault();
-    alert("Сначала добавьте хотя бы одну позицию в заказ.");
-    return;
-  }
-
-  renderPage();
+function handleSaveOptions() {
+  saveOptions(currentCalculation);
+  elements.nextStepLink.classList.remove("is-disabled");
 }
 
 function initEvents() {
   elements.packagingSelect.addEventListener("change", renderPage);
+  elements.packagingCoefficientInput.addEventListener("input", renderPage);
+  elements.servicesCommentInput.addEventListener("input", renderPage);
 
   elements.serviceCheckboxes.forEach((checkbox) => {
     checkbox.addEventListener("change", renderPage);
   });
 
-  elements.servicesCommentInput.addEventListener("input", renderPage);
-
-  elements.saveOptionsBtn.addEventListener("click", handleSaveClick);
-  elements.nextStepLink.addEventListener("click", handleNextStepClick);
+  elements.saveOptionsBtn.addEventListener("click", handleSaveOptions);
 }
 
 applySavedOptions();

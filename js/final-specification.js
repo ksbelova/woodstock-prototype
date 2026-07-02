@@ -60,6 +60,8 @@ const elements = {
   orderRequirements: document.querySelector("#orderRequirements"),
   managerComment: document.querySelector("#managerComment"),
 
+  averageUnitPrice: document.querySelector("#averageUnitPrice"),
+  averageM2Price: document.querySelector("#averageM2Price"),
   itemsTotal: document.querySelector("#itemsTotal"),
   summaryPackagingTotal: document.querySelector("#summaryPackagingTotal"),
   summaryServicesTotal: document.querySelector("#summaryServicesTotal"),
@@ -135,25 +137,15 @@ function getPluralLabel(count, one, few, many) {
   const lastDigit = abs % 10;
   const lastTwoDigits = abs % 100;
 
-  if (lastTwoDigits >= 11 && lastTwoDigits <= 14) {
-    return many;
-  }
-
-  if (lastDigit === 1) {
-    return one;
-  }
-
-  if (lastDigit >= 2 && lastDigit <= 4) {
-    return few;
-  }
+  if (lastTwoDigits >= 11 && lastTwoDigits <= 14) return many;
+  if (lastDigit === 1) return one;
+  if (lastDigit >= 2 && lastDigit <= 4) return few;
 
   return many;
 }
 
 function getItemsTotal(items) {
-  return items.reduce((sum, item) => {
-    return sum + (Number(item.total) || 0);
-  }, 0);
+  return items.reduce((sum, item) => sum + (Number(item.total) || 0), 0);
 }
 
 function getItemVat(item) {
@@ -161,21 +153,10 @@ function getItemVat(item) {
 }
 
 function getProductName(item) {
-  if (item.productName) {
-    return item.productName;
-  }
-
-  if (item.productType === "flooring") {
-    return "Инженерная доска";
-  }
-
-  if (item.productType === "facades") {
-    return "Мебельные фасады";
-  }
-
-  if (item.productType === "panels") {
-    return "Интерьерные панели";
-  }
+  if (item.productName) return item.productName;
+  if (item.productType === "flooring") return "Инженерная доска";
+  if (item.productType === "facades") return "Мебельные фасады";
+  if (item.productType === "panels") return "Интерьерные панели";
 
   return "Изделие";
 }
@@ -184,33 +165,25 @@ function getItemParamsText(item) {
   if (item.productType === "flooring") {
     const parts = [];
 
-    if (item.selectedPattern?.name) {
-      parts.push(item.selectedPattern.name);
-    }
-
-    if (item.topLayer) {
-      parts.push(`верхний слой ${item.topLayer}`);
-    }
-
-    if (item.thickness) {
-      parts.push(`толщина ${item.thickness} мм`);
-    }
+    if (item.selectedPattern?.name) parts.push(item.selectedPattern.name);
+    if (item.topLayer) parts.push(`верхний слой ${item.topLayer}`);
+    if (item.thickness) parts.push(`толщина ${item.thickness} мм`);
 
     return parts.length ? joinLines(parts) : "—";
   }
 
   const parts = [];
 
-  if (item.base) {
-    parts.push(item.base);
+  if (item.base) parts.push(item.base);
+  if (item.thickness) parts.push(item.thickness);
+  if (item.veneeredSides) parts.push(`${item.veneeredSides} сторон(а) фанеровки`);
+
+  if (item.sizeType === "standard" && item.standardPriceApplied) {
+    parts.push("стандартная цена по таблице");
   }
 
-  if (item.thickness) {
-    parts.push(item.thickness);
-  }
-
-  if (item.veneeredSides) {
-    parts.push(`${item.veneeredSides} сторон(а) фанеровки`);
+  if (item.sizeType === "custom") {
+    parts.push("нестандартный расчёт");
   }
 
   if (item.textureTransition === "yes") {
@@ -224,13 +197,8 @@ function getItemSizeText(item) {
   if (item.productType === "flooring") {
     const parts = [];
 
-    if (item.roomArea) {
-      parts.push(`помещение ${formatNumber(item.roomArea)} м²`);
-    }
-
-    if (item.paidArea) {
-      parts.push(`к оплате ${formatNumber(item.paidArea)} м²`);
-    }
+    if (item.roomArea) parts.push(`помещение ${formatNumber(item.roomArea)} м²`);
+    if (item.paidArea) parts.push(`к оплате ${formatNumber(item.paidArea)} м²`);
 
     if (item.length || item.width || item.thickness) {
       const length = item.length || "—";
@@ -244,21 +212,10 @@ function getItemSizeText(item) {
 
   const parts = [];
 
-  if (item.length && item.width) {
-    parts.push(`${item.length} × ${item.width} мм`);
-  }
-
-  if (item.quantity) {
-    parts.push(`${item.quantity} шт.`);
-  }
-
-  if (item.area) {
-    parts.push(`${formatNumber(item.area, 3)} м²`);
-  }
-
-  if (item.sizeTypeLabel) {
-    parts.push(item.sizeTypeLabel);
-  }
+  if (item.length && item.width) parts.push(`${item.length} × ${item.width} мм`);
+  if (item.quantity) parts.push(`${item.quantity} шт.`);
+  if (item.area) parts.push(`${formatNumber(item.area, 3)} м²`);
+  if (item.sizeTypeLabel) parts.push(item.sizeTypeLabel);
 
   return parts.length ? joinLines(parts) : "—";
 }
@@ -267,40 +224,50 @@ function getItemMaterialText(item) {
   if (item.productType === "flooring") {
     const parts = [];
 
-    if (item.materialType) {
-      parts.push(item.materialType);
-    }
-
-    if (item.species) {
-      parts.push(item.species);
-    }
-
-    if (item.pricePerM2) {
-      parts.push(`${formatMoney(item.pricePerM2)} / м²`);
-    }
-
-    if (item.selectedCoating?.name) {
-      parts.push(item.selectedCoating.name);
-    }
+    if (item.materialType) parts.push(item.materialType);
+    if (item.species) parts.push(item.species);
+    if (item.pricePerM2) parts.push(`${formatMoney(item.pricePerM2)} / м²`);
+    if (item.selectedCoating?.name) parts.push(item.selectedCoating.name);
 
     return parts.length ? joinLines(parts) : "—";
   }
 
   const parts = [];
 
-  if (item.veneerA?.name) {
-    parts.push(`А: ${item.veneerA.name}`);
-  }
-
-  if (item.sideB) {
-    parts.push(`Б: ${item.sideB}`);
-  }
-
-  if (item.premiumVeneerApplied) {
-    parts.push("Шпон > 1000 ₽/м², коэффициент ×2");
-  }
+  if (item.veneerA?.name) parts.push(`А: ${item.veneerA.name}`);
+  if (item.sideB) parts.push(`Б: ${item.sideB}`);
+  if (item.fiberDirection) parts.push(`волокна: ${getFiberDirectionLabel(item.fiberDirection)}`);
+  if (item.veneerLayout) parts.push(`раскладка: ${getVeneerLayoutLabel(item.veneerLayout)}`);
+  if (item.premiumVeneerApplied) parts.push("шпон > 1 000 ₽/м², коэффициент ×2");
 
   return parts.length ? joinLines(parts) : "—";
+}
+
+function getFiberDirectionLabel(value) {
+  const labels = {
+    length: "по длине",
+    width: "по ширине",
+    custom: "по ТЗ"
+  };
+
+  return labels[value] || value;
+}
+
+function getVeneerLayoutLabel(value) {
+  const labels = {
+    not_set: "не задана",
+    book: "книжка",
+    straight: "прямая",
+    straight_shifted: "прямая с перекладкой",
+    mixed: "смешанная / микс",
+    custom: "по ТЗ",
+    radial: "радиал",
+    tangent: "тангенс",
+    mixmatch: "MixMatch",
+    bookmatch: "BookMatch"
+  };
+
+  return labels[value] || value;
 }
 
 function getItemExtrasText(item) {
@@ -321,7 +288,8 @@ function getItemExtrasText(item) {
   const parts = [];
 
   if (item.cuttingAdded) {
-    parts.push(`Раскрой: ${formatNumber(item.cuttingMeters)} пог. м`);
+    const cuttingMode = item.cuttingModeLabel ? `, ${item.cuttingModeLabel}` : "";
+    parts.push(`Раскрой: ${formatNumber(item.cuttingMeters)} пог. м${cuttingMode}`);
   }
 
   if (item.edgeCost > 0) {
@@ -332,8 +300,8 @@ function getItemExtrasText(item) {
     parts.push("Шлифовка");
   }
 
-  if (item.lacquerCost > 0) {
-    parts.push("Лак / финиш");
+  if (item.finishCost > 0 || item.lacquerCost > 0 || item.finishType && item.finishType !== "none") {
+    parts.push(item.finishLabel || "Финиш");
   }
 
   if (item.extrasWarnings?.length) {
@@ -353,6 +321,40 @@ function getItemArea(item) {
   }
 
   return Number(item.area) || 0;
+}
+
+function getItemQuantity(item) {
+  if (item.productType === "flooring") {
+    return 1;
+  }
+
+  return Number(item.quantity) || 1;
+}
+
+function getItemUnitPrice(item) {
+  if (item.unitPrice) {
+    return Number(item.unitPrice) || 0;
+  }
+
+  const quantity = getItemQuantity(item);
+  return quantity ? Math.round((Number(item.total) || 0) / quantity) : Number(item.total) || 0;
+}
+
+function getItemPricePerM2(item) {
+  if (item.pricePerM2 && item.productType === "flooring") {
+    return Number(item.pricePerM2) || 0;
+  }
+
+  if (item.pricePerM2 && item.productType !== "flooring") {
+    return Number(item.pricePerM2) || 0;
+  }
+
+  const area = getItemArea(item);
+  return area ? Math.round((Number(item.total) || 0) / area) : 0;
+}
+
+function getItemDetailsTotal(item) {
+  return Number(item.detailsTotal) || Number(item.total) || 0;
 }
 
 function getItemThickness(item) {
@@ -402,7 +404,11 @@ function getPackagingWeightMultiplier(options) {
     return 0;
   }
 
-  return Number(packaging.multiplier) || 1;
+  if (packaging.type === "hard") {
+    return 1;
+  }
+
+  return 0;
 }
 
 function getItemNetWeight(item) {
@@ -420,27 +426,63 @@ function getItemGrossWeight(item, options) {
   return netWeight + area * PACKAGING_WEIGHT_PER_M2 * packagingMultiplier;
 }
 
+function itemHasFinish(item) {
+  return Boolean(
+    item.productType !== "flooring" &&
+    (
+      item.finishType && item.finishType !== "none" ||
+      item.finishCost > 0 ||
+      item.lacquerCost > 0 ||
+      item.lacquerNeeded === "yes"
+    )
+  );
+}
+
+function itemHasAdditionalOperations(item) {
+  if (item.productType === "flooring") {
+    return false;
+  }
+
+  return Boolean(
+    item.km1 === "yes" ||
+    item.radiusPanel === "yes" ||
+    item.panelOperations ||
+    item.hinges === "yes" ||
+    item.handleType && item.handleType !== "none" ||
+    item.facadeOperations
+  );
+}
+
 function getItemProductionTerm(item) {
+  if (item.productionTerm) {
+    return item.productionTerm;
+  }
+
   if (item.productType === "flooring") {
     return "1,5 месяца";
   }
 
-  if (item.lacquerCost > 0 || item.lacquerNeeded === "yes") {
-    return "25–28 раб. дней";
+  if (itemHasAdditionalOperations(item)) {
+    return "от 25 раб. дней";
+  }
+
+  if (itemHasFinish(item)) {
+    return "от 20 раб. дней";
   }
 
   if (item.sizeType === "custom") {
-    return "20 раб. дней";
+    return "12–15 раб. дней";
   }
 
-  return "11–15 раб. дней";
+  return "7–9 раб. дней";
 }
 
 function getProductionTermRank(term) {
-  if (term.includes("1,5 месяца")) return 4;
-  if (term.includes("25–28")) return 3;
-  if (term.includes("20")) return 2;
-  if (term.includes("11–15")) return 1;
+  if (term.includes("1,5 месяца")) return 5;
+  if (term.includes("от 25")) return 4;
+  if (term.includes("от 20")) return 3;
+  if (term.includes("12–15")) return 2;
+  if (term.includes("7–9")) return 1;
   return 0;
 }
 
@@ -463,6 +505,7 @@ function getTechnicalTotals(items, options) {
       acc.volume += getItemVolume(item);
       acc.netWeight += getItemNetWeight(item);
       acc.grossWeight += getItemGrossWeight(item, options);
+      acc.quantity += getItemQuantity(item);
       return acc;
     },
     {
@@ -470,6 +513,7 @@ function getTechnicalTotals(items, options) {
       volume: 0,
       netWeight: 0,
       grossWeight: 0,
+      quantity: 0,
       productionTerm: getOrderProductionTerm(items)
     }
   );
@@ -483,13 +527,23 @@ function getFinalTotals(items, options) {
   const finalTotal = Number(options?.finalTotal) || itemsTotal + optionsTotal;
   const vat = Number(options?.vat) || Math.round(finalTotal * VAT_RATE / (1 + VAT_RATE));
 
+  const totalArea = items.reduce((sum, item) => sum + getItemArea(item), 0);
+  const totalQuantity = items.reduce((sum, item) => sum + getItemQuantity(item), 0);
+
+  const averageUnitPrice = totalQuantity ? Math.round(itemsTotal / totalQuantity) : 0;
+  const averageM2Price = totalArea ? Math.round(itemsTotal / totalArea) : 0;
+
   return {
     itemsTotal,
     packagingTotal,
     servicesTotal,
     optionsTotal,
     finalTotal,
-    vat
+    vat,
+    totalArea,
+    totalQuantity,
+    averageUnitPrice,
+    averageM2Price
   };
 }
 
@@ -531,7 +585,7 @@ function renderItems(items, options) {
   if (!items.length) {
     elements.itemsTableBody.innerHTML = `
       <tr>
-        <td colspan="11">Позиции заказа не найдены.</td>
+        <td colspan="14">Позиции заказа не найдены.</td>
       </tr>
     `;
     return;
@@ -549,17 +603,20 @@ function renderItems(items, options) {
           <td>${getItemSizeText(item)}</td>
           <td>${getItemMaterialText(item)}</td>
           <td>${getItemExtrasText(item)}</td>
+          <td>${formatNumber(getItemQuantity(item), 0)} шт.</td>
           <td>${formatNumber(getItemArea(item), 3)} м²</td>
+          <td>${formatMoney(getItemUnitPrice(item))}</td>
+          <td>${formatMoney(getItemPricePerM2(item))}</td>
+          <td>
+            <strong>${formatMoney(getItemDetailsTotal(item))}</strong>
+            <small>НДС: ${formatMoney(getItemVat(item))}</small>
+          </td>
           <td>${formatNumber(getItemVolume(item), 3)} м³</td>
           <td>
             <strong>${formatNumber(getItemNetWeight(item), 2)} кг</strong>
             <small>брутто: ${formatNumber(getItemGrossWeight(item, options), 2)} кг</small>
           </td>
           <td>${escapeHtml(getItemProductionTerm(item))}</td>
-          <td>
-            <strong>${formatMoney(item.total)}</strong>
-            <small>НДС: ${formatMoney(getItemVat(item))}</small>
-          </td>
         </tr>
       `;
     })
@@ -591,10 +648,14 @@ function renderPackaging(options) {
 
   elements.packagingName.textContent = packaging.name || "Упаковка";
   elements.packagingArea.textContent = `${formatNumber(packaging.area, 3)} м²`;
-  elements.packagingRate.textContent = `${formatMoney(packaging.rate)} / м²`;
-  elements.packagingMultiplier.textContent = `× ${formatNumber(packaging.multiplier, 1)}`;
+  elements.packagingRate.textContent = packaging.rate
+    ? `${formatMoney(packaging.rate)} / м²`
+    : "—";
+  elements.packagingMultiplier.textContent = packaging.multiplier
+    ? `× ${formatNumber(packaging.multiplier, 1)}`
+    : "—";
   elements.packagingTotal.textContent = formatMoney(packaging.total);
-  elements.packagingNote.textContent = packaging.note || "Тариф упаковки взят из расчётной таблицы.";
+  elements.packagingNote.textContent = packaging.note || "Тариф упаковки требует проверки менеджером.";
 }
 
 function renderServices(options) {
@@ -640,6 +701,8 @@ function renderFilesAndComments(details) {
 function renderTotals(items, options) {
   const totals = getFinalTotals(items, options);
 
+  elements.averageUnitPrice.textContent = formatMoney(totals.averageUnitPrice);
+  elements.averageM2Price.textContent = formatMoney(totals.averageM2Price);
   elements.itemsTotal.textContent = formatMoney(totals.itemsTotal);
   elements.summaryPackagingTotal.textContent = formatMoney(totals.packagingTotal);
   elements.summaryServicesTotal.textContent = formatMoney(totals.servicesTotal);

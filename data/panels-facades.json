@@ -9,592 +9,682 @@
     "productionMultiplier": 1.5,
     "edgeWasteCoefficient": 1.2,
     "veneerReserveMultiplier": 2,
-    "cuttingThresholdMeters": 40,
-    "note": "Тарифы и формулы перенесены из Excel-модели расчёта нестандартных панелей. Если шпон дороже 1000 ₽/м², к работе со шпоном применяется коэффициент ×2. Для основ без тарифов расчёт не выполняется автоматически."
+    "edgeThresholdMeters": 35,
+    "defaultCuttingMode": "machine",
+    "note": "Расчёт обновлён по новым материалам: стандартные панели считаются по таблице стандартных цен; нестандартные панели считаются по тарифам нестандартного расчёта с раскроем, кромкой, шлифовкой и финишем. Упаковка считается отдельно на странице параметров заказа."
   },
-  "standardSizes": [
-    {
-      "length": 2440,
-      "width": 910,
-      "name": "2440 × 910 мм"
-    },
-    {
-      "length": 2440,
-      "width": 1830,
-      "name": "2440 × 1830 мм"
-    },
-    {
-      "length": 2440,
-      "width": 2050,
-      "name": "2440 × 2050 мм"
-    },
-    {
-      "length": 2800,
-      "width": 1032,
-      "name": "2800 × 1032 мм"
-    },
-    {
-      "length": 2800,
-      "width": 1220,
-      "name": "2800 × 1220 мм"
-    },
-    {
-      "length": 2800,
-      "width": 2070,
-      "name": "2800 × 2070 мм"
-    }
-  ],
+  "standardSizesByBase": {
+    "mdf": [
+      { "length": 2440, "width": 610, "name": "2440 × 610 мм" },
+      { "length": 2440, "width": 910, "name": "2440 × 910 мм" },
+      { "length": 2440, "width": 1830, "name": "2440 × 1830 мм" },
+      { "length": 2800, "width": 686, "name": "2800 × 686 мм" },
+      { "length": 2800, "width": 1032, "name": "2800 × 1032 мм" },
+      { "length": 2800, "width": 1220, "name": "2800 × 1220 мм" },
+      { "length": 2800, "width": 2070, "name": "2800 × 2070 мм" },
+      { "length": 3050, "width": 1220, "name": "3050 × 1220 мм" }
+    ],
+    "chipboard": [
+      { "length": 2440, "width": 610, "name": "2440 × 610 мм" },
+      { "length": 2440, "width": 910, "name": "2440 × 910 мм" },
+      { "length": 2440, "width": 1830, "name": "2440 × 1830 мм" },
+      { "length": 2750, "width": 610, "name": "2750 × 610 мм" },
+      { "length": 2750, "width": 910, "name": "2750 × 910 мм" },
+      { "length": 2750, "width": 1830, "name": "2750 × 1830 мм" },
+      { "length": 2800, "width": 686, "name": "2800 × 686 мм" },
+      { "length": 2800, "width": 1032, "name": "2800 × 1032 мм" },
+      { "length": 2800, "width": 2070, "name": "2800 × 2070 мм" }
+    ],
+    "gsp": [
+      { "length": 2500, "width": 1250, "name": "2500 × 1250 мм" },
+      { "length": 3000, "width": 1250, "name": "3000 × 1250 мм" }
+    ],
+    "blockboard": [
+      { "length": 2500, "width": 1250, "name": "2500 × 1250 мм" },
+      { "length": 2600, "width": 2050, "name": "2600 × 2050 мм" },
+      { "length": 2800, "width": 2070, "name": "2800 × 2070 мм" }
+    ],
+    "plywood_waterproof": [
+      { "length": 2440, "width": 1220, "name": "2440 × 1220 мм" },
+      { "length": 2500, "width": 1250, "name": "2500 × 1250 мм" },
+      { "length": 3000, "width": 1500, "name": "3000 × 1500 мм" }
+    ],
+    "plywood_light": [
+      { "length": 2440, "width": 1220, "name": "2440 × 1220 мм" },
+      { "length": 2500, "width": 1250, "name": "2500 × 1250 мм" },
+      { "length": 3000, "width": 1500, "name": "3000 × 1500 мм" }
+    ],
+    "plywood_flexible": [
+      { "length": 2440, "width": 1220, "name": "2440 × 1220 мм" },
+      { "length": 2500, "width": 1250, "name": "2500 × 1250 мм" },
+      { "length": 3000, "width": 1500, "name": "3000 × 1500 мм" }
+    ]
+  },
+  "standardPanelPrices": {
+    "mdf": [
+      {
+        "thickness": "3",
+        "one": {
+          "2440x610": 2070,
+          "2440x910": 3084,
+          "2440x1830": 6223,
+          "2800x686": 2667,
+          "2800x1032": 4028,
+          "2800x1220": 4750,
+          "2800x2070": 8056
+        },
+        "two": {
+          "2440x610": 2003,
+          "2440x910": 2984,
+          "2440x1830": 6021,
+          "2800x686": 2580,
+          "2800x1032": 3898,
+          "2800x1220": 4596,
+          "2800x2070": 7795
+        }
+      },
+      {
+        "thickness": "6",
+        "one": {
+          "2440x610": 2197,
+          "2440x910": 3273,
+          "2440x1830": 6606,
+          "2800x686": 2831,
+          "2800x1032": 4276,
+          "2800x1220": 5043,
+          "2800x2070": 8552,
+          "3050x1220": 5485
+        },
+        "two": {
+          "2440x610": 2130,
+          "2440x910": 3173,
+          "2440x1830": 6404,
+          "2800x686": 2745,
+          "2800x1032": 4146,
+          "2800x1220": 4889,
+          "2800x2070": 8291,
+          "3050x1220": 5318
+        }
+      },
+      {
+        "thickness": "8",
+        "one": {
+          "2800x686": 3061,
+          "2800x1032": 4624,
+          "2800x1220": 5453,
+          "2800x2070": 9248
+        },
+        "two": {
+          "2800x686": 2975,
+          "2800x1032": 4494,
+          "2800x1220": 5299,
+          "2800x2070": 8987
+        }
+      },
+      {
+        "thickness": "10",
+        "one": {
+          "2440x610": 2445,
+          "2440x910": 3643,
+          "2440x1830": 7352,
+          "2800x686": 3151,
+          "2800x1032": 4759,
+          "2800x1220": 5612,
+          "2800x2070": 9518
+        },
+        "two": {
+          "2440x610": 2378,
+          "2440x910": 3543,
+          "2440x1830": 7150,
+          "2800x686": 3064,
+          "2800x1032": 4628,
+          "2800x1220": 5458,
+          "2800x2070": 9257
+        }
+      },
+      {
+        "thickness": "12",
+        "one": {
+          "2800x686": 3499,
+          "2800x1032": 5285,
+          "2800x1220": 6233,
+          "2800x2070": 10570,
+          "3050x1220": 6953
+        },
+        "two": {
+          "2800x686": 3413,
+          "2800x1032": 5155,
+          "2800x1220": 6079,
+          "2800x2070": 10310,
+          "3050x1220": 9408
+        }
+      },
+      {
+        "thickness": "16",
+        "one": {
+          "2440x610": 2825,
+          "2440x910": 4209,
+          "2440x1830": 8494,
+          "2800x686": 3640,
+          "2800x1032": 5498,
+          "2800x1220": 6484,
+          "2800x2070": 10997
+        },
+        "two": {
+          "2440x610": 2758,
+          "2440x910": 4109,
+          "2440x1830": 8292,
+          "2800x686": 3554,
+          "2800x1032": 5368,
+          "2800x1220": 6330,
+          "2800x2070": 10736
+        }
+      },
+      {
+        "thickness": "18",
+        "one": {
+          "2440x610": 2946,
+          "2440x910": 4389,
+          "2440x1830": 8857,
+          "2800x686": 3796,
+          "2800x1032": 5733,
+          "2800x1220": 6761,
+          "2800x2070": 11467,
+          "3050x1220": 10338
+        },
+        "two": {
+          "2440x610": 2879,
+          "2440x910": 4289,
+          "2440x1830": 8655,
+          "2800x686": 3709,
+          "2800x1032": 5603,
+          "2800x1220": 6607,
+          "2800x2070": 11206,
+          "3050x1220": 14211
+        }
+      },
+      {
+        "thickness": "22",
+        "one": {
+          "2440x610": 3290,
+          "2440x910": 4902,
+          "2440x1830": 9892,
+          "2800x686": 4239,
+          "2800x1032": 6403,
+          "2800x1220": 7551,
+          "2800x2070": 12806
+        },
+        "two": {
+          "2440x610": 3223,
+          "2440x910": 4802,
+          "2440x1830": 9690,
+          "2800x686": 4153,
+          "2800x1032": 6273,
+          "2800x1220": 7397,
+          "2800x2070": 12545
+        }
+      },
+      {
+        "thickness": "25",
+        "one": {
+          "2800x686": 4800,
+          "2800x1032": 7250,
+          "2800x2070": 14499
+        },
+        "two": {
+          "2800x686": 4825,
+          "2800x1032": 7287,
+          "2800x2070": 14574
+        }
+      },
+      {
+        "thickness": "32",
+        "one": {
+          "2440x610": 4264,
+          "2440x910": 6354,
+          "2440x1830": 12822,
+          "2800x686": 5495,
+          "2800x1032": 8300,
+          "2800x1220": 9788,
+          "2800x2070": 16600
+        },
+        "two": {
+          "2440x610": 5248,
+          "2440x910": 7819,
+          "2440x1830": 15779,
+          "2800x686": 6762,
+          "2800x1032": 10214,
+          "2800x1220": 12045,
+          "2800x2070": 20428
+        }
+      },
+      {
+        "thickness": "35",
+        "one": {
+          "2440x610": 5015,
+          "2440x910": 7473,
+          "2440x1830": 15080,
+          "2800x686": 6463,
+          "2800x1032": 9761,
+          "2800x1220": 11512,
+          "2800x2070": 19523
+        },
+        "two": {
+          "2440x610": 5999,
+          "2440x910": 8938,
+          "2440x1830": 18036,
+          "2800x686": 7730,
+          "2800x1032": 11675,
+          "2800x1220": 13769,
+          "2800x2070": 23351
+        }
+      },
+      {
+        "thickness": "36",
+        "one": {
+          "2440x610": 4729,
+          "2440x910": 7046,
+          "2440x1830": 14220,
+          "2800x686": 6094,
+          "2800x1032": 9205,
+          "2800x1220": 10855,
+          "2800x2070": 18409
+        },
+        "two": {
+          "2440x610": 5713,
+          "2440x910": 8511,
+          "2440x1830": 17176,
+          "2800x686": 7361,
+          "2800x1032": 11119,
+          "2800x1220": 13112,
+          "2800x2070": 22237
+        }
+      },
+      {
+        "thickness": "38",
+        "one": {
+          "2440x610": 5143,
+          "2440x910": 7662,
+          "2440x1830": 15463,
+          "2800x686": 6627,
+          "2800x1032": 10009,
+          "2800x1220": 11804,
+          "2800x2070": 20019
+        },
+        "two": {
+          "2440x610": 6126,
+          "2440x910": 9128,
+          "2440x1830": 18420,
+          "2800x686": 7894,
+          "2800x1032": 11923,
+          "2800x1220": 14061,
+          "2800x2070": 23847
+        }
+      },
+      {
+        "thickness": "39",
+        "one": {
+          "2440x610": 5257,
+          "2440x910": 7832,
+          "2440x1830": 15805,
+          "2800x686": 6774,
+          "2800x1032": 10231,
+          "2800x1220": 12066,
+          "2800x2070": 20462
+        },
+        "two": {
+          "2440x610": 6240,
+          "2440x910": 9297,
+          "2440x1830": 18762,
+          "2800x686": 8041,
+          "2800x1032": 12145,
+          "2800x1220": 14323,
+          "2800x2070": 24290
+        }
+      },
+      {
+        "thickness": "40",
+        "one": {
+          "2440x610": 5322,
+          "2440x910": 7929,
+          "2440x1830": 16000,
+          "2800x686": 6857,
+          "2800x1032": 10357,
+          "2800x1220": 12215,
+          "2800x2070": 20715
+        },
+        "two": {
+          "2440x610": 6305,
+          "2440x910": 9394,
+          "2440x1830": 18957,
+          "2800x686": 8124,
+          "2800x1032": 12271,
+          "2800x1220": 14472,
+          "2800x2070": 24543
+        }
+      },
+      {
+        "thickness": "44",
+        "one": {
+          "2440x610": 5641,
+          "2440x910": 8405,
+          "2440x1830": 16961,
+          "2800x686": 7269,
+          "2800x1032": 10979,
+          "2800x1220": 12948,
+          "2800x2070": 21959
+        },
+        "two": {
+          "2440x610": 6625,
+          "2440x910": 9870,
+          "2440x1830": 19918,
+          "2800x686": 8536,
+          "2800x1032": 12893,
+          "2800x1220": 15205,
+          "2800x2070": 25787
+        }
+      },
+      {
+        "thickness": "48",
+        "one": {
+          "2440x610": 6218,
+          "2440x910": 9264,
+          "2440x1830": 18695,
+          "2800x686": 8012,
+          "2800x1032": 12102,
+          "2800x1220": 14272,
+          "2800x2070": 24203
+        },
+        "two": {
+          "2440x610": 7201,
+          "2440x910": 10729,
+          "2440x1830": 21652,
+          "2800x686": 9279,
+          "2800x1032": 14016,
+          "2800x1220": 16529,
+          "2800x2070": 28031
+        }
+      },
+      {
+        "thickness": "50",
+        "one": {
+          "2800x686": 8505,
+          "2800x1032": 12846,
+          "2800x1220": 15149,
+          "2800x2070": 25691
+        },
+        "two": {
+          "2800x686": 9775,
+          "2800x1032": 14764,
+          "2800x1220": 17411,
+          "2800x2070": 29528
+        }
+      }
+    ],
+    "chipboard": [
+      {
+        "thickness": "16",
+        "one": {
+          "2440x610": 2168,
+          "2440x910": 3230,
+          "2440x1830": 6518,
+          "2750x610": 2444,
+          "2750x910": 3638,
+          "2750x1830": 7319,
+          "2800x686": 2794,
+          "2800x1032": 4220,
+          "2800x2070": 8439
+        },
+        "two": {
+          "2440x610": 2146,
+          "2440x910": 3197,
+          "2440x1830": 6451,
+          "2750x610": 2419,
+          "2750x910": 3600,
+          "2750x1830": 7243,
+          "2800x686": 2765,
+          "2800x1032": 4176,
+          "2800x2070": 8352
+        }
+      },
+      {
+        "thickness": "32",
+        "one": {
+          "2440x610": 3853,
+          "2440x910": 5741,
+          "2440x1830": 11585,
+          "2750x610": 4344,
+          "2750x910": 6465,
+          "2750x1830": 13008,
+          "2800x686": 4965,
+          "2800x1032": 7499,
+          "2800x2070": 14999
+        },
+        "two": {
+          "2440x610": 4904,
+          "2440x910": 7306,
+          "2440x1830": 14744,
+          "2750x610": 5529,
+          "2750x910": 8228,
+          "2750x1830": 16554,
+          "2800x686": 6319,
+          "2800x1032": 9544,
+          "2800x2070": 19088
+        }
+      },
+      {
+        "thickness": "48",
+        "one": {
+          "2440x610": 5567,
+          "2440x910": 8295,
+          "2440x1830": 16740,
+          "2750x610": 6277,
+          "2750x910": 9341,
+          "2750x1830": 18795,
+          "2800x686": 7174,
+          "2800x1032": 10836,
+          "2800x2070": 21672
+        },
+        "two": {
+          "2440x610": 6618,
+          "2440x910": 9860,
+          "2440x1830": 19898,
+          "2750x610": 7462,
+          "2750x910": 11104,
+          "2750x1830": 22341,
+          "2800x686": 8528,
+          "2800x1032": 12880,
+          "2800x2070": 25761
+        }
+      }
+    ]
+  },
   "bases": [
     {
       "id": "mdf",
       "name": "МДФ",
-      "note": "Основной материал для панелей и фасадов. В интервью указано, что около 90% заказов идут на МДФ.",
+      "note": "Для МДФ заведены тарифы нестандартного расчёта и таблица стандартных цен.",
       "thicknesses": [
-        {
-          "value": "3",
-          "label": "3 мм",
-          "numericThickness": 3,
-          "oneSideRate": 1331.55,
-          "twoSideRate": 1628.55
-        },
-        {
-          "value": "6",
-          "label": "6 мм",
-          "numericThickness": 6,
-          "oneSideRate": 1493.25,
-          "twoSideRate": 1790.25
-        },
-        {
-          "value": "8",
-          "label": "8 мм",
-          "numericThickness": 8,
-          "oneSideRate": 1597.2,
-          "twoSideRate": 1894.2
-        },
-        {
-          "value": "10",
-          "label": "10 мм",
-          "numericThickness": 10,
-          "oneSideRate": 1686.3,
-          "twoSideRate": 1983.3
-        },
-        {
-          "value": "12",
-          "label": "12 мм",
-          "numericThickness": 12,
-          "oneSideRate": 1775.4,
-          "twoSideRate": 2072.4
-        },
-        {
-          "value": "16",
-          "label": "16 мм",
-          "numericThickness": 16,
-          "oneSideRate": 1955.25,
-          "twoSideRate": 2252.25
-        },
-        {
-          "value": "18",
-          "label": "18 мм",
-          "numericThickness": 18,
-          "oneSideRate": 2079,
-          "twoSideRate": 2376
-        },
-        {
-          "value": "22",
-          "label": "22 мм",
-          "numericThickness": 22,
-          "oneSideRate": 2479.95,
-          "twoSideRate": 2776.95
-        },
-        {
-          "value": "24",
-          "label": "24 мм",
-          "numericThickness": 24,
-          "oneSideRate": 2823.98,
-          "twoSideRate": 3120.98
-        },
-        {
-          "value": "25",
-          "label": "25 мм",
-          "numericThickness": 25,
-          "oneSideRate": 2968.35,
-          "twoSideRate": 3265.35
-        },
-        {
-          "value": "32",
-          "label": "32 мм",
-          "numericThickness": 32,
-          "oneSideRate": 3300,
-          "twoSideRate": 4405.5
-        },
-        {
-          "value": "35",
-          "label": "35 мм",
-          "numericThickness": 35,
-          "oneSideRate": 4049.1,
-          "twoSideRate": 5156.25
-        },
-        {
-          "value": "36",
-          "label": "36 мм",
-          "numericThickness": 36,
-          "oneSideRate": 3786.75,
-          "twoSideRate": 4900.5
-        },
-        {
-          "value": "38",
-          "label": "38 мм",
-          "numericThickness": 38,
-          "oneSideRate": 4202.55,
-          "twoSideRate": 5309.7
-        },
-        {
-          "value": "39",
-          "label": "39 мм",
-          "numericThickness": 39,
-          "oneSideRate": 4290,
-          "twoSideRate": 5403.75
-        },
-        {
-          "value": "40",
-          "label": "40 мм",
-          "numericThickness": 40,
-          "oneSideRate": 4301.55,
-          "twoSideRate": 5408.7
-        },
-        {
-          "value": "44",
-          "label": "44 мм",
-          "numericThickness": 44,
-          "oneSideRate": 4819.65,
-          "twoSideRate": 5949.9
-        },
-        {
-          "value": "48",
-          "label": "48 мм",
-          "numericThickness": 48,
-          "oneSideRate": 5138.1,
-          "twoSideRate": 6245.25
-        },
-        {
-          "value": "50",
-          "label": "50 мм",
-          "numericThickness": 50,
-          "oneSideRate": 5880.6,
-          "twoSideRate": 7172.55
-        },
-        {
-          "value": "6+6",
-          "label": "6+6 мм",
-          "numericThickness": 12,
-          "oneSideRate": 2148.3,
-          "twoSideRate": 3232.35
-        }
+        { "value": "3", "label": "3 мм", "numericThickness": 3, "oneSideRate": 1331.55, "twoSideRate": 1628.55 },
+        { "value": "6", "label": "6 мм", "numericThickness": 6, "oneSideRate": 1493.25, "twoSideRate": 1790.25 },
+        { "value": "8", "label": "8 мм", "numericThickness": 8, "oneSideRate": 1597.2, "twoSideRate": 1894.2 },
+        { "value": "10", "label": "10 мм", "numericThickness": 10, "oneSideRate": 1686.3, "twoSideRate": 1983.3 },
+        { "value": "12", "label": "12 мм", "numericThickness": 12, "oneSideRate": 1775.4, "twoSideRate": 2072.4 },
+        { "value": "16", "label": "16 мм", "numericThickness": 16, "oneSideRate": 1955.25, "twoSideRate": 2252.25 },
+        { "value": "18", "label": "18 мм", "numericThickness": 18, "oneSideRate": 2079, "twoSideRate": 2376 },
+        { "value": "22", "label": "22 мм", "numericThickness": 22, "oneSideRate": 2479.95, "twoSideRate": 2776.95 },
+        { "value": "24", "label": "24 мм", "numericThickness": 24, "oneSideRate": 2823.98, "twoSideRate": 3120.98 },
+        { "value": "25", "label": "25 мм", "numericThickness": 25, "oneSideRate": 2968.35, "twoSideRate": 3265.35 },
+        { "value": "32", "label": "32 мм", "numericThickness": 32, "oneSideRate": 3300, "twoSideRate": 4405.5 },
+        { "value": "35", "label": "35 мм", "numericThickness": 35, "oneSideRate": 4049.1, "twoSideRate": 5156.25 },
+        { "value": "36", "label": "36 мм", "numericThickness": 36, "oneSideRate": 3786.75, "twoSideRate": 4900.5 },
+        { "value": "38", "label": "38 мм", "numericThickness": 38, "oneSideRate": 4202.55, "twoSideRate": 5309.7 },
+        { "value": "39", "label": "39 мм", "numericThickness": 39, "oneSideRate": 4290, "twoSideRate": 5403.75 },
+        { "value": "40", "label": "40 мм", "numericThickness": 40, "oneSideRate": 4301.55, "twoSideRate": 5408.7 },
+        { "value": "44", "label": "44 мм", "numericThickness": 44, "oneSideRate": 4819.65, "twoSideRate": 5949.9 },
+        { "value": "48", "label": "48 мм", "numericThickness": 48, "oneSideRate": 5138.1, "twoSideRate": 6245.25 },
+        { "value": "50", "label": "50 мм", "numericThickness": 50, "oneSideRate": 5880.6, "twoSideRate": 7172.55 },
+        { "value": "6+6", "label": "6+6 мм", "numericThickness": 12, "oneSideRate": 2148.3, "twoSideRate": 3232.35 }
       ]
     },
     {
       "id": "chipboard",
       "name": "ДСП",
-      "note": "Тарифы есть в Excel для 16, 32 и 48 мм.",
+      "note": "Для ДСП заведены тарифы по 16, 32 и 48 мм.",
       "thicknesses": [
-        {
-          "value": "16",
-          "label": "16 мм",
-          "numericThickness": 16,
-          "oneSideRate": 1930.5,
-          "twoSideRate": 2227.5
-        },
-        {
-          "value": "32",
-          "label": "32 мм",
-          "numericThickness": 32,
-          "oneSideRate": 3250.5,
-          "twoSideRate": 4356
-        },
-        {
-          "value": "48",
-          "label": "48 мм",
-          "numericThickness": 48,
-          "oneSideRate": 5063.85,
-          "twoSideRate": 6171
-        }
+        { "value": "16", "label": "16 мм", "numericThickness": 16, "oneSideRate": 1930.5, "twoSideRate": 2227.5 },
+        { "value": "32", "label": "32 мм", "numericThickness": 32, "oneSideRate": 3250.5, "twoSideRate": 4356 },
+        { "value": "48", "label": "48 мм", "numericThickness": 48, "oneSideRate": 5063.85, "twoSideRate": 6171 }
       ]
     },
     {
       "id": "gsp",
       "name": "ГСП",
-      "note": "Есть в продуктовой схеме, но тарифы не найдены в предоставленном Excel.",
+      "note": "В бланке есть стандартные размеры ГСП, но тарифы автоматического расчёта не найдены.",
       "manualPrice": true,
       "thicknesses": []
     },
     {
       "id": "blockboard",
       "name": "Столярная плита",
-      "note": "Есть в продуктовой схеме, но тарифы не найдены в предоставленном Excel.",
+      "note": "В бланке есть стандартные размеры столярной плиты, но тарифы автоматического расчёта не найдены.",
       "manualPrice": true,
       "thicknesses": []
     },
     {
       "id": "plywood_waterproof",
       "name": "Фанера влагостойкая",
-      "note": "Есть в продуктовой схеме, но тарифы не найдены в предоставленном Excel.",
+      "note": "В бланке есть стандартные размеры фанеры, но тарифы автоматического расчёта не найдены.",
       "manualPrice": true,
       "thicknesses": []
     },
     {
       "id": "plywood_light",
       "name": "Фанера облегчённая",
-      "note": "Есть в продуктовой схеме, но тарифы не найдены в предоставленном Excel.",
+      "note": "В бланке есть стандартные размеры фанеры, но тарифы автоматического расчёта не найдены.",
       "manualPrice": true,
       "thicknesses": []
     },
     {
       "id": "plywood_flexible",
       "name": "Фанера гибкая",
-      "note": "Есть в продуктовой схеме, но тарифы не найдены в предоставленном Excel.",
+      "note": "В бланке есть стандартные размеры фанеры, но тарифы автоматического расчёта не найдены.",
       "manualPrice": true,
       "thicknesses": []
     }
   ],
   "veneers": [
-    {
-      "id": "beech_bookmatch_3",
-      "name": "Бук BookMatch 3 мм",
-      "species": "Бук",
-      "layout": "BookMatch",
-      "pricePerM2": 1397
-    },
-    {
-      "id": "beech_mixmatch_3",
-      "name": "Бук MixMatch 3 мм",
-      "species": "Бук",
-      "layout": "MixMatch",
-      "pricePerM2": 1577
-    },
-    {
-      "id": "oak_bookmatch_3",
-      "name": "Дуб BookMatch 3 мм",
-      "species": "Дуб",
-      "layout": "BookMatch",
-      "pricePerM2": 2172
-    },
-    {
-      "id": "oak_mixmatch_3",
-      "name": "Дуб MixMatch 3 мм",
-      "species": "Дуб",
-      "layout": "MixMatch",
-      "pricePerM2": 2253
-    },
-    {
-      "id": "walnut_bookmatch_3",
-      "name": "Орех BookMatch 3 мм",
-      "species": "Орех",
-      "layout": "BookMatch",
-      "pricePerM2": 2538
-    },
-    {
-      "id": "walnut_mixmatch_3",
-      "name": "Орех MixMatch 3 мм",
-      "species": "Орех",
-      "layout": "MixMatch",
-      "pricePerM2": 2719
-    },
-    {
-      "id": "ash_bookmatch_3",
-      "name": "Ясень белый BookMatch 3 мм",
-      "species": "Ясень белый",
-      "layout": "BookMatch",
-      "pricePerM2": 1684
-    },
-    {
-      "id": "ash_mixmatch_3",
-      "name": "Ясень белый MixMatch 3 мм",
-      "species": "Ясень белый",
-      "layout": "MixMatch",
-      "pricePerM2": 1804
-    },
-    {
-      "id": "american_walnut_radial_mix",
-      "name": "Орех Американский Радиал Микс",
-      "species": "Орех Американский",
-      "layout": "Радиал Микс",
-      "pricePerM2": 999
-    }
+    { "id": "beech_bookmatch_3", "name": "Бук BookMatch 3 мм", "species": "Бук", "layout": "BookMatch", "pricePerM2": 1397 },
+    { "id": "beech_mixmatch_3", "name": "Бук MixMatch 3 мм", "species": "Бук", "layout": "MixMatch", "pricePerM2": 1577 },
+    { "id": "oak_bookmatch_3", "name": "Дуб BookMatch 3 мм", "species": "Дуб", "layout": "BookMatch", "pricePerM2": 2172 },
+    { "id": "oak_mixmatch_3", "name": "Дуб MixMatch 3 мм", "species": "Дуб", "layout": "MixMatch", "pricePerM2": 2253 },
+    { "id": "walnut_bookmatch_3", "name": "Орех BookMatch 3 мм", "species": "Орех", "layout": "BookMatch", "pricePerM2": 2538 },
+    { "id": "walnut_mixmatch_3", "name": "Орех MixMatch 3 мм", "species": "Орех", "layout": "MixMatch", "pricePerM2": 2719 },
+    { "id": "ash_bookmatch_3", "name": "Ясень белый BookMatch 3 мм", "species": "Ясень белый", "layout": "BookMatch", "pricePerM2": 1684 },
+    { "id": "ash_mixmatch_3", "name": "Ясень белый MixMatch 3 мм", "species": "Ясень белый", "layout": "MixMatch", "pricePerM2": 1804 },
+    { "id": "american_walnut_radial_mix", "name": "Орех Американский Радиал Микс", "species": "Орех Американский", "layout": "Радиал Микс", "pricePerM2": 999 }
   ],
   "reverseSides": [
-    {
-      "id": "none",
-      "name": "Не фанеруется / без обратной стороны",
-      "pricePerM2": 0
-    },
-    {
-      "id": "black_veneer",
-      "name": "Чёрный шпон",
-      "pricePerM2": 250
-    },
-    {
-      "id": "paper",
-      "name": "Бумага",
-      "pricePerM2": 50
-    }
+    { "id": "none", "name": "Не фанеруется / без обратной стороны", "pricePerM2": 0 },
+    { "id": "black_veneer", "name": "Чёрный шпон", "pricePerM2": 250 },
+    { "id": "paper", "name": "Бумага", "pricePerM2": 50 }
+  ],
+  "cuttingModes": [
+    { "id": "machine", "name": "На станке" },
+    { "id": "manual", "name": "Вручную" }
   ],
   "cuttingRates": [
-    {
-      "maxThickness": 3,
-      "ratePerMeter": 66
-    },
-    {
-      "maxThickness": 4,
-      "ratePerMeter": 66
-    },
-    {
-      "maxThickness": 6,
-      "ratePerMeter": 66
-    },
-    {
-      "maxThickness": 8,
-      "ratePerMeter": 66
-    },
-    {
-      "maxThickness": 10,
-      "ratePerMeter": 66
-    },
-    {
-      "maxThickness": 12,
-      "ratePerMeter": 66
-    },
-    {
-      "maxThickness": 16,
-      "ratePerMeter": 66
-    },
-    {
-      "maxThickness": 18,
-      "ratePerMeter": 66
-    },
-    {
-      "maxThickness": 22,
-      "ratePerMeter": 77
-    },
-    {
-      "maxThickness": 25,
-      "ratePerMeter": 77
-    },
-    {
-      "maxThickness": 32,
-      "ratePerMeter": 88
-    },
-    {
-      "maxThickness": 35,
-      "ratePerMeter": 88
-    },
-    {
-      "maxThickness": 40,
-      "ratePerMeter": 93.5
-    },
-    {
-      "maxThickness": 45,
-      "ratePerMeter": 99
-    },
-    {
-      "maxThickness": 50,
-      "ratePerMeter": 110
-    },
-    {
-      "maxThickness": 53,
-      "ratePerMeter": 115.5
-    },
-    {
-      "maxThickness": 57,
-      "ratePerMeter": 121
-    },
-    {
-      "maxThickness": 60,
-      "ratePerMeter": 126.5
-    }
+    { "maxThickness": 18, "manualRatePerMeter": 70, "machineRatePerMeter": 60 },
+    { "maxThickness": 25, "manualRatePerMeter": 80, "machineRatePerMeter": 70 },
+    { "maxThickness": 35, "manualRatePerMeter": 90, "machineRatePerMeter": 80 },
+    { "maxThickness": 40, "manualRatePerMeter": 95, "machineRatePerMeter": 85 },
+    { "maxThickness": 45, "manualRatePerMeter": 100, "machineRatePerMeter": 90 },
+    { "maxThickness": 50, "manualRatePerMeter": 110, "machineRatePerMeter": 100 },
+    { "maxThickness": 53, "manualRatePerMeter": 115.5, "machineRatePerMeter": 105 },
+    { "maxThickness": 57, "manualRatePerMeter": 121, "machineRatePerMeter": 110 },
+    { "maxThickness": 60, "manualRatePerMeter": 126.5, "machineRatePerMeter": 115 }
   ],
   "edge": {
     "thicknesses": [
-      {
-        "value": 0.5,
-        "type": "thin",
-        "name": "0,5 мм"
-      },
-      {
-        "value": 1,
-        "type": "thin",
-        "name": "1 мм"
-      },
-      {
-        "value": 1.5,
-        "type": "thick",
-        "name": "1,5 мм"
-      },
-      {
-        "value": 2,
-        "type": "thick",
-        "name": "2 мм"
-      }
+      { "value": 0.5, "type": "thin", "name": "0,5 мм" },
+      { "value": 1, "type": "thin", "name": "1 мм" },
+      { "value": 1.5, "type": "thick", "name": "1,5 мм" },
+      { "value": 2, "type": "thick", "name": "2 мм" }
     ],
     "rates": {
       "thin": [
-        {
-          "maxThickness": 9,
-          "rateBefore40": 160,
-          "rateAfter40": 80
-        },
-        {
-          "maxThickness": 10,
-          "rateBefore40": 300,
-          "rateAfter40": 80
-        },
-        {
-          "maxThickness": 19,
-          "rateBefore40": 160,
-          "rateAfter40": 80
-        },
-        {
-          "maxThickness": 21,
-          "rateBefore40": 170,
-          "rateAfter40": 85
-        },
-        {
-          "maxThickness": 25,
-          "rateBefore40": 180,
-          "rateAfter40": 90
-        },
-        {
-          "maxThickness": 31,
-          "rateBefore40": 190,
-          "rateAfter40": 95
-        },
-        {
-          "maxThickness": 35,
-          "rateBefore40": 200,
-          "rateAfter40": 100
-        },
-        {
-          "maxThickness": 41,
-          "rateBefore40": 220,
-          "rateAfter40": 110
-        },
-        {
-          "maxThickness": 45,
-          "rateBefore40": 230,
-          "rateAfter40": 115
-        },
-        {
-          "maxThickness": 60,
-          "rateBefore40": 250,
-          "rateAfter40": 125
-        }
+        { "maxThickness": 19, "rateBeforeThreshold": 184, "rateAfterThreshold": 92 },
+        { "maxThickness": 21, "rateBeforeThreshold": 196, "rateAfterThreshold": 98 },
+        { "maxThickness": 25, "rateBeforeThreshold": 210, "rateAfterThreshold": 105 },
+        { "maxThickness": 31, "rateBeforeThreshold": 220, "rateAfterThreshold": 110 },
+        { "maxThickness": 35, "rateBeforeThreshold": 230, "rateAfterThreshold": 115 },
+        { "maxThickness": 41, "rateBeforeThreshold": 260, "rateAfterThreshold": 130 },
+        { "maxThickness": 45, "rateBeforeThreshold": 270, "rateAfterThreshold": 135 },
+        { "maxThickness": 60, "rateBeforeThreshold": 290, "rateAfterThreshold": 145 }
       ],
       "thick": [
-        {
-          "maxThickness": 21,
-          "rateBefore40": 250,
-          "rateAfter40": 125
-        },
-        {
-          "maxThickness": 31,
-          "rateBefore40": 270,
-          "rateAfter40": 135
-        },
-        {
-          "maxThickness": 35,
-          "rateBefore40": 320,
-          "rateAfter40": 160
-        },
-        {
-          "maxThickness": 43,
-          "rateBefore40": 350,
-          "rateAfter40": 175
-        },
-        {
-          "maxThickness": 49,
-          "rateBefore40": 370,
-          "rateAfter40": 185
-        },
-        {
-          "maxThickness": 60,
-          "rateBefore40": 400,
-          "rateAfter40": 200
-        }
+        { "maxThickness": 21, "rateBeforeThreshold": 250, "rateAfterThreshold": 125 },
+        { "maxThickness": 31, "rateBeforeThreshold": 270, "rateAfterThreshold": 135 },
+        { "maxThickness": 35, "rateBeforeThreshold": 320, "rateAfterThreshold": 160 },
+        { "maxThickness": 43, "rateBeforeThreshold": 350, "rateAfterThreshold": 175 },
+        { "maxThickness": 49, "rateBeforeThreshold": 370, "rateAfterThreshold": 185 },
+        { "maxThickness": 60, "rateBeforeThreshold": 400, "rateAfterThreshold": 200 }
       ]
     }
   },
   "sanding": [
-    {
-      "id": "one",
-      "name": "1 сторона",
-      "sides": 1,
-      "ratePerM2": 60
-    },
-    {
-      "id": "two",
-      "name": "2 стороны",
-      "sides": 2,
-      "ratePerM2": 120
-    }
+    { "id": "one", "name": "1 сторона", "sides": 1, "ratePerM2": 60 },
+    { "id": "two", "name": "2 стороны", "sides": 2, "ratePerM2": 120 }
   ],
-  "lacquer": {
+  "finish": {
     "types": [
-      {
-        "id": "pu",
-        "name": "Полиуретан",
-        "rates": {
-          "one": 2500,
-          "two": 5000
-        }
-      },
+      { "id": "none", "name": "Нет", "autoPrice": true },
+      { "id": "lacquer", "name": "Лак", "autoPrice": true },
+      { "id": "gloss_100", "name": "Глянец 100%", "autoPrice": true },
+      { "id": "enamel", "name": "Эмаль", "autoPrice": true },
+      { "id": "toning", "name": "Тонировка", "autoPrice": true },
+      { "id": "custom", "name": "По ТЗ", "autoPrice": false }
+    ],
+    "lacquers": [
       {
         "id": "acrylic",
         "name": "Акрил",
-        "rates": {
-          "one": 3000,
-          "two": 6000
-        }
+        "gloss": [
+          { "id": "acrylic_3", "name": "3%" },
+          { "id": "acrylic_10", "name": "10%" },
+          { "id": "acrylic_30", "name": "30%" },
+          { "id": "acrylic_70", "name": "70%" }
+        ],
+        "rates": { "one": 3000, "two": 6000 }
+      },
+      {
+        "id": "polyurethane",
+        "name": "Полиуретан",
+        "gloss": [
+          { "id": "pu_10", "name": "10%" },
+          { "id": "pu_20", "name": "20%" },
+          { "id": "pu_40", "name": "40%" }
+        ],
+        "rates": { "one": 3000, "two": 6000 }
       }
     ],
-    "gloss": [
-      {
-        "id": "matte_10",
-        "name": "Матовый 10%",
-        "rates": {
-          "one": 0,
-          "two": 0
-        }
-      },
-      {
-        "id": "gloss_100",
-        "name": "Глянец 100%",
-        "rates": {
-          "one": 12000,
-          "two": 24000
-        }
-      },
-      {
-        "id": "one_gloss_one_matte",
-        "name": "1 глянец + 1 матовый",
-        "rates": {
-          "one": 12000,
-          "two": 15000
-        }
-      },
-      {
-        "id": "custom",
-        "name": "Другой %",
-        "rates": {
-          "one": 0,
-          "two": 0
-        }
-      }
-    ]
+    "isolatorRates": { "one": 1000, "two": 2000 },
+    "gloss100Rates": { "one": 12000, "oneGlossOneMatte": 15000, "two": 24000 },
+    "enamelRates": {
+      "ground_enamel_one": 3000,
+      "ground_enamel_two": 6000,
+      "ground_enamel_lacquer_one": 3800,
+      "ground_enamel_lacquer_two": 7600,
+      "ground_patina_enamel_lacquer_one": 4200,
+      "ground_patina_enamel_lacquer_two": 8400
+    },
+    "toningRates": { "one": 3000, "two": 6000 }
   },
   "panelExtras": {
     "km1": {
       "name": "КМ1",
       "autoPrice": false,
-      "note": "КМ1 влияет на цену, но отдельный тариф в предоставленном Excel не найден."
+      "note": "КМ1 влияет на цену, но отдельный тариф в предоставленных материалах не найден."
     },
     "radius": {
       "name": "Радиусная панель",

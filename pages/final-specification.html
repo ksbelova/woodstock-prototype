@@ -7,7 +7,89 @@
   <link rel="stylesheet" href="../css/main.css" />
   <style>
     .final-table {
-      min-width: 1380px;
+      min-width: 1680px;
+    }
+
+    @media print {
+      .final-table {
+        min-width: 0 !important;
+      }
+
+      .final-table th,
+      .final-table td {
+        font-size: 7px !important;
+        padding: 4px 3px !important;
+      }
+
+      .final-table th:nth-child(1),
+      .final-table td:nth-child(1) {
+        width: 2.5%;
+      }
+
+      .final-table th:nth-child(2),
+      .final-table td:nth-child(2) {
+        width: 8%;
+      }
+
+      .final-table th:nth-child(3),
+      .final-table td:nth-child(3) {
+        width: 10%;
+      }
+
+      .final-table th:nth-child(4),
+      .final-table td:nth-child(4) {
+        width: 11%;
+      }
+
+      .final-table th:nth-child(5),
+      .final-table td:nth-child(5) {
+        width: 12%;
+      }
+
+      .final-table th:nth-child(6),
+      .final-table td:nth-child(6) {
+        width: 12%;
+      }
+
+      .final-table th:nth-child(7),
+      .final-table td:nth-child(7) {
+        width: 4.5%;
+      }
+
+      .final-table th:nth-child(8),
+      .final-table td:nth-child(8) {
+        width: 5%;
+      }
+
+      .final-table th:nth-child(9),
+      .final-table td:nth-child(9) {
+        width: 6%;
+      }
+
+      .final-table th:nth-child(10),
+      .final-table td:nth-child(10) {
+        width: 6%;
+      }
+
+      .final-table th:nth-child(11),
+      .final-table td:nth-child(11) {
+        width: 7%;
+      }
+
+      .final-table th:nth-child(12),
+      .final-table td:nth-child(12) {
+        width: 5%;
+      }
+
+      .final-table th:nth-child(13),
+      .final-table td:nth-child(13) {
+        width: 5%;
+      }
+
+      .final-table th:nth-child(14),
+      .final-table td:nth-child(14) {
+        width: 6%;
+      }
     }
   </style>
 </head>
@@ -136,11 +218,14 @@
                 <th>Размер / площадь</th>
                 <th>Материал / покрытие</th>
                 <th>Операции / услуги</th>
+                <th>Кол-во шт.</th>
                 <th>Кол-во м²</th>
+                <th>Цена за шт.</th>
+                <th>Цена за м²</th>
+                <th>Сумма за детали</th>
                 <th>Объём м³</th>
                 <th>Вес</th>
                 <th>Срок</th>
-                <th>Стоимость</th>
               </tr>
             </thead>
 
@@ -177,8 +262,7 @@
           </dl>
 
           <p class="final-note">
-            Объём считается как площадь × толщина. Для МДФ используется плотность 800 кг/м³, как в контрольной спецификации.
-            Вес брутто учитывает упаковку, если она добавлена на странице параметров заказа.
+            Объём считается как площадь × толщина. Вес брутто учитывает упаковку, если она добавлена на странице параметров заказа.
           </p>
         </div>
 
@@ -208,9 +292,7 @@
             </div>
           </dl>
 
-          <p class="final-note" id="packagingNote">
-            —
-          </p>
+          <p class="final-note" id="packagingNote">—</p>
         </div>
       </section>
 
@@ -222,9 +304,7 @@
             Услуги не выбраны.
           </div>
 
-          <p class="final-note" id="servicesComment">
-            —
-          </p>
+          <p class="final-note" id="servicesComment">—</p>
         </div>
 
         <div class="final-card">
@@ -250,9 +330,10 @@
       <section class="final-grid final-grid--two">
         <div class="final-card final-card--notice">
           <p>
-            Сроки изготовления показываются по правилам из предоставленной спецификации:
-            стандартные размеры до 70 м² — 11–15 рабочих дней, нестандартные размеры без лака до 100 м² — 20 рабочих дней,
-            изделия в лаке — 25–28 рабочих дней. Для инженерной доски применяется срок 1,5 месяца.
+            Сроки изготовления обновлены по новым материалам: стандартные панели — 7–9 рабочих дней,
+            нестандартные панели — 12–15 рабочих дней, изделия с финишем — от 20 рабочих дней,
+            панели или фасады с дополнительными операциями — от 25 рабочих дней.
+            Для инженерной доски применяется срок 1,5 месяца.
           </p>
         </div>
 
@@ -261,7 +342,15 @@
 
           <dl class="final-total-list">
             <div>
-              <dt>Позиции заказа</dt>
+              <dt>Средняя цена за 1 шт.</dt>
+              <dd id="averageUnitPrice">—</dd>
+            </div>
+            <div>
+              <dt>Средняя цена за 1 м²</dt>
+              <dd id="averageM2Price">—</dd>
+            </div>
+            <div>
+              <dt>Стоимость деталей</dt>
               <dd id="itemsTotal">—</dd>
             </div>
             <div>
@@ -289,6 +378,7 @@
           Цена в спецификации является предварительной. Окончательная стоимость товара
           согласовывается менеджером перед оплатой. Сервисные услуги с демонстрационным
           тарифом 1 000 ₽ используются в прототипе для проверки влияния услуги на итоговую стоимость.
+          Для стрейч, лёгкой и глухой упаковки тариф не подтверждён в предоставленных материалах.
         </p>
       </section>
     </section>

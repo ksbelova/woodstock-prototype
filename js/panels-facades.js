@@ -12,12 +12,12 @@ const productType = params.get("type") || sessionStorage.getItem("woodstockProdu
 const productLabels = {
   panels: {
     title: "Интерьерные панели",
-    lead: "Расчёт стоимости по основе, размеру, шпону, кромке, шлифовке, лаку, КМ1 и дополнительным операциям.",
+    lead: "Расчёт стоимости по основе, размеру, шпону, кромке, шлифовке, финишу, КМ1 и дополнительным операциям.",
     spec: "Интерьерные панели"
   },
   facades: {
     title: "Мебельные фасады",
-    lead: "Расчёт стоимости по основе, размеру, шпону, кромке, шлифовке, лаку, присадке и ручкам.",
+    lead: "Расчёт стоимости по основе, размеру, шпону, кромке, шлифовке, финишу, присадке и ручкам.",
     spec: "Мебельные фасады"
   }
 };
@@ -26,6 +26,9 @@ const form = {
   baseSelect: document.querySelector("#baseSelect"),
   thicknessSelect: document.querySelector("#thicknessSelect"),
   baseNote: document.querySelector("#baseNote"),
+
+  standardSizeValues: document.querySelector("#standardSizeValues"),
+  standardSizeNote: document.querySelector("#standardSizeNote"),
 
   sizeRows: document.querySelector("#sizeRows"),
   addSizeRowBtn: document.querySelector("#addSizeRowBtn"),
@@ -41,6 +44,8 @@ const form = {
   veneerLayoutSelect: document.querySelector("#veneerLayoutSelect"),
   textureTransitionSelect: document.querySelector("#textureTransitionSelect"),
 
+  cuttingModeSelect: document.querySelector("#cuttingModeSelect"),
+
   edgeNeededSelect: document.querySelector("#edgeNeededSelect"),
   edgeFields: document.querySelector("#edgeFields"),
   edgeSidesSelect: document.querySelector("#edgeSidesSelect"),
@@ -50,11 +55,18 @@ const form = {
   sandingField: document.querySelector("#sandingField"),
   sandingSelect: document.querySelector("#sandingSelect"),
 
-  lacquerNeededSelect: document.querySelector("#lacquerNeededSelect"),
+  finishTypeSelect: document.querySelector("#finishTypeSelect"),
+  finishFields: document.querySelector("#finishFields"),
   lacquerFields: document.querySelector("#lacquerFields"),
   lacquerTypeSelect: document.querySelector("#lacquerTypeSelect"),
-  glossSelect: document.querySelector("#glossSelect"),
-  lacquerSidesSelect: document.querySelector("#lacquerSidesSelect"),
+  lacquerGlossSelect: document.querySelector("#lacquerGlossSelect"),
+  finishSidesSelect: document.querySelector("#finishSidesSelect"),
+  isolatorField: document.querySelector("#isolatorField"),
+  isolatorSelect: document.querySelector("#isolatorSelect"),
+  gloss100Field: document.querySelector("#gloss100Field"),
+  gloss100Select: document.querySelector("#gloss100Select"),
+  enamelField: document.querySelector("#enamelField"),
+  enamelSelect: document.querySelector("#enamelSelect"),
   finishCommentInput: document.querySelector("#finishCommentInput"),
 
   panelExtrasBlock: document.querySelector("#panelExtrasBlock"),
@@ -121,10 +133,21 @@ function formatNumber(value, digits = 2) {
 
 function roundTo(value, digits = 2) {
   const factor = Math.pow(10, digits);
-  return Math.round((value + Number.EPSILON) * factor) / factor;
+  return Math.round((Number(value) + Number.EPSILON) * factor) / factor;
+}
+
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 }
 
 function resetSelect(select, placeholder, disabled = false) {
+  if (!select) return;
+
   select.innerHTML = "";
 
   const option = document.createElement("option");
@@ -136,6 +159,8 @@ function resetSelect(select, placeholder, disabled = false) {
 }
 
 function addOption(select, value, label) {
+  if (!select) return;
+
   const option = document.createElement("option");
   option.value = value;
   option.textContent = label;
@@ -143,6 +168,8 @@ function addOption(select, value, label) {
 }
 
 function fillSelect(select, items, getLabel) {
+  if (!select || !items) return;
+
   items.forEach((item) => {
     addOption(select, item.id, getLabel(item));
   });
@@ -182,26 +209,46 @@ function getSelectedSanding() {
   return calcData.sanding.find((item) => item.id === form.sandingSelect.value);
 }
 
-function getSelectedLacquerType() {
-  return calcData.lacquer.types.find((item) => item.id === form.lacquerTypeSelect.value);
+function getSelectedFinishType() {
+  return calcData.finish.types.find((item) => item.id === form.finishTypeSelect.value);
 }
 
-function getSelectedGloss() {
-  return calcData.lacquer.gloss.find((item) => item.id === form.glossSelect.value);
+function getSelectedLacquerType() {
+  return calcData.finish.lacquers.find((item) => item.id === form.lacquerTypeSelect.value);
+}
+
+function getSelectedLacquerGloss() {
+  const lacquer = getSelectedLacquerType();
+
+  if (!lacquer) {
+    return null;
+  }
+
+  return lacquer.gloss.find((item) => item.id === form.lacquerGlossSelect.value);
 }
 
 function normalizeSizePair(length, width) {
   return [Number(length), Number(width)].sort((a, b) => a - b);
 }
 
+function getAvailableStandardSizes() {
+  const base = getSelectedBase();
+
+  if (!base) {
+    return [];
+  }
+
+  return calcData.standardSizesByBase?.[base.id] || [];
+}
+
 function getMatchedStandardSize(length, width) {
-  if (!length || !width || !calcData.standardSizes) {
+  if (!length || !width) {
     return null;
   }
 
   const current = normalizeSizePair(length, width);
 
-  return calcData.standardSizes.find((item) => {
+  return getAvailableStandardSizes().find((item) => {
     const standard = normalizeSizePair(item.length, item.width);
     return standard[0] === current[0] && standard[1] === current[1];
   }) || null;
@@ -233,12 +280,67 @@ function shouldAddCutting(length, width) {
   return !isStandardSize(length, width);
 }
 
+function getSizeKey(length, width) {
+  const standardSize = getMatchedStandardSize(length, width);
+
+  if (standardSize) {
+    return `${standardSize.length}x${standardSize.width}`;
+  }
+
+  return `${Number(length)}x${Number(width)}`;
+}
+
 function getArea(length, width, quantity) {
   return roundTo(length * width * quantity / 1000000, 3);
 }
 
 function getCuttingMeters(length, width, quantity) {
   return roundTo((length + width) / 1000 * 2 * quantity, 2);
+}
+
+function getStandardPanelUnitPrice(baseId, thicknessValue, sides, length, width) {
+  const pricesByBase = calcData.standardPanelPrices?.[baseId];
+
+  if (!pricesByBase) {
+    return null;
+  }
+
+  const row = pricesByBase.find((item) => String(item.thickness) === String(thicknessValue));
+
+  if (!row) {
+    return null;
+  }
+
+  const sideKey = String(sides) === "2" ? "two" : "one";
+  const sizeKey = getSizeKey(length, width);
+
+  const price = row[sideKey]?.[sizeKey];
+
+  return Number.isFinite(Number(price)) ? Number(price) : null;
+}
+
+function renderStandardSizes() {
+  const base = getSelectedBase();
+  const sizes = getAvailableStandardSizes();
+
+  if (!base) {
+    form.standardSizeValues.innerHTML = "<span>Выберите основу</span>";
+    form.standardSizeNote.textContent = "Сначала выберите основу. Стандартные размеры зависят от материала.";
+    return;
+  }
+
+  if (!sizes.length) {
+    form.standardSizeValues.innerHTML = "<span>Для выбранной основы стандартные размеры не заведены</span>";
+    form.standardSizeNote.textContent = `${base.name}: стандартные размеры не найдены в справочнике прототипа.`;
+    return;
+  }
+
+  form.standardSizeValues.innerHTML = sizes
+    .map((item) => `<span>${escapeHtml(item.name)}</span>`)
+    .join("");
+
+  form.standardSizeNote.textContent =
+    `${base.name}: если введённый размер совпадает со стандартным форматом, система берёт цену из таблицы стандартных панелей. Если размер отличается, добавляется раскрой по периметру.`;
 }
 
 function createSizeRow(values = {}) {
@@ -303,6 +405,59 @@ function getCompleteSizeValues() {
   return getAllSizeValues().filter((item) => item.isComplete);
 }
 
+function isFinishSelected() {
+  return form.finishTypeSelect.value && form.finishTypeSelect.value !== "none";
+}
+
+function getSizeLimitWarnings(sizeItem) {
+  const thickness = getSelectedThickness();
+  const numericThickness = Number(thickness?.numericThickness) || 0;
+
+  if (!sizeItem.isComplete || !numericThickness) {
+    return {
+      warnings: [],
+      blocked: false
+    };
+  }
+
+  const biggerSide = Math.max(sizeItem.length, sizeItem.width);
+  const smallerSide = Math.min(sizeItem.length, sizeItem.width);
+
+  const isStandard = isStandardSize(sizeItem.length, sizeItem.width);
+  const hasSanding = form.sandingNeededSelect.value === "yes";
+  const hasFinish = isFinishSelected();
+  const hasEdge = form.edgeNeededSelect.value === "yes";
+
+  const warnings = [];
+  let blocked = false;
+
+  if (!isStandard && hasSanding && hasFinish && hasEdge && numericThickness >= 8 && numericThickness <= 19) {
+    if (biggerSide > 2780 || smallerSide > 2050) {
+      blocked = true;
+      warnings.push("Ограничение: нестандартные панели со шлифованием, финишем и кромкой при толщине 8–19 мм — максимум 2780 × 2050 мм.");
+    }
+  }
+
+  if (!isStandard && hasSanding && hasFinish && hasEdge && numericThickness > 19 && numericThickness <= 50) {
+    if (biggerSide > 2780 || smallerSide > 1280) {
+      blocked = true;
+      warnings.push("Ограничение: нестандартные панели со шлифованием, финишем и кромкой при толщине 19–50 мм — максимум 2780 × 1280 мм.");
+    }
+  }
+
+  if (isStandard && hasSanding && !hasFinish && !hasEdge) {
+    if (biggerSide > 2800 || smallerSide > 2070) {
+      blocked = true;
+      warnings.push("Ограничение: стандартные панели со шлифованием без финиша и кромки — максимум 2800 × 2070 мм.");
+    }
+  }
+
+  return {
+    warnings,
+    blocked
+  };
+}
+
 function renderSizeRowsStatus() {
   getAllSizeValues().forEach((item) => {
     const status = item.row.querySelector("[data-size-status]");
@@ -322,17 +477,24 @@ function renderSizeRowsStatus() {
     }
 
     const standardSize = getMatchedStandardSize(item.length, item.width);
+    const limits = getSizeLimitWarnings(item);
 
     status.classList.remove("is-hidden");
 
     if (standardSize) {
-      status.classList.add("field-status--ok");
-      status.textContent = `Стандартный размер: ${standardSize.name}. Раскрой не добавляется.`;
+      status.classList.add(limits.blocked ? "field-status--warning" : "field-status--ok");
+      status.textContent = [
+        `Стандартный размер: ${standardSize.name}. Цена берётся из таблицы стандартных панелей.`,
+        ...limits.warnings
+      ].join(" ");
       return;
     }
 
     status.classList.add("field-status--warning");
-    status.textContent = `Нестандартный размер. Раскрой добавлен автоматически: ${formatNumber(getCuttingMeters(item.length, item.width, item.quantity), 2)} пог. м.`;
+    status.textContent = [
+      `Нестандартный размер. Раскрой добавлен автоматически: ${formatNumber(getCuttingMeters(item.length, item.width, item.quantity), 2)} пог. м.`,
+      ...limits.warnings
+    ].join(" ");
   });
 
   updateRemoveButtonsState();
@@ -340,6 +502,7 @@ function renderSizeRowsStatus() {
 
 function updateRemoveButtonsState() {
   const rows = getSizeRows();
+
   rows.forEach((row) => {
     const button = row.querySelector("[data-remove-size-row]");
     button.disabled = rows.length === 1;
@@ -371,13 +534,13 @@ function removeSizeRow(row) {
   renderSpecification();
 }
 
-function getLookupRate(items, thickness, rateKey) {
+function getLookupRate(items, value, rateKey) {
   if (!items || !items.length) {
     return 0;
   }
 
   const sortedItems = [...items].sort((a, b) => a.maxThickness - b.maxThickness);
-  const exactOrHigher = sortedItems.find((item) => thickness <= item.maxThickness);
+  const exactOrHigher = sortedItems.find((item) => value <= item.maxThickness);
 
   if (exactOrHigher) {
     return exactOrHigher[rateKey] || 0;
@@ -387,7 +550,15 @@ function getLookupRate(items, thickness, rateKey) {
 }
 
 function getCuttingRate(thickness) {
-  return getLookupRate(calcData.cuttingRates, thickness, "ratePerMeter");
+  const mode = form.cuttingModeSelect.value || calcData.meta.defaultCuttingMode || "machine";
+  const rateKey = mode === "manual" ? "manualRatePerMeter" : "machineRatePerMeter";
+
+  return getLookupRate(calcData.cuttingRates, thickness, rateKey);
+}
+
+function getCuttingModeLabel() {
+  const selected = calcData.cuttingModes?.find((item) => item.id === form.cuttingModeSelect.value);
+  return selected?.name || "На станке";
 }
 
 function getEdgeMeters(length, width, quantity) {
@@ -410,9 +581,10 @@ function getEdgeMeters(length, width, quantity) {
 
 function getEdgeRate(baseThickness, edgeType, edgeMeters) {
   const rates = calcData.edge.rates[edgeType] || [];
-  const rateKey = edgeMeters > calcData.meta.cuttingThresholdMeters
-    ? "rateAfter40"
-    : "rateBefore40";
+  const threshold = calcData.meta.edgeThresholdMeters || 35;
+  const rateKey = edgeMeters > threshold
+    ? "rateAfterThreshold"
+    : "rateBeforeThreshold";
 
   return getLookupRate(rates, baseThickness, rateKey);
 }
@@ -554,31 +726,120 @@ function getReverseSideWorkRate() {
   return getSelectedReverseSide()?.pricePerM2 || 0;
 }
 
-function getAreaSurchargeRate(area) {
-  const rates = calcData.areaSurchargeRates || [];
-  return getLookupRate(rates, area, "ratePerM2");
+function getFinishTypeLabel() {
+  return getSelectedFinishType()?.name || "Нет";
 }
 
-function getGlossRate() {
-  const gloss = getSelectedGloss();
+function getFinishSidesRate(rates) {
+  const sides = form.finishSidesSelect.value;
+  return rates?.[sides] || 0;
+}
 
-  if (!gloss) {
+function getIsolatorCost(area) {
+  if (form.isolatorSelect.value !== "yes") {
     return 0;
   }
 
-  const sides = form.lacquerSidesSelect.value;
-  return gloss.rates?.[sides] || 0;
+  const rate = getFinishSidesRate(calcData.finish.isolatorRates);
+  return Math.round(area * rate);
 }
 
-function getLacquerRate() {
-  const lacquerType = getSelectedLacquerType();
+function getFinishCost(area) {
+  const finishType = form.finishTypeSelect.value;
 
-  if (!lacquerType) {
-    return 0;
+  if (!finishType || finishType === "none") {
+    return {
+      rate: 0,
+      cost: 0,
+      isolatorCost: 0
+    };
   }
 
-  const sides = form.lacquerSidesSelect.value;
-  return lacquerType.rates?.[sides] || 0;
+  if (finishType === "lacquer") {
+    const lacquer = getSelectedLacquerType();
+    const rate = getFinishSidesRate(lacquer?.rates || {});
+    const isolatorCost = getIsolatorCost(area);
+
+    return {
+      rate,
+      cost: Math.round(area * rate) + isolatorCost,
+      isolatorCost
+    };
+  }
+
+  if (finishType === "gloss_100") {
+    const glossRate = calcData.finish.gloss100Rates?.[form.gloss100Select.value] || 0;
+
+    return {
+      rate: glossRate,
+      cost: Math.round(area * glossRate),
+      isolatorCost: 0
+    };
+  }
+
+  if (finishType === "enamel") {
+    const enamelRate = calcData.finish.enamelRates?.[form.enamelSelect.value] || 0;
+    const isolatorCost = getIsolatorCost(area);
+
+    return {
+      rate: enamelRate,
+      cost: Math.round(area * enamelRate) + isolatorCost,
+      isolatorCost
+    };
+  }
+
+  if (finishType === "toning") {
+    const rate = getFinishSidesRate(calcData.finish.toningRates || {});
+    const isolatorCost = getIsolatorCost(area);
+
+    return {
+      rate,
+      cost: Math.round(area * rate) + isolatorCost,
+      isolatorCost
+    };
+  }
+
+  return {
+    rate: 0,
+    cost: 0,
+    isolatorCost: 0
+  };
+}
+
+function getFinishLabel() {
+  const finishType = form.finishTypeSelect.value;
+
+  if (!finishType || finishType === "none") {
+    return "Нет";
+  }
+
+  if (finishType === "lacquer") {
+    const lacquer = getSelectedLacquerType()?.name || "Лак";
+    const gloss = getSelectedLacquerGloss()?.name || "блеск не выбран";
+    const sides = form.finishSidesSelect.options[form.finishSidesSelect.selectedIndex]?.textContent || "";
+    const isolator = form.isolatorSelect.value === "yes" ? ", изолятор" : "";
+
+    return `${lacquer}, ${gloss}, ${sides}${isolator}`;
+  }
+
+  if (finishType === "gloss_100") {
+    const glossOption = form.gloss100Select.options[form.gloss100Select.selectedIndex]?.textContent || "Глянец 100%";
+    return `Глянец 100%: ${glossOption}`;
+  }
+
+  if (finishType === "enamel") {
+    const enamelOption = form.enamelSelect.options[form.enamelSelect.selectedIndex]?.textContent || "Эмаль";
+    const isolator = form.isolatorSelect.value === "yes" ? ", изолятор" : "";
+    return `${enamelOption}${isolator}`;
+  }
+
+  if (finishType === "toning") {
+    const sides = form.finishSidesSelect.options[form.finishSidesSelect.selectedIndex]?.textContent || "";
+    const isolator = form.isolatorSelect.value === "yes" ? ", изолятор" : "";
+    return `Тонировка, ${sides}${isolator}`;
+  }
+
+  return "По ТЗ";
 }
 
 function getExtrasText() {
@@ -615,7 +876,7 @@ function getNotes() {
   }
 
   if (form.veneerLayoutSelect.value === "custom") {
-    notes.push("Набор / рубашка по ТЗ.");
+    notes.push("Раскладка шпона по ТЗ.");
   }
 
   if (form.finishCommentInput.value.trim()) {
@@ -642,6 +903,30 @@ function isReadyForCalculation() {
   return isReadyForCommonCalculation() && getCompleteSizeValues().length > 0;
 }
 
+function getProductionTermForItem(sizeItem, finishCost, extrasWarnings) {
+  if (productType === "flooring") {
+    return "1,5 месяца";
+  }
+
+  const isStandard = isStandardSize(sizeItem.length, sizeItem.width);
+  const hasFinish = finishCost > 0 || isFinishSelected();
+  const hasOperations = extrasWarnings.length > 0;
+
+  if (hasOperations) {
+    return "от 25 раб. дней";
+  }
+
+  if (hasFinish) {
+    return "от 20 раб. дней";
+  }
+
+  if (isStandard) {
+    return "7–9 раб. дней";
+  }
+
+  return "12–15 раб. дней";
+}
+
 function calculateSizeItem(sizeItem) {
   const meta = calcData.meta;
 
@@ -652,6 +937,18 @@ function calculateSizeItem(sizeItem) {
   const area = sizeItem.area;
   const baseRate = getBaseRate(thickness);
   const reverseSideWorkRate = getReverseSideWorkRate();
+
+  const standardSize = getMatchedStandardSize(sizeItem.length, sizeItem.width);
+  const isStandard = Boolean(standardSize);
+  const sides = form.veneeredSidesSelect.value;
+
+  const standardUnitPrice = isStandard
+    ? getStandardPanelUnitPrice(base.id, thickness.value, sides, sizeItem.length, sizeItem.width)
+    : null;
+
+  const standardPanelCost = standardUnitPrice !== null
+    ? Math.round(standardUnitPrice * sizeItem.quantity)
+    : 0;
 
   const coefficient = form.textureTransitionSelect.value === "yes"
     ? meta.textureTransitionCoefficient
@@ -702,27 +999,31 @@ function calculateSizeItem(sizeItem) {
     sandingCost = Math.round(area * sandingRate);
   }
 
-  let lacquerCost = 0;
-  let lacquerRate = 0;
-  let glossRate = 0;
-
-  if (form.lacquerNeededSelect.value === "yes") {
-    lacquerRate = getLacquerRate();
-    glossRate = getGlossRate();
-    lacquerCost = Math.round(area * (lacquerRate + glossRate));
-  }
-
-  const areaSurchargeRate = getAreaSurchargeRate(area);
-  const areaSurchargeCost = Math.round(area * areaSurchargeRate);
+  const finish = getFinishCost(area);
+  const finishCost = finish.cost;
+  const finishRate = finish.rate;
 
   const workSubtotal =
     panelWorkCost +
     cuttingCost +
     edgeCost +
     sandingCost +
-    lacquerCost;
+    finishCost;
 
-  const workTotal = Math.round((workSubtotal + areaSurchargeCost) * meta.productionMultiplier);
+  const nonstandardWorkTotal = Math.round(workSubtotal * meta.productionMultiplier);
+
+  const standardExtraOperations =
+    edgeCost +
+    sandingCost +
+    finishCost;
+
+  const standardWorkTotal = standardUnitPrice !== null
+    ? standardPanelCost + Math.round(standardExtraOperations * meta.productionMultiplier)
+    : nonstandardWorkTotal;
+
+  const workTotal = isStandard
+    ? standardWorkTotal
+    : nonstandardWorkTotal;
 
   const veneer = getVeneerCost(area);
   const total = workTotal + veneer.veneerCost;
@@ -733,9 +1034,17 @@ function calculateSizeItem(sizeItem) {
 
   const extrasWarnings = [];
 
+  if (isStandard && standardUnitPrice === null) {
+    extrasWarnings.push("Стандартный размер найден, но цена для этой основы/толщины/размера не заведена. В прототипе применена формула нестандартного расчёта.");
+  }
+
+  if (form.finishTypeSelect.value === "custom") {
+    extrasWarnings.push("Финиш по ТЗ — тариф не найден, требуется проверка менеджером.");
+  }
+
   if (productType === "panels") {
     if (form.km1Select.value === "yes") {
-      extrasWarnings.push("КМ1 выбран — влияет на цену, но тариф не найден в предоставленном Excel.");
+      extrasWarnings.push("КМ1 выбран — влияет на цену, но тариф не найден в предоставленных материалах.");
     }
 
     if (form.radiusPanelSelect.value === "yes") {
@@ -761,6 +1070,13 @@ function calculateSizeItem(sizeItem) {
     }
   }
 
+  const limitResult = getSizeLimitWarnings(sizeItem);
+  extrasWarnings.push(...limitResult.warnings);
+
+  const productionTerm = getProductionTermForItem(sizeItem, finishCost, extrasWarnings);
+  const unitPrice = sizeItem.quantity ? Math.round(total / sizeItem.quantity) : total;
+  const pricePerM2 = area ? Math.round(total / area) : 0;
+
   return {
     productType,
     productName: productLabels[productType].spec,
@@ -777,8 +1093,12 @@ function calculateSizeItem(sizeItem) {
     quantity: sizeItem.quantity,
     area,
 
-    sizeType: isStandardSize(sizeItem.length, sizeItem.width) ? "standard" : "custom",
+    sizeType: isStandard ? "standard" : "custom",
     sizeTypeLabel: getSizeTypeLabel(sizeItem.length, sizeItem.width),
+    matchedStandardSize: standardSize,
+    standardUnitPrice,
+    standardPanelCost,
+    standardPriceApplied: isStandard && standardUnitPrice !== null,
 
     veneeredSides: form.veneeredSidesSelect.value,
     veneerA,
@@ -807,6 +1127,8 @@ function calculateSizeItem(sizeItem) {
     panelWorkRate,
     panelWorkCost,
 
+    cuttingMode: form.cuttingModeSelect.value,
+    cuttingModeLabel: getCuttingModeLabel(),
     cuttingAdded,
     cuttingMeters,
     cuttingRate,
@@ -824,14 +1146,19 @@ function calculateSizeItem(sizeItem) {
     sandingRate,
     sandingCost,
 
-    lacquerNeeded: form.lacquerNeededSelect.value,
+    finishType: form.finishTypeSelect.value,
+    finishTypeLabel: getFinishTypeLabel(),
+    finishLabel: getFinishLabel(),
+    finishSides: form.finishSidesSelect.value,
     lacquerTypeId: form.lacquerTypeSelect.value,
-    glossId: form.glossSelect.value,
-    lacquerSides: form.lacquerSidesSelect.value,
+    lacquerGlossId: form.lacquerGlossSelect.value,
+    isolator: form.isolatorSelect.value,
+    gloss100Mode: form.gloss100Select.value,
+    enamelMode: form.enamelSelect.value,
     finishComment: form.finishCommentInput.value.trim(),
-    lacquerRate,
-    glossRate,
-    lacquerCost,
+    finishRate,
+    finishCost,
+    lacquerCost: finishCost,
 
     km1: form.km1Select.value,
     radiusPanel: form.radiusPanelSelect.value,
@@ -843,14 +1170,16 @@ function calculateSizeItem(sizeItem) {
     handleComment: form.handleCommentInput.value.trim(),
     facadeOperations: form.facadeOperationsInput.value.trim(),
 
-    areaSurchargeRate,
-    areaSurchargeCost,
-
     workSubtotal,
     workTotal,
     total,
     vat,
+    unitPrice,
+    pricePerM2,
+    detailsTotal: total,
 
+    productionTerm,
+    sizeLimitBlocked: limitResult.blocked,
     extrasWarnings,
     notes: getNotes()
   };
@@ -872,8 +1201,8 @@ function calculateAll() {
       acc.panelWorkCost += item.panelWorkCost;
       acc.veneerCost += item.veneerCost;
       acc.sandingCost += item.sandingCost;
-      acc.lacquerCost += item.lacquerCost;
-      acc.areaSurchargeCost += item.areaSurchargeCost;
+      acc.finishCost += item.finishCost;
+      acc.standardPanelCost += item.standardPanelCost;
       acc.workTotal += item.workTotal;
       return acc;
     },
@@ -889,8 +1218,8 @@ function calculateAll() {
       panelWorkCost: 0,
       veneerCost: 0,
       sandingCost: 0,
-      lacquerCost: 0,
-      areaSurchargeCost: 0,
+      finishCost: 0,
+      standardPanelCost: 0,
       workTotal: 0
     }
   );
@@ -930,7 +1259,7 @@ function renderPartialSpec() {
     form.veneerASelect.value ||
     form.edgeNeededSelect.value === "yes" ||
     form.sandingNeededSelect.value === "yes" ||
-    form.lacquerNeededSelect.value === "yes"
+    isFinishSelected()
   );
 
   if (!hasAnyData) {
@@ -940,6 +1269,7 @@ function renderPartialSpec() {
 
   showSpecContent();
 
+  spec.title.textContent = productLabels[productType].spec;
   spec.productType.textContent = productLabels[productType].spec;
 
   spec.base.textContent = base
@@ -969,7 +1299,7 @@ function renderPartialSpec() {
   const cuttingRows = sizes.filter((item) => shouldAddCutting(item.length, item.width));
 
   spec.cutting.textContent = cuttingRows.length
-    ? `Добавлен для ${cuttingRows.length} размер(ов)`
+    ? `Добавлен для ${cuttingRows.length} размер(ов), ${getCuttingModeLabel()}`
     : sizes.length
       ? "Не добавлен"
       : "—";
@@ -993,28 +1323,25 @@ function renderPartialSpec() {
     ? getSelectedSanding()?.name || "Да"
     : "Нет";
 
-  spec.lacquer.textContent = form.lacquerNeededSelect.value === "yes"
-    ? `${getSelectedLacquerType()?.name || "—"}, ${getSelectedGloss()?.name || "—"}, ${form.lacquerSidesSelect.options[form.lacquerSidesSelect.selectedIndex].textContent}`
-    : "Нет";
-
+  spec.lacquer.textContent = getFinishLabel();
   spec.extras.textContent = getExtrasText();
 
   spec.total.textContent = "—";
   spec.vat.textContent = "В том числе НДС: —";
   spec.breakdown.innerHTML = "";
-  spec.formula.textContent = "Каждый размер считается как отдельная позиция.";
+  spec.formula.textContent = "Стандартные размеры считаются по таблице стандартных цен; нестандартные — по формуле нестандартного расчёта.";
   spec.warnings.textContent = "Цена появится после выбора основы, толщины, шпона и хотя бы одного полного размера.";
 }
 
 function renderBreakdown(summary) {
   const rows = [
+    ["Стандартная цена по таблице", summary.standardPanelCost],
     ["Работы по основе / фанерованию", summary.panelWorkCost],
     ["Шпон", summary.veneerCost],
     ["Раскрой", summary.cuttingCost],
     ["Кромка", summary.edgeCost],
     ["Шлифовка", summary.sandingCost],
-    ["Лак / финиш", summary.lacquerCost],
-    ["Надбавка по объёму", summary.areaSurchargeCost],
+    ["Финиш", summary.finishCost],
     ["Работы с производственным коэффициентом", summary.workTotal]
   ];
 
@@ -1030,19 +1357,21 @@ function renderBreakdown(summary) {
 }
 
 function renderSpecification() {
+  renderStandardSizes();
   renderSizeRowsStatus();
   renderPartialSpec();
 
   if (!isReadyForCalculation()) {
     latestCalculations = [];
     latestSummary = null;
+    form.addToSpecBtn.disabled = true;
 
     const base = getSelectedBase();
     const thickness = getSelectedThickness();
     const baseRate = getBaseRate(thickness);
 
     if (base?.manualPrice) {
-      spec.warnings.textContent = `${base.name}: тарифы не заведены в JSON. Нужно добавить данные из справочника.`;
+      spec.warnings.textContent = `${base.name}: стандартные размеры заведены, но тарифы автоматического расчёта не найдены. Позицию нужно считать вручную или добавить тарифы в справочник.`;
     } else if (thickness && baseRate === null) {
       spec.warnings.textContent = `Для ${base.name}, ${thickness.label}, ${form.veneeredSidesSelect.value} сторона(ы) тариф не найден.`;
     }
@@ -1059,7 +1388,7 @@ function renderSpecification() {
   spec.vat.textContent = `В том числе НДС: ${formatMoney(result.summary.vat)}`;
 
   spec.formula.textContent =
-    `Будет создано позиций: ${result.items.length}. Каждый размер считается отдельно: шпон + ((работы по основе / фанерованию + раскрой + кромка + шлифовка + лак + надбавка по объёму) × производственный коэффициент).`;
+    `Будет создано позиций: ${result.items.length}. Стандартные размеры считаются по таблице стандартных панелей. Нестандартные размеры считаются по формуле: шпон + ((работы по основе / фанерованию + раскрой + кромка + шлифовка + финиш) × производственный коэффициент). Упаковка считается отдельно на следующем шаге.`;
 
   renderBreakdown(result.summary);
 
@@ -1069,17 +1398,25 @@ function renderSpecification() {
     warnings.push("Есть нестандартные размеры — раскрой добавлен автоматически для соответствующих строк.");
   }
 
-  if (result.items.some((item) => item.premiumVeneerApplied)) {
-    warnings.push("Шпон дороже 1000 ₽/м² — применён коэффициент ×2 к работе со шпоном.");
+  if (result.items.some((item) => item.standardPriceApplied)) {
+    warnings.push("Есть стандартные размеры — для них применена таблица стандартных цен.");
   }
 
-  if (result.items.some((item) => item.glossRate === 0) && form.glossSelect.value === "custom") {
-    warnings.push("Выбран другой процент глянца — тариф нужно уточнить вручную.");
+  if (result.items.some((item) => item.premiumVeneerApplied)) {
+    warnings.push("Шпон дороже 1 000 ₽/м² — применён коэффициент ×2 к работе со шпоном.");
+  }
+
+  if (result.items.some((item) => item.finishType === "custom")) {
+    warnings.push("Есть финиш по ТЗ — тариф нужно уточнить вручную.");
   }
 
   result.items.forEach((item) => {
     warnings.push(...item.extrasWarnings);
   });
+
+  const hasBlockedSize = result.items.some((item) => item.sizeLimitBlocked);
+
+  form.addToSpecBtn.disabled = hasBlockedSize;
 
   spec.warnings.textContent = warnings.length
     ? [...new Set(warnings)].join(" ")
@@ -1088,75 +1425,168 @@ function renderSpecification() {
   sessionStorage.setItem("woodstockPanelsFacadesCalculation", JSON.stringify(result));
 }
 
-function handleBaseChange() {
+function getItemsFromStorage() {
+  try {
+    const items = JSON.parse(sessionStorage.getItem(storageKeys.items) || "[]");
+    return Array.isArray(items) ? items : [];
+  } catch (error) {
+    return [];
+  }
+}
+
+function saveItemsToStorage(items) {
+  sessionStorage.setItem(storageKeys.items, JSON.stringify(items));
+}
+
+function handleAddToSpec() {
+  if (!latestCalculations.length) {
+    return;
+  }
+
+  if (latestCalculations.some((item) => item.sizeLimitBlocked)) {
+    window.alert("Есть размеры, которые превышают технологические ограничения. Исправьте размеры или снимите операции, из-за которых применяется ограничение.");
+    return;
+  }
+
+  const items = getItemsFromStorage();
+
+  if (editMode && editIndex !== null) {
+    items.splice(editIndex, 1, ...latestCalculations);
+  } else {
+    items.push(...latestCalculations);
+  }
+
+  saveItemsToStorage(items);
+  clearEditState();
+
+  window.location.href = "specification.html";
+}
+
+function renderConditionalFields() {
+  const twoSides = form.veneeredSidesSelect.value === "2";
+
+  form.reverseSideField.classList.toggle("is-hidden", twoSides);
+  form.veneerBField.classList.toggle(
+    "is-hidden",
+    !twoSides || form.sideBModeSelect.value !== "other"
+  );
+
+  form.edgeFields.classList.toggle("is-hidden", form.edgeNeededSelect.value !== "yes");
+  form.sandingField.classList.toggle("is-hidden", form.sandingNeededSelect.value !== "yes");
+
+  const finishType = form.finishTypeSelect.value;
+  const hasFinish = finishType && finishType !== "none";
+
+  form.finishFields.classList.toggle("is-hidden", !hasFinish);
+  form.lacquerFields.classList.toggle("is-hidden", finishType !== "lacquer" && finishType !== "toning");
+  form.isolatorField.classList.toggle("is-hidden", !["lacquer", "enamel", "toning"].includes(finishType));
+  form.gloss100Field.classList.toggle("is-hidden", finishType !== "gloss_100");
+  form.enamelField.classList.toggle("is-hidden", finishType !== "enamel");
+
+  form.hingesCommentField.classList.toggle("is-hidden", form.hingesSelect.value !== "yes");
+  form.handleCommentField.classList.toggle("is-hidden", form.handleTypeSelect.value === "none");
+}
+
+function fillBaseSelect() {
+  resetSelect(form.baseSelect, "Выберите основу");
+  fillSelect(form.baseSelect, calcData.bases, (item) => item.name);
+}
+
+function fillThicknessSelect() {
   const base = getSelectedBase();
 
-  resetSelect(form.thicknessSelect, "Сначала выберите основу", true);
+  resetSelect(form.thicknessSelect, "Выберите толщину", !base || base.manualPrice);
 
   if (!base) {
     form.baseNote.textContent = "Система подгружает доступные толщины выбранной основы.";
-    renderSpecification();
     return;
   }
 
-  form.baseNote.textContent = base.note || "Толщина зависит от выбранной основы.";
+  form.baseNote.textContent = base.note || "Толщины подгружены из справочника.";
 
-  if (base.manualPrice || !base.thicknesses.length) {
-    resetSelect(form.thicknessSelect, "Тарифы нужно добавить в справочник", true);
-    renderSpecification();
+  if (base.manualPrice) {
+    resetSelect(form.thicknessSelect, "Тарифы не заведены", true);
     return;
   }
-
-  resetSelect(form.thicknessSelect, "Выберите толщину основы", false);
 
   base.thicknesses.forEach((item) => {
     addOption(form.thicknessSelect, item.value, item.label);
   });
 
-  renderSpecification();
+  form.thicknessSelect.disabled = false;
 }
 
-function handleVeneeredSidesChange() {
-  if (form.veneeredSidesSelect.value === "1") {
-    form.sideBModeSelect.value = "reverse";
-    form.sideBModeSelect.disabled = true;
-    form.reverseSideField.classList.remove("is-hidden");
-    form.veneerBField.classList.add("is-hidden");
-  } else {
-    form.sideBModeSelect.disabled = false;
+function fillVeneerSelects() {
+  resetSelect(form.veneerASelect, "Выберите шпон");
+  resetSelect(form.veneerBSelect, "Выберите шпон стороны Б");
 
-    if (form.sideBModeSelect.value === "reverse") {
-      form.sideBModeSelect.value = "same";
-    }
+  calcData.veneers.forEach((item) => {
+    const label = `${item.name} — ${formatMoney(item.pricePerM2)} / м²`;
+    addOption(form.veneerASelect, item.id, label);
+    addOption(form.veneerBSelect, item.id, label);
+  });
+}
+
+function fillReverseSideSelect() {
+  form.reverseSideSelect.innerHTML = "";
+
+  calcData.reverseSides.forEach((item) => {
+    addOption(form.reverseSideSelect, item.id, `${item.name} — ${formatMoney(item.pricePerM2)} / м²`);
+  });
+}
+
+function fillEdgeThicknessSelect() {
+  form.edgeThicknessSelect.innerHTML = "";
+
+  calcData.edge.thicknesses.forEach((item) => {
+    addOption(form.edgeThicknessSelect, item.value, item.name);
+  });
+}
+
+function fillSandingSelect() {
+  form.sandingSelect.innerHTML = "";
+
+  calcData.sanding.forEach((item) => {
+    addOption(form.sandingSelect, item.id, `${item.name} — ${formatMoney(item.ratePerM2)} / м²`);
+  });
+}
+
+function fillFinishSelects() {
+  form.lacquerTypeSelect.innerHTML = "";
+
+  calcData.finish.lacquers.forEach((item) => {
+    addOption(form.lacquerTypeSelect, item.id, item.name);
+  });
+
+  fillLacquerGlossSelect();
+}
+
+function fillLacquerGlossSelect() {
+  const lacquer = getSelectedLacquerType();
+
+  form.lacquerGlossSelect.innerHTML = "";
+
+  if (!lacquer) {
+    addOption(form.lacquerGlossSelect, "", "Сначала выберите лак");
+    return;
   }
 
-  handleSideBModeChange();
+  lacquer.gloss.forEach((item) => {
+    addOption(form.lacquerGlossSelect, item.id, item.name);
+  });
 }
 
-function handleSideBModeChange() {
-  const mode = form.sideBModeSelect.value;
+function setProductContent() {
+  const labels = productLabels[productType] || productLabels.panels;
 
-  form.reverseSideField.classList.toggle("is-hidden", mode !== "reverse");
-  form.veneerBField.classList.toggle("is-hidden", mode !== "other");
+  document.querySelector("#pageTitle").textContent = labels.title;
+  document.querySelector("#pageLead").textContent = labels.lead;
+  spec.title.textContent = labels.spec;
 
-  renderSpecification();
-}
+  form.panelExtrasBlock.classList.toggle("is-hidden", productType !== "panels");
+  form.facadeExtrasBlock.classList.toggle("is-hidden", productType !== "facades");
 
-function handleConditionalBlocks() {
-  const edgeNeeded = form.edgeNeededSelect.value === "yes";
-  const sandingNeeded = form.sandingNeededSelect.value === "yes";
-  const lacquerNeeded = form.lacquerNeededSelect.value === "yes";
-  const hingesNeeded = form.hingesSelect.value === "yes";
-  const handleNeeded = form.handleTypeSelect.value !== "none";
-
-  form.edgeFields.classList.toggle("is-hidden", !edgeNeeded);
-  form.sandingField.classList.toggle("is-hidden", !sandingNeeded);
-  form.lacquerFields.classList.toggle("is-hidden", !lacquerNeeded);
-
-  form.hingesCommentField.classList.toggle("is-hidden", !hingesNeeded);
-  form.handleCommentField.classList.toggle("is-hidden", !handleNeeded);
-
-  renderSpecification();
+  sessionStorage.setItem("woodstockProductType", productType);
 }
 
 function getEditItem() {
@@ -1193,6 +1623,7 @@ function applyEditMode() {
   const index = getEditIndex();
 
   if (!item || item.productType !== productType || index === null) {
+    clearEditState();
     return;
   }
 
@@ -1202,38 +1633,36 @@ function applyEditMode() {
   form.addToSpecBtn.textContent = "Сохранить изменения";
 
   form.baseSelect.value = item.baseId || "";
-  handleBaseChange();
-
+  fillThicknessSelect();
   form.thicknessSelect.value = item.thicknessValue || "";
 
-  clearSizeRows();
-  form.sizeRows.appendChild(createSizeRow({
-    length: item.length,
-    width: item.width,
-    quantity: item.quantity
-  }));
-
   form.veneeredSidesSelect.value = item.veneeredSides || "1";
-  form.veneerASelect.value = item.veneerAId || item.veneerA?.id || "";
-  form.sideBModeSelect.value = item.sideBMode || "reverse";
-  form.reverseSideSelect.value = item.reverseSideId || "";
-  form.veneerBSelect.value = item.veneerBId || "";
+  form.veneerASelect.value = item.veneerAId || "";
 
+  form.sideBModeSelect.value = item.sideBMode || "reverse";
+  form.reverseSideSelect.value = item.reverseSideId || "none";
+  form.veneerBSelect.value = item.veneerBId || "";
   form.fiberDirectionSelect.value = item.fiberDirection || "length";
   form.veneerLayoutSelect.value = item.veneerLayout || "not_set";
   form.textureTransitionSelect.value = item.textureTransition || "no";
 
-  form.edgeNeededSelect.value = item.edgeNeeded || (item.edgeCost > 0 ? "yes" : "no");
+  form.cuttingModeSelect.value = item.cuttingMode || "machine";
+
+  form.edgeNeededSelect.value = item.edgeNeeded || "no";
   form.edgeSidesSelect.value = item.edgeSides || "perimeter";
-  form.edgeThicknessSelect.value = item.edgeThicknessValue || "";
+  form.edgeThicknessSelect.value = item.edgeThicknessValue || "0.5";
 
-  form.sandingNeededSelect.value = item.sandingNeeded || (item.sandingCost > 0 ? "yes" : "no");
-  form.sandingSelect.value = item.sandingId || "";
+  form.sandingNeededSelect.value = item.sandingNeeded || "no";
+  form.sandingSelect.value = item.sandingId || "one";
 
-  form.lacquerNeededSelect.value = item.lacquerNeeded || (item.lacquerCost > 0 ? "yes" : "no");
-  form.lacquerTypeSelect.value = item.lacquerTypeId || "";
-  form.glossSelect.value = item.glossId || "";
-  form.lacquerSidesSelect.value = item.lacquerSides || "one";
+  form.finishTypeSelect.value = item.finishType || (item.lacquerNeeded === "yes" ? "lacquer" : "none");
+  form.finishSidesSelect.value = item.finishSides || item.lacquerSides || "one";
+  form.lacquerTypeSelect.value = item.lacquerTypeId || "acrylic";
+  fillLacquerGlossSelect();
+  form.lacquerGlossSelect.value = item.lacquerGlossId || item.glossId || form.lacquerGlossSelect.value;
+  form.isolatorSelect.value = item.isolator || "no";
+  form.gloss100Select.value = item.gloss100Mode || "one";
+  form.enamelSelect.value = item.enamelMode || "ground_enamel_one";
   form.finishCommentInput.value = item.finishComment || "";
 
   form.km1Select.value = item.km1 || "no";
@@ -1246,154 +1675,42 @@ function applyEditMode() {
   form.handleCommentInput.value = item.handleComment || "";
   form.facadeOperationsInput.value = item.facadeOperations || "";
 
-  handleVeneeredSidesChange();
-  handleConditionalBlocks();
+  clearSizeRows();
+  addSizeRow({
+    length: item.length,
+    width: item.width,
+    quantity: item.quantity
+  });
+
+  renderConditionalFields();
   renderSpecification();
 }
 
-function saveCurrentCalculationsToSpecification() {
-  const savedItems = JSON.parse(sessionStorage.getItem(storageKeys.items) || "[]");
-
-  if (editMode && editIndex !== null && savedItems[editIndex]) {
-    if (latestCalculations.length === 1) {
-      savedItems[editIndex] = latestCalculations[0];
-    } else {
-      savedItems.splice(editIndex, 1, ...latestCalculations);
-    }
-  } else {
-    savedItems.push(...latestCalculations);
-  }
-
-  sessionStorage.setItem(storageKeys.items, JSON.stringify(savedItems));
+function handleBaseChange() {
+  fillThicknessSelect();
+  renderSpecification();
 }
 
-function addToSpecification() {
-  if (!latestCalculations.length) {
-    alert("Для добавления в спецификацию выберите основу, толщину, шпон и укажите хотя бы один полный размер.");
-    return;
-  }
-
-  saveCurrentCalculationsToSpecification();
-
-  if (editMode) {
-    clearEditState();
-    window.location.href = "specification.html";
-    return;
-  }
-
-  form.addToSpecBtn.textContent = `Добавлено позиций: ${latestCalculations.length}`;
-
-  setTimeout(() => {
-    form.addToSpecBtn.textContent = "Добавить в спецификацию";
-  }, 1400);
-}
-
-function initPageContext() {
-  const current = productLabels[productType] || productLabels.panels;
-
-  document.querySelector("#pageTitle").textContent = current.title;
-  document.querySelector("#pageLead").textContent = current.lead;
-
-  spec.title.textContent = current.spec;
-  spec.productType.textContent = current.spec;
-
-  form.panelExtrasBlock.classList.toggle("is-hidden", productType !== "panels");
-  form.facadeExtrasBlock.classList.toggle("is-hidden", productType !== "facades");
-}
-
-function initSelects() {
-  calcData.bases.forEach((base) => {
-    addOption(form.baseSelect, base.id, base.name);
-  });
-
-  fillSelect(
-    form.veneerASelect,
-    calcData.veneers,
-    (item) => `${item.name} — ${formatMoney(item.pricePerM2)} / м²`
-  );
-
-  fillSelect(
-    form.veneerBSelect,
-    calcData.veneers,
-    (item) => `${item.name} — ${formatMoney(item.pricePerM2)} / м²`
-  );
-
-  fillSelect(
-    form.reverseSideSelect,
-    calcData.reverseSides,
-    (item) => `${item.name}${item.pricePerM2 ? ` — ${formatMoney(item.pricePerM2)} / м²` : ""}`
-  );
-
-  fillSelect(
-    form.edgeThicknessSelect,
-    calcData.edge.thicknesses,
-    (item) => item.name
-  );
-
-  fillSelect(
-    form.sandingSelect,
-    calcData.sanding,
-    (item) => `${item.name} — ${formatMoney(item.ratePerM2)} / м²`
-  );
-
-  fillSelect(
-    form.lacquerTypeSelect,
-    calcData.lacquer.types,
-    (item) => item.name
-  );
-
-  fillSelect(
-    form.glossSelect,
-    calcData.lacquer.gloss,
-    (item) => item.name
-  );
+function handleLacquerTypeChange() {
+  fillLacquerGlossSelect();
+  renderSpecification();
 }
 
 function initEvents() {
   form.baseSelect.addEventListener("change", handleBaseChange);
-  form.veneeredSidesSelect.addEventListener("change", handleVeneeredSidesChange);
-  form.sideBModeSelect.addEventListener("change", handleSideBModeChange);
+  form.thicknessSelect.addEventListener("change", renderSpecification);
 
-  [
-    form.edgeNeededSelect,
-    form.sandingNeededSelect,
-    form.lacquerNeededSelect,
-    form.hingesSelect,
-    form.handleTypeSelect
-  ].forEach((element) => {
-    element.addEventListener("change", handleConditionalBlocks);
+  form.addSizeRowBtn.addEventListener("click", () => addSizeRow());
+
+  form.sizeRows.addEventListener("input", (event) => {
+    if (
+      event.target.matches("[data-size-length]") ||
+      event.target.matches("[data-size-width]") ||
+      event.target.matches("[data-size-quantity]")
+    ) {
+      renderSpecification();
+    }
   });
-
-  [
-    form.thicknessSelect,
-    form.veneerASelect,
-    form.veneerBSelect,
-    form.reverseSideSelect,
-    form.fiberDirectionSelect,
-    form.veneerLayoutSelect,
-    form.textureTransitionSelect,
-    form.edgeSidesSelect,
-    form.edgeThicknessSelect,
-    form.sandingSelect,
-    form.lacquerTypeSelect,
-    form.glossSelect,
-    form.lacquerSidesSelect,
-    form.finishCommentInput,
-    form.km1Select,
-    form.radiusPanelSelect,
-    form.panelOperationsInput,
-    form.hingesCommentInput,
-    form.handleCommentInput,
-    form.facadeOperationsInput
-  ].forEach((element) => {
-    if (!element) return;
-
-    element.addEventListener("input", renderSpecification);
-    element.addEventListener("change", renderSpecification);
-  });
-
-  form.sizeRows.addEventListener("input", renderSpecification);
-  form.sizeRows.addEventListener("change", renderSpecification);
 
   form.sizeRows.addEventListener("click", (event) => {
     const button = event.target.closest("[data-remove-size-row]");
@@ -1405,35 +1722,70 @@ function initEvents() {
     removeSizeRow(button.closest("[data-size-row]"));
   });
 
-  form.addSizeRowBtn.addEventListener("click", () => {
-    addSizeRow();
+  [
+    form.veneeredSidesSelect,
+    form.veneerASelect,
+    form.sideBModeSelect,
+    form.reverseSideSelect,
+    form.veneerBSelect,
+    form.fiberDirectionSelect,
+    form.veneerLayoutSelect,
+    form.textureTransitionSelect,
+    form.cuttingModeSelect,
+    form.edgeNeededSelect,
+    form.edgeSidesSelect,
+    form.edgeThicknessSelect,
+    form.sandingNeededSelect,
+    form.sandingSelect,
+    form.finishTypeSelect,
+    form.finishSidesSelect,
+    form.isolatorSelect,
+    form.gloss100Select,
+    form.enamelSelect,
+    form.km1Select,
+    form.radiusPanelSelect,
+    form.hingesSelect,
+    form.handleTypeSelect
+  ].forEach((element) => {
+    element.addEventListener("change", () => {
+      renderConditionalFields();
+      renderSpecification();
+    });
   });
 
-  form.addToSpecBtn.addEventListener("click", addToSpecification);
+  form.lacquerTypeSelect.addEventListener("change", handleLacquerTypeChange);
+  form.lacquerGlossSelect.addEventListener("change", renderSpecification);
+
+  [
+    form.finishCommentInput,
+    form.panelOperationsInput,
+    form.hingesCommentInput,
+    form.handleCommentInput,
+    form.facadeOperationsInput
+  ].forEach((element) => {
+    element.addEventListener("input", renderSpecification);
+  });
+
+  form.addToSpecBtn.addEventListener("click", handleAddToSpec);
 }
 
-fetch(dataUrl)
-  .then((response) => {
-    if (!response.ok) {
-      throw new Error("Не удалось загрузить data/panels-facades.json.");
-    }
+async function init() {
+  const response = await fetch(dataUrl);
+  calcData = await response.json();
 
-    return response.json();
-  })
-  .then((data) => {
-    calcData = data;
+  setProductContent();
+  fillBaseSelect();
+  fillThicknessSelect();
+  fillVeneerSelects();
+  fillReverseSideSelect();
+  fillEdgeThicknessSelect();
+  fillSandingSelect();
+  fillFinishSelects();
+  renderConditionalFields();
+  updateRemoveButtonsState();
+  applyEditMode();
+  renderSpecification();
+  initEvents();
+}
 
-    initPageContext();
-    initSelects();
-    initEvents();
-
-    handleVeneeredSidesChange();
-    handleConditionalBlocks();
-    updateRemoveButtonsState();
-    showEmptySpec();
-    applyEditMode();
-  })
-  .catch((error) => {
-    console.error(error);
-    alert("Не удалось загрузить data/panels-facades.json. Запустите проект через локальный сервер.");
-  });
+init();
