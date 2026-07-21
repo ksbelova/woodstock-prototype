@@ -36,8 +36,10 @@
       { "length": 2800, "width": 2070, "name": "2800 × 2070 мм" }
     ],
     "gsp": [
-      { "length": 2500, "width": 1250, "name": "2500 × 1250 мм" },
-      { "length": 3000, "width": 1250, "name": "3000 × 1250 мм" }
+      { "length": 2500, "width": 1220, "name": "2500 × 1220 мм" },
+      { "length": 1220, "width": 2500, "name": "1220 × 2500 мм" },
+      { "length": 3000, "width": 1220, "name": "3000 × 1220 мм" },
+      { "length": 1220, "width": 3000, "name": "1220 × 3000 мм" }
     ],
     "blockboard": [
       { "length": 2500, "width": 1250, "name": "2500 × 1250 мм" },
@@ -539,10 +541,17 @@
     },
     {
       "id": "gsp",
-      "name": "ГСП",
-      "note": "В бланке есть стандартные размеры ГСП, но тарифы автоматического расчёта не найдены.",
-      "manualPrice": true,
-      "thicknesses": []
+      "name": "ГСП (противопожарная плита)",
+      "note": "Для ГСП нет подтверждённой цены расчёта. Чтобы показать участие основы ГСП в расчёте панелей и мебельных фасадов, в прототипе используется условная цена 1 000 ₽/м². Значение демонстрационное и должно быть заменено после получения фактических тарифов.",
+      "thicknesses": [
+        {
+          "value": "10",
+          "label": "10 мм",
+          "numericThickness": 10,
+          "oneSideRate": 1000,
+          "twoSideRate": 1000
+        }
+      ]
     },
     {
       "id": "blockboard",
@@ -586,7 +595,7 @@
   ],
   "reverseSides": [
     { "id": "none", "name": "Не фанеруется / без обратной стороны", "pricePerM2": 0 },
-    { "id": "black_veneer", "name": "Чёрный шпон", "pricePerM2": 250 },
+    { "id": "black_veneer", "name": "Черновой шпон", "pricePerM2": 250 },
     { "id": "paper", "name": "Бумага", "pricePerM2": 50 }
   ],
   "cuttingModes": [
@@ -655,7 +664,10 @@
           { "id": "acrylic_30", "name": "30%" },
           { "id": "acrylic_70", "name": "70%" }
         ],
-        "rates": { "one": 3000, "two": 6000 }
+        "rates": {
+          "one": 3000,
+          "two": 6000
+        }
       },
       {
         "id": "polyurethane",
@@ -665,11 +677,21 @@
           { "id": "pu_20", "name": "20%" },
           { "id": "pu_40", "name": "40%" }
         ],
-        "rates": { "one": 3000, "two": 6000 }
+        "rates": {
+          "one": 3000,
+          "two": 6000
+        }
       }
     ],
-    "isolatorRates": { "one": 1000, "two": 2000 },
-    "gloss100Rates": { "one": 12000, "oneGlossOneMatte": 15000, "two": 24000 },
+    "isolatorRates": {
+      "one": 1000,
+      "two": 2000
+    },
+    "gloss100Rates": {
+      "one": 12000,
+      "oneGlossOneMatte": 15000,
+      "two": 24000
+    },
     "enamelRates": {
       "ground_enamel_one": 3000,
       "ground_enamel_two": 6000,
@@ -678,14 +700,12 @@
       "ground_patina_enamel_lacquer_one": 4200,
       "ground_patina_enamel_lacquer_two": 8400
     },
-    "toningRates": { "one": 3000, "two": 6000 }
+    "toningRates": {
+      "one": 3000,
+      "two": 6000
+    }
   },
   "panelExtras": {
-    "km1": {
-      "name": "КМ1",
-      "autoPrice": false,
-      "note": "КМ1 влияет на цену, но отдельный тариф в предоставленных материалах не найден."
-    },
     "radius": {
       "name": "Радиусная панель",
       "autoPrice": false,

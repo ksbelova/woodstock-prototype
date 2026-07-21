@@ -6,25 +6,96 @@ const storageKeys = {
 };
 
 const elements = {
-  orderNumber: document.querySelector("#orderNumber"),
-  orderDate: document.querySelector("#orderDate"),
-  orderStatus: document.querySelector("#orderStatus"),
-  itemsCount: document.querySelector("#itemsCount"),
-  summaryTotal: document.querySelector("#summaryTotal"),
-  summaryVat: document.querySelector("#summaryVat"),
+  orderNumber: document.querySelector(
+    "#orderNumber"
+  ),
 
-  emptySummary: document.querySelector("#emptySummary"),
-  summaryTableWrap: document.querySelector("#summaryTableWrap"),
-  itemsTableBody: document.querySelector("#itemsTableBody"),
-  clearOrderBtn: document.querySelector("#clearOrderBtn"),
+  orderDate: document.querySelector(
+    "#orderDate"
+  ),
 
-  sideOrderNumber: document.querySelector("#sideOrderNumber"),
-  sideOrderStatus: document.querySelector("#sideOrderStatus"),
-  sideItemsCount: document.querySelector("#sideItemsCount"),
-  sideTotal: document.querySelector("#sideTotal"),
-  sideVat: document.querySelector("#sideVat"),
-  summaryNote: document.querySelector("#summaryNote"),
-  nextStepLink: document.querySelector("#nextStepLink")
+  orderStatus: document.querySelector(
+    "#orderStatus"
+  ),
+
+  itemsCount: document.querySelector(
+    "#itemsCount"
+  ),
+
+  summaryTotalBeforeDiscount:
+    document.querySelector(
+      "#summaryTotalBeforeDiscount"
+    ),
+
+  summaryDiscount:
+    document.querySelector(
+      "#summaryDiscount"
+    ),
+
+  summaryTotal: document.querySelector(
+    "#summaryTotal"
+  ),
+
+  summaryVat: document.querySelector(
+    "#summaryVat"
+  ),
+
+  emptySummary: document.querySelector(
+    "#emptySummary"
+  ),
+
+  summaryTableWrap:
+    document.querySelector(
+      "#summaryTableWrap"
+    ),
+
+  itemsTableBody:
+    document.querySelector(
+      "#itemsTableBody"
+    ),
+
+  clearOrderBtn:
+    document.querySelector(
+      "#clearOrderBtn"
+    ),
+
+  sideOrderNumber:
+    document.querySelector(
+      "#sideOrderNumber"
+    ),
+
+  sideOrderStatus:
+    document.querySelector(
+      "#sideOrderStatus"
+    ),
+
+  sideItemsCount:
+    document.querySelector(
+      "#sideItemsCount"
+    ),
+
+  sideOrderBreakdown:
+    document.querySelector(
+      "#sideOrderBreakdown"
+    ),
+
+  sideTotal: document.querySelector(
+    "#sideTotal"
+  ),
+
+  sideVat: document.querySelector(
+    "#sideVat"
+  ),
+
+  summaryNote:
+    document.querySelector(
+      "#summaryNote"
+    ),
+
+  nextStepLink:
+    document.querySelector(
+      "#nextStepLink"
+    )
 };
 
 function escapeHtml(value) {
@@ -38,40 +109,89 @@ function escapeHtml(value) {
 
 function joinLines(parts) {
   return parts
-    .filter((item) => item !== undefined && item !== null && String(item).trim() !== "")
+    .filter(
+      (item) =>
+        item !== undefined &&
+        item !== null &&
+        String(item).trim() !== ""
+    )
     .map((item) => escapeHtml(item))
     .join("<br>");
 }
 
 function formatMoney(value) {
-  return new Intl.NumberFormat("ru-RU", {
-    style: "currency",
-    currency: "RUB",
-    maximumFractionDigits: 0
-  }).format(Number(value) || 0);
+  return new Intl.NumberFormat(
+    "ru-RU",
+    {
+      style: "currency",
+      currency: "RUB",
+      maximumFractionDigits: 0
+    }
+  ).format(Number(value) || 0);
 }
 
-function formatNumber(value, digits = 2) {
-  return new Intl.NumberFormat("ru-RU", {
-    minimumFractionDigits: digits,
-    maximumFractionDigits: digits
-  }).format(Number(value) || 0);
+function formatNumber(
+  value,
+  digits = 2
+) {
+  return new Intl.NumberFormat(
+    "ru-RU",
+    {
+      minimumFractionDigits: digits,
+      maximumFractionDigits: digits
+    }
+  ).format(Number(value) || 0);
+}
+
+function formatFileSize(size) {
+  const bytes = Number(size) || 0;
+
+  if (bytes <= 0) {
+    return "";
+  }
+
+  if (bytes < 1024) {
+    return `${bytes} Б`;
+  }
+
+  if (bytes < 1024 * 1024) {
+    return `${formatNumber(
+      bytes / 1024,
+      1
+    )} КБ`;
+  }
+
+  return `${formatNumber(
+    bytes / (1024 * 1024),
+    1
+  )} МБ`;
 }
 
 function getTodayString() {
-  return new Intl.DateTimeFormat("ru-RU", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric"
-  }).format(new Date());
+  return new Intl.DateTimeFormat(
+    "ru-RU",
+    {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric"
+    }
+  ).format(new Date());
 }
 
-function getPluralLabel(count, one, few, many) {
+function getPluralLabel(
+  count,
+  one,
+  few,
+  many
+) {
   const abs = Math.abs(count);
   const lastDigit = abs % 10;
   const lastTwoDigits = abs % 100;
 
-  if (lastTwoDigits >= 11 && lastTwoDigits <= 14) {
+  if (
+    lastTwoDigits >= 11 &&
+    lastTwoDigits <= 14
+  ) {
     return many;
   }
 
@@ -79,7 +199,10 @@ function getPluralLabel(count, one, few, many) {
     return one;
   }
 
-  if (lastDigit >= 2 && lastDigit <= 4) {
+  if (
+    lastDigit >= 2 &&
+    lastDigit <= 4
+  ) {
     return few;
   }
 
@@ -91,30 +214,54 @@ function generateOrderNumber() {
 
   const datePart = [
     now.getFullYear(),
-    String(now.getMonth() + 1).padStart(2, "0"),
-    String(now.getDate()).padStart(2, "0")
+
+    String(
+      now.getMonth() + 1
+    ).padStart(2, "0"),
+
+    String(
+      now.getDate()
+    ).padStart(2, "0")
   ].join("");
 
   const timePart = [
-    String(now.getHours()).padStart(2, "0"),
-    String(now.getMinutes()).padStart(2, "0")
+    String(
+      now.getHours()
+    ).padStart(2, "0"),
+
+    String(
+      now.getMinutes()
+    ).padStart(2, "0")
   ].join("");
 
-  const randomPart = Math.floor(Math.random() * 900 + 100);
+  const randomPart =
+    Math.floor(
+      Math.random() * 900 + 100
+    );
 
   return `WS-${datePart}-${timePart}-${randomPart}`;
 }
 
-function readJsonFromStorage(key, fallback) {
+function readJsonFromStorage(
+  key,
+  fallback
+) {
   try {
-    return JSON.parse(sessionStorage.getItem(key) || JSON.stringify(fallback));
+    return JSON.parse(
+      sessionStorage.getItem(key) ||
+        JSON.stringify(fallback)
+    );
   } catch (error) {
     return fallback;
   }
 }
 
 function getOrderMeta() {
-  const savedMeta = readJsonFromStorage(storageKeys.orderMeta, null);
+  const savedMeta =
+    readJsonFromStorage(
+      storageKeys.orderMeta,
+      null
+    );
 
   if (savedMeta) {
     return savedMeta;
@@ -126,23 +273,83 @@ function getOrderMeta() {
     status: "Черновик"
   };
 
-  sessionStorage.setItem(storageKeys.orderMeta, JSON.stringify(meta));
+  sessionStorage.setItem(
+    storageKeys.orderMeta,
+    JSON.stringify(meta)
+  );
 
   return meta;
 }
 
 function getItems() {
-  const items = readJsonFromStorage(storageKeys.items, []);
+  const items =
+    readJsonFromStorage(
+      storageKeys.items,
+      []
+    );
 
-  return Array.isArray(items) ? items : [];
+  return Array.isArray(items)
+    ? items
+    : [];
 }
 
 function saveItems(items) {
-  sessionStorage.setItem(storageKeys.items, JSON.stringify(items));
+  sessionStorage.setItem(
+    storageKeys.items,
+    JSON.stringify(items)
+  );
 }
 
 function getItemTotal(item) {
   return Number(item.total) || 0;
+}
+
+function getItemTotalBeforeDiscount(
+  item
+) {
+  const value =
+    Number(
+      item.totalBeforeDiscount
+    );
+
+  if (
+    Number.isFinite(value) &&
+    value >= 0
+  ) {
+    return value;
+  }
+
+  return getItemTotal(item);
+}
+
+function getItemDiscountPercent(
+  item
+) {
+  const value =
+    Number(item.discountPercent) || 0;
+
+  return Math.min(
+    Math.max(value, 0),
+    100
+  );
+}
+
+function getItemDiscountAmount(item) {
+  const savedValue =
+    Number(item.discountAmount);
+
+  if (
+    Number.isFinite(savedValue) &&
+    savedValue >= 0
+  ) {
+    return savedValue;
+  }
+
+  return Math.round(
+    getItemTotalBeforeDiscount(item) *
+      getItemDiscountPercent(item) /
+      100
+  );
 }
 
 function getItemVat(item) {
@@ -152,11 +359,25 @@ function getItemVat(item) {
 function getOrderTotals(items) {
   return items.reduce(
     (acc, item) => {
-      acc.total += getItemTotal(item);
-      acc.vat += getItemVat(item);
+      acc.totalBeforeDiscount +=
+        getItemTotalBeforeDiscount(
+          item
+        );
+
+      acc.discountAmount +=
+        getItemDiscountAmount(item);
+
+      acc.total +=
+        getItemTotal(item);
+
+      acc.vat +=
+        getItemVat(item);
+
       return acc;
     },
     {
+      totalBeforeDiscount: 0,
+      discountAmount: 0,
       total: 0,
       vat: 0
     }
@@ -168,15 +389,21 @@ function getProductName(item) {
     return item.productName;
   }
 
-  if (item.productType === "flooring") {
+  if (
+    item.productType === "flooring"
+  ) {
     return "Инженерная доска";
   }
 
-  if (item.productType === "facades") {
+  if (
+    item.productType === "facades"
+  ) {
     return "Мебельные фасады";
   }
 
-  if (item.productType === "panels") {
+  if (
+    item.productType === "panels"
+  ) {
     return "Интерьерные панели";
   }
 
@@ -184,22 +411,34 @@ function getProductName(item) {
 }
 
 function getItemParamsText(item) {
-  if (item.productType === "flooring") {
+  if (
+    item.productType === "flooring"
+  ) {
     const parts = [];
 
-    if (item.selectedPattern?.name) {
-      parts.push(item.selectedPattern.name);
+    if (
+      item.selectedPattern?.name
+    ) {
+      parts.push(
+        item.selectedPattern.name
+      );
     }
 
     if (item.topLayer) {
-      parts.push(`верхний слой ${item.topLayer}`);
+      parts.push(
+        `верхний слой ${item.topLayer}`
+      );
     }
 
     if (item.thickness) {
-      parts.push(`толщина ${item.thickness} мм`);
+      parts.push(
+        `толщина ${item.thickness} мм`
+      );
     }
 
-    return parts.length ? joinLines(parts) : "—";
+    return parts.length
+      ? joinLines(parts)
+      : "—";
   }
 
   const parts = [];
@@ -213,65 +452,117 @@ function getItemParamsText(item) {
   }
 
   if (item.veneeredSides) {
-    parts.push(`${item.veneeredSides} сторон(а) фанеровки`);
+    parts.push(
+      `${item.veneeredSides} сторон(а) фанеровки`
+    );
   }
 
-  if (item.textureTransition === "yes") {
-    parts.push("переход текстуры");
+  if (
+    item.textureTransition === "yes"
+  ) {
+    parts.push(
+      "переход текстуры"
+    );
   }
 
-  return parts.length ? joinLines(parts) : "—";
+  return parts.length
+    ? joinLines(parts)
+    : "—";
 }
 
 function getItemSizeText(item) {
-  if (item.productType === "flooring") {
+  if (
+    item.productType === "flooring"
+  ) {
     const parts = [];
 
     if (item.roomArea) {
-      parts.push(`помещение ${formatNumber(item.roomArea)} м²`);
+      parts.push(
+        `помещение ${formatNumber(
+          item.roomArea
+        )} м²`
+      );
     }
 
     if (item.paidArea) {
-      parts.push(`к оплате ${formatNumber(item.paidArea)} м²`);
+      parts.push(
+        `к оплате ${formatNumber(
+          item.paidArea
+        )} м²`
+      );
     }
 
-    if (item.length || item.width || item.thickness) {
-      const length = item.length || "—";
-      const width = item.width || "—";
-      const thickness = item.thickness || "—";
-      parts.push(`${length} × ${width} × ${thickness} мм`);
+    if (
+      item.length ||
+      item.width ||
+      item.thickness
+    ) {
+      const length =
+        item.length || "—";
+
+      const width =
+        item.width || "—";
+
+      const thickness =
+        item.thickness || "—";
+
+      parts.push(
+        `${length} × ${width} × ${thickness} мм`
+      );
     }
 
-    return parts.length ? joinLines(parts) : "—";
+    return parts.length
+      ? joinLines(parts)
+      : "—";
   }
 
   const parts = [];
 
-  if (item.length && item.width) {
-    parts.push(`${item.length} × ${item.width} мм`);
+  if (
+    item.length &&
+    item.width
+  ) {
+    parts.push(
+      `${item.length} × ${item.width} мм`
+    );
   }
 
   if (item.quantity) {
-    parts.push(`${item.quantity} шт.`);
+    parts.push(
+      `${item.quantity} шт.`
+    );
   }
 
   if (item.area) {
-    parts.push(`${formatNumber(item.area, 3)} м²`);
+    parts.push(
+      `${formatNumber(
+        item.area,
+        3
+      )} м²`
+    );
   }
 
   if (item.sizeTypeLabel) {
-    parts.push(item.sizeTypeLabel);
+    parts.push(
+      item.sizeTypeLabel
+    );
   }
 
-  return parts.length ? joinLines(parts) : "—";
+  return parts.length
+    ? joinLines(parts)
+    : "—";
 }
 
 function getItemMaterialText(item) {
-  if (item.productType === "flooring") {
+  if (
+    item.productType === "flooring"
+  ) {
     const parts = [];
 
     if (item.materialType) {
-      parts.push(item.materialType);
+      parts.push(
+        item.materialType
+      );
     }
 
     if (item.species) {
@@ -279,174 +570,471 @@ function getItemMaterialText(item) {
     }
 
     if (item.pricePerM2) {
-      parts.push(`${formatMoney(item.pricePerM2)} / м²`);
+      parts.push(
+        `${formatMoney(
+          item.pricePerM2
+        )} / м²`
+      );
     }
 
-    return parts.length ? joinLines(parts) : "—";
+    return parts.length
+      ? joinLines(parts)
+      : "—";
   }
 
   const parts = [];
 
   if (item.veneerA?.name) {
-    parts.push(`А: ${item.veneerA.name}`);
+    parts.push(
+      `А: ${item.veneerA.name}`
+    );
   }
 
   if (item.sideB) {
-    parts.push(`Б: ${item.sideB}`);
+    parts.push(
+      `Б: ${item.sideB}`
+    );
   }
 
-  if (item.premiumVeneerApplied) {
-    parts.push("Шпон > 1000 ₽/м², коэффициент ×2");
+  if (
+    item.premiumVeneerApplied
+  ) {
+    parts.push(
+      "Шпон > 1000 ₽/м², коэффициент ×2"
+    );
   }
 
-  return parts.length ? joinLines(parts) : "—";
+  return parts.length
+    ? joinLines(parts)
+    : "—";
+}
+
+function getAttachedFiles(item) {
+  return Array.isArray(
+    item.attachedFiles
+  )
+    ? item.attachedFiles
+    : [];
+}
+
+function getItemComment(item) {
+  if (
+    item.productType === "flooring"
+  ) {
+    return item.comment || "";
+  }
+
+  return item.orderComment || "";
+}
+
+function getFilesText(item) {
+  const files =
+    getAttachedFiles(item);
+
+  if (!files.length) {
+    return "";
+  }
+
+  const fileNames = files.map(
+    (file) => {
+      const name =
+        file?.name ||
+        "Файл без названия";
+
+      const size =
+        formatFileSize(file?.size);
+
+      return size
+        ? `${name} (${size})`
+        : name;
+    }
+  );
+
+  return `Файлы: ${fileNames.join(
+    ", "
+  )}`;
 }
 
 function getItemExtrasText(item) {
-  if (item.productType === "flooring") {
-    const parts = [];
-
-    if (item.selectedCoating?.name) {
-      parts.push(item.selectedCoating.name);
-    }
-
-    if (item.wastePercent !== undefined && item.wastePercent !== null) {
-      parts.push(`отходы ${formatNumber(item.wastePercent, 1)}%`);
-    }
-
-    if (item.comment) {
-      parts.push(`Комментарий: ${item.comment}`);
-    }
-
-    return parts.length ? joinLines(parts) : "—";
-  }
-
   const parts = [];
 
-  if (item.cuttingAdded) {
-    parts.push(`Раскрой: ${formatNumber(item.cuttingMeters)} пог. м`);
+  if (
+    item.productType === "flooring"
+  ) {
+    if (
+      item.selectedCoating?.name
+    ) {
+      parts.push(
+        item.selectedCoating.name
+      );
+    }
+
+    if (
+      item.wastePercent !==
+        undefined &&
+      item.wastePercent !== null
+    ) {
+      parts.push(
+        `Отходы: ${formatNumber(
+          item.wastePercent,
+          1
+        )}%`
+      );
+    }
+  } else {
+    if (item.cuttingAdded) {
+      parts.push(
+        `Раскрой: ${formatNumber(
+          item.cuttingMeters
+        )} пог. м`
+      );
+    }
+
+    if (item.edgeCost > 0) {
+      parts.push(
+        `Кромка: ${formatNumber(
+          item.edgeMeters
+        )} пог. м`
+      );
+    }
+
+    if (item.sandingCost > 0) {
+      parts.push("Шлифовка");
+    }
+
+    if (item.lacquerCost > 0) {
+      parts.push("Лак / финиш");
+    }
+
+    if (
+      item.extrasWarnings?.length
+    ) {
+      parts.push(
+        ...item.extrasWarnings
+      );
+    }
+
+    if (item.notes?.length) {
+      parts.push(...item.notes);
+    }
   }
 
-  if (item.edgeCost > 0) {
-    parts.push(`Кромка: ${formatNumber(item.edgeMeters)} пог. м`);
+  const comment =
+    getItemComment(item);
+
+  if (comment) {
+    parts.push(
+      `Комментарий: ${comment}`
+    );
   }
 
-  if (item.sandingCost > 0) {
-    parts.push("Шлифовка");
+  const filesText =
+    getFilesText(item);
+
+  if (filesText) {
+    parts.push(filesText);
   }
 
-  if (item.lacquerCost > 0) {
-    parts.push("Лак / финиш");
-  }
-
-  if (item.extrasWarnings?.length) {
-    parts.push(...item.extrasWarnings);
-  }
-
-  if (item.notes?.length) {
-    parts.push(...item.notes);
-  }
-
-  return parts.length ? joinLines(parts) : "—";
+  return parts.length
+    ? joinLines(parts)
+    : "—";
 }
 
 function getEditUrl(item) {
-  if (item.productType === "flooring") {
+  if (
+    item.productType === "flooring"
+  ) {
     return "flooring.html";
   }
 
-  if (item.productType === "facades") {
+  if (
+    item.productType === "facades"
+  ) {
     return "panels-facades.html?type=facades";
   }
 
   return "panels-facades.html?type=panels";
 }
 
-function renderOrderMeta(meta, items, totals) {
-  const itemLabel = getPluralLabel(items.length, "позиция", "позиции", "позиций");
-  const itemsText = `${items.length} ${itemLabel}`;
+function renderOrderBreakdown(totals) {
+  const rows = [
+    [
+      "Стоимость до скидки",
+      totals.totalBeforeDiscount
+    ],
+    [
+      "Скидка",
+      -totals.discountAmount
+    ]
+  ];
 
-  elements.orderNumber.textContent = meta.number;
-  elements.sideOrderNumber.textContent = meta.number;
+  elements.sideOrderBreakdown.innerHTML =
+    rows
+      .filter((row) => row[1] !== 0)
+      .map(
+        (row) => `
+          <div class="breakdown-row">
+            <span>
+              ${escapeHtml(row[0])}
+            </span>
 
-  elements.orderDate.textContent = meta.date;
+            <strong>
+              ${row[1] < 0 ? "−" : ""}
+              ${formatMoney(
+                Math.abs(row[1])
+              )}
+            </strong>
+          </div>
+        `
+      )
+      .join("");
+}
 
-  elements.orderStatus.textContent = meta.status;
-  elements.sideOrderStatus.textContent = meta.status;
+function renderOrderMeta(
+  meta,
+  items,
+  totals
+) {
+  const itemLabel =
+    getPluralLabel(
+      items.length,
+      "позиция",
+      "позиции",
+      "позиций"
+    );
 
-  elements.itemsCount.textContent = itemsText;
-  elements.sideItemsCount.textContent = itemsText;
+  const itemsText =
+    `${items.length} ${itemLabel}`;
 
-  elements.summaryTotal.textContent = formatMoney(totals.total);
-  elements.sideTotal.textContent = formatMoney(totals.total);
+  elements.orderNumber.textContent =
+    meta.number;
 
-  elements.summaryVat.textContent = formatMoney(totals.vat);
-  elements.sideVat.textContent = `В том числе НДС: ${formatMoney(totals.vat)}`;
+  elements.sideOrderNumber.textContent =
+    meta.number;
+
+  elements.orderDate.textContent =
+    meta.date;
+
+  elements.orderStatus.textContent =
+    meta.status;
+
+  elements.sideOrderStatus.textContent =
+    meta.status;
+
+  elements.itemsCount.textContent =
+    itemsText;
+
+  elements.sideItemsCount.textContent =
+    itemsText;
+
+  elements.summaryTotalBeforeDiscount.textContent =
+    formatMoney(
+      totals.totalBeforeDiscount
+    );
+
+  elements.summaryDiscount.textContent =
+    totals.discountAmount > 0
+      ? `−${formatMoney(
+          totals.discountAmount
+        )}`
+      : formatMoney(0);
+
+  elements.summaryTotal.textContent =
+    formatMoney(totals.total);
+
+  elements.sideTotal.textContent =
+    formatMoney(totals.total);
+
+  elements.summaryVat.textContent =
+    formatMoney(totals.vat);
+
+  elements.sideVat.textContent =
+    `В том числе НДС: ${formatMoney(
+      totals.vat
+    )}`;
+
+  renderOrderBreakdown(totals);
 }
 
 function renderEmptyState(items) {
-  const isEmpty = items.length === 0;
+  const isEmpty =
+    items.length === 0;
 
-  elements.emptySummary.hidden = !isEmpty;
-  elements.summaryTableWrap.hidden = isEmpty;
+  elements.emptySummary.hidden =
+    !isEmpty;
 
-  elements.clearOrderBtn.disabled = isEmpty;
-  elements.nextStepLink.classList.toggle("is-disabled", isEmpty);
+  elements.summaryTableWrap.hidden =
+    isEmpty;
+
+  elements.clearOrderBtn.disabled =
+    isEmpty;
+
+  elements.nextStepLink.classList.toggle(
+    "is-disabled",
+    isEmpty
+  );
 
   if (isEmpty) {
-    elements.summaryNote.textContent = "Добавьте хотя бы одну позицию, чтобы перейти к параметрам заказа.";
+    elements.summaryNote.textContent =
+      "Добавьте хотя бы одну позицию, чтобы перейти к параметрам заказа.";
   } else {
-    elements.summaryNote.textContent = "На следующем шаге можно добавить упаковку и сервисные услуги.";
+    elements.summaryNote.textContent =
+      "На следующем шаге можно добавить упаковку и сервисные услуги.";
   }
+}
+
+function getItemPriceHtml(item) {
+  const totalBeforeDiscount =
+    getItemTotalBeforeDiscount(item);
+
+  const discountPercent =
+    getItemDiscountPercent(item);
+
+  const discountAmount =
+    getItemDiscountAmount(item);
+
+  const total =
+    getItemTotal(item);
+
+  const vat =
+    getItemVat(item);
+
+  if (
+    discountPercent <= 0 ||
+    discountAmount <= 0
+  ) {
+    return `
+      <strong>
+        ${formatMoney(total)}
+      </strong>
+
+      <small>
+        НДС: ${formatMoney(vat)}
+      </small>
+    `;
+  }
+
+  return `
+    <span class="table-price-before">
+      До скидки:
+      ${formatMoney(
+        totalBeforeDiscount
+      )}
+    </span>
+
+    <span class="table-price-discount">
+      Скидка ${formatNumber(
+        discountPercent,
+        1
+      )}%:
+      −${formatMoney(
+        discountAmount
+      )}
+    </span>
+
+    <strong>
+      ${formatMoney(total)}
+    </strong>
+
+    <small>
+      НДС: ${formatMoney(vat)}
+    </small>
+  `;
 }
 
 function renderItemsTable(items) {
   if (!items.length) {
-    elements.itemsTableBody.innerHTML = "";
+    elements.itemsTableBody.innerHTML =
+      "";
+
     return;
   }
 
-  elements.itemsTableBody.innerHTML = items
-    .map((item, index) => {
-      return `
-        <tr>
-          <td>${index + 1}</td>
-          <td>
-            <strong>${escapeHtml(getProductName(item))}</strong>
-          </td>
-          <td>${getItemParamsText(item)}</td>
-          <td>${getItemSizeText(item)}</td>
-          <td>${getItemMaterialText(item)}</td>
-          <td>${getItemExtrasText(item)}</td>
-          <td>
-            <strong>${formatMoney(getItemTotal(item))}</strong>
-            <small>НДС: ${formatMoney(getItemVat(item))}</small>
-          </td>
-          <td>
-            <div class="table-actions">
-              <button type="button" data-action="edit" data-index="${index}">
-                Редактировать
-              </button>
-              <button type="button" data-action="duplicate" data-index="${index}">
-                Дублировать
-              </button>
-              <button type="button" data-action="delete" data-index="${index}">
-                Удалить
-              </button>
-            </div>
-          </td>
-        </tr>
-      `;
-    })
-    .join("");
+  elements.itemsTableBody.innerHTML =
+    items
+      .map((item, index) => {
+        return `
+          <tr>
+            <td>
+              ${index + 1}
+            </td>
+
+            <td>
+              <strong>
+                ${escapeHtml(
+                  getProductName(item)
+                )}
+              </strong>
+            </td>
+
+            <td>
+              ${getItemParamsText(item)}
+            </td>
+
+            <td>
+              ${getItemSizeText(item)}
+            </td>
+
+            <td>
+              ${getItemMaterialText(item)}
+            </td>
+
+            <td>
+              ${getItemExtrasText(item)}
+            </td>
+
+            <td>
+              <div class="table-price">
+                ${getItemPriceHtml(item)}
+              </div>
+            </td>
+
+            <td>
+              <div class="table-actions">
+                <button
+                  type="button"
+                  data-action="edit"
+                  data-index="${index}"
+                >
+                  Редактировать
+                </button>
+
+                <button
+                  type="button"
+                  data-action="duplicate"
+                  data-index="${index}"
+                >
+                  Дублировать
+                </button>
+
+                <button
+                  type="button"
+                  data-action="delete"
+                  data-index="${index}"
+                >
+                  Удалить
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+      })
+      .join("");
 }
 
 function renderPage() {
   const meta = getOrderMeta();
   const items = getItems();
-  const totals = getOrderTotals(items);
 
-  renderOrderMeta(meta, items, totals);
+  const totals =
+    getOrderTotals(items);
+
+  renderOrderMeta(
+    meta,
+    items,
+    totals
+  );
+
   renderEmptyState(items);
   renderItemsTable(items);
 }
@@ -455,27 +1043,38 @@ function deleteItem(index) {
   const items = getItems();
 
   items.splice(index, 1);
-  saveItems(items);
 
+  saveItems(items);
   renderPage();
 }
 
 function duplicateItem(index) {
   const items = getItems();
-  const sourceItem = items[index];
+  const sourceItem =
+    items[index];
 
   if (!sourceItem) {
     return;
   }
 
-  const copy = JSON.parse(JSON.stringify(sourceItem));
+  const copy =
+    JSON.parse(
+      JSON.stringify(sourceItem)
+    );
 
-  copy.duplicatedFrom = index + 1;
-  copy.createdAt = new Date().toISOString();
+  copy.duplicatedFrom =
+    index + 1;
 
-  items.splice(index + 1, 0, copy);
+  copy.createdAt =
+    new Date().toISOString();
+
+  items.splice(
+    index + 1,
+    0,
+    copy
+  );
+
   saveItems(items);
-
   renderPage();
 }
 
@@ -487,36 +1086,66 @@ function editItem(index) {
     return;
   }
 
-  sessionStorage.setItem(storageKeys.editItem, JSON.stringify(item));
-  sessionStorage.setItem(storageKeys.editIndex, String(index));
+  sessionStorage.setItem(
+    storageKeys.editItem,
+    JSON.stringify(item)
+  );
 
-  window.location.href = getEditUrl(item);
+  sessionStorage.setItem(
+    storageKeys.editIndex,
+    String(index)
+  );
+
+  window.location.href =
+    getEditUrl(item);
 }
 
 function clearOrder() {
-  const confirmed = window.confirm("Удалить все позиции из заказа?");
+  const confirmed =
+    window.confirm(
+      "Удалить все позиции из заказа?"
+    );
 
   if (!confirmed) {
     return;
   }
 
-  sessionStorage.removeItem(storageKeys.items);
-  sessionStorage.removeItem(storageKeys.orderMeta);
-  sessionStorage.removeItem(storageKeys.editItem);
-  sessionStorage.removeItem(storageKeys.editIndex);
+  sessionStorage.removeItem(
+    storageKeys.items
+  );
+
+  sessionStorage.removeItem(
+    storageKeys.orderMeta
+  );
+
+  sessionStorage.removeItem(
+    storageKeys.editItem
+  );
+
+  sessionStorage.removeItem(
+    storageKeys.editIndex
+  );
 
   renderPage();
 }
 
 function handleTableClick(event) {
-  const button = event.target.closest("button[data-action]");
+  const button =
+    event.target.closest(
+      "button[data-action]"
+    );
 
   if (!button) {
     return;
   }
 
-  const action = button.dataset.action;
-  const index = Number(button.dataset.index);
+  const action =
+    button.dataset.action;
+
+  const index =
+    Number(
+      button.dataset.index
+    );
 
   if (action === "delete") {
     deleteItem(index);
@@ -536,12 +1165,26 @@ function handleNextStepClick(event) {
 
   if (!items.length) {
     event.preventDefault();
-    alert("Добавьте хотя бы одну позицию в заказ.");
+
+    alert(
+      "Добавьте хотя бы одну позицию в заказ."
+    );
   }
 }
 
-elements.itemsTableBody.addEventListener("click", handleTableClick);
-elements.clearOrderBtn.addEventListener("click", clearOrder);
-elements.nextStepLink.addEventListener("click", handleNextStepClick);
+elements.itemsTableBody.addEventListener(
+  "click",
+  handleTableClick
+);
+
+elements.clearOrderBtn.addEventListener(
+  "click",
+  clearOrder
+);
+
+elements.nextStepLink.addEventListener(
+  "click",
+  handleNextStepClick
+);
 
 renderPage();

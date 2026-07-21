@@ -2,16 +2,29 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
   <title>Woodstock — проверка заказа</title>
-  <link rel="stylesheet" href="../css/main.css" />
+
+  <link
+    rel="stylesheet"
+    href="../css/main.css"
+  />
 </head>
+
 <body>
   <main class="start-page calc-page">
     <section class="calc-head">
       <div>
-        <p class="kicker">WOODSTOCK · Проверка заказа</p>
+        <p class="kicker">
+          WOODSTOCK · Проверка заказа
+        </p>
+
         <h1>Сводная спецификация</h1>
+
         <p class="lead">
           Проверьте рассчитанные позиции заказа перед добавлением упаковки,
           сервисных услуг и данных клиента.
@@ -24,12 +37,20 @@
         <section class="summary-card">
           <div class="summary-card__head">
             <div>
-              <p class="kicker">Данные расчёта</p>
-              <h2>Расчёт <span id="orderNumber">—</span></h2>
+              <p class="kicker">
+                Данные расчёта
+              </p>
+
+              <h2>
+                Расчёт
+                <span id="orderNumber">—</span>
+              </h2>
             </div>
 
             <div class="summary-status">
-              <span id="orderStatus">Черновик</span>
+              <span id="orderStatus">
+                Черновик
+              </span>
             </div>
           </div>
 
@@ -38,14 +59,31 @@
               <dt>Дата</dt>
               <dd id="orderDate">—</dd>
             </div>
+
             <div>
               <dt>Позиций</dt>
               <dd id="itemsCount">—</dd>
             </div>
+
+            <div>
+              <dt>Стоимость до скидки</dt>
+              <dd id="summaryTotalBeforeDiscount">
+                —
+              </dd>
+            </div>
+
+            <div>
+              <dt>Скидка</dt>
+              <dd id="summaryDiscount">
+                —
+              </dd>
+            </div>
+
             <div>
               <dt>Итого с НДС</dt>
               <dd id="summaryTotal">—</dd>
             </div>
+
             <div>
               <dt>В том числе НДС</dt>
               <dd id="summaryVat">—</dd>
@@ -56,23 +94,43 @@
         <section class="summary-card">
           <div class="summary-card__head">
             <div>
-              <p class="kicker">Позиции заказа</p>
+              <p class="kicker">
+                Позиции заказа
+              </p>
+
               <h2>Сводная таблица</h2>
             </div>
 
-            <button class="secondary-button" id="clearOrderBtn" type="button">
+            <button
+              class="secondary-button"
+              id="clearOrderBtn"
+              type="button"
+            >
               Очистить заказ
             </button>
           </div>
 
-          <div class="empty-summary" id="emptySummary">
-            <p>В заказ ещё не добавлены позиции.</p>
-            <a class="next-step-button next-step-button--inline" href="product-type.html">
+          <div
+            class="empty-summary"
+            id="emptySummary"
+          >
+            <p>
+              В заказ ещё не добавлены позиции.
+            </p>
+
+            <a
+              class="next-step-button next-step-button--inline"
+              href="product-type.html"
+            >
               Добавить позицию
             </a>
           </div>
 
-          <div class="summary-table-wrap" id="summaryTableWrap" hidden>
+          <div
+            class="summary-table-wrap"
+            id="summaryTableWrap"
+            hidden
+          >
             <table class="summary-table">
               <thead>
                 <tr>
@@ -95,39 +153,71 @@
 
       <aside class="spec-panel">
         <div class="spec-panel__inner">
-          <p class="kicker">Итог заказа</p>
-          <h2 class="spec-title">Проверка</h2>
+          <p class="kicker">
+            Итог заказа
+          </p>
+
+          <h2 class="spec-title">
+            Проверка
+          </h2>
 
           <dl class="spec-list">
             <div>
               <dt>Номер расчёта</dt>
               <dd id="sideOrderNumber">—</dd>
             </div>
+
             <div>
               <dt>Статус</dt>
-              <dd id="sideOrderStatus">Черновик</dd>
+              <dd id="sideOrderStatus">
+                Черновик
+              </dd>
             </div>
+
             <div>
               <dt>Позиций</dt>
               <dd id="sideItemsCount">—</dd>
             </div>
           </dl>
 
+          <div
+            class="breakdown-list"
+            id="sideOrderBreakdown"
+          ></div>
+
           <div class="total-box">
-            <span>Итого по позициям с НДС</span>
-            <strong id="sideTotal">—</strong>
-            <small id="sideVat">В том числе НДС: —</small>
+            <span>
+              Итого по позициям с НДС
+            </span>
+
+            <strong id="sideTotal">
+              —
+            </strong>
+
+            <small id="sideVat">
+              В том числе НДС: —
+            </small>
           </div>
 
-          <p class="spec-note" id="summaryNote">
+          <p
+            class="spec-note"
+            id="summaryNote"
+          >
             На следующем шаге можно добавить упаковку и сервисные услуги.
           </p>
 
-          <a class="next-step-button" href="order-options.html" id="nextStepLink">
+          <a
+            class="next-step-button"
+            href="order-options.html"
+            id="nextStepLink"
+          >
             Перейти к параметрам заказа
           </a>
 
-          <a class="next-step-link" href="product-type.html">
+          <a
+            class="next-step-link"
+            href="product-type.html"
+          >
             Добавить ещё позицию
           </a>
         </div>

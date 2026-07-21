@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>
+    Woodstock — краткий расчёт инженерной доски
+  </title>
+
+  <link
+    rel="stylesheet"
+    href="../css/main.css"
+  />
+</head>
+
+<body>
+  <main class="start-page calc-page quick-flooring-page">
+    <section class="calc-head">
+      <div>
+        <p class="kicker">
+          WOODSTOCK · КРАТКИЙ РАСЧЁТ
+        </p>
+
+        <h1>
+          Инженерная доска
+        </h1>
+
+        <p class="lead">
+          Предварительный расчёт по породе или шпону,
+          толщине верхнего слоя, раскладке и площади помещения.
+        </p>
+      </div>
+
+      <a
+        class="back-link"
+        href="quick-product-type.html"
+      >
+        Назад к выбору изделия
+      </a>
+    </section>
+
+    <section class="calc-layout">
+      <form
+        class="calc-form"
+        id="quickFlooringForm"
+        novalidate
+      >
+        <!-- Материал -->
+        <div class="form-block">
+          <h2>Материал</h2>
+
+          <label class="field">
+            <span class="field__label">
+              Порода / шпон
+            </span>
+
+            <div
+              class="searchable-select"
+              id="speciesCombobox"
+            >
+              <select
+                class="searchable-select__native"
+                id="speciesSelect"
+                required
+                tabindex="-1"
+                aria-hidden="true"
+              >
+                <option value="">
+                  Выберите породу / шпон
+                </option>
+              </select>
+
+              <div class="searchable-select__control">
+                <input
+                  class="searchable-select__input"
+                  id="speciesSearch"
+                  type="text"
+                  autocomplete="off"
+                  placeholder="Выберите породу / шпон"
+                  role="combobox"
+                  aria-autocomplete="list"
+                  aria-expanded="false"
+                  aria-controls="speciesDropdown"
+                />
+
+                <button
+                  class="searchable-select__toggle"
+                  type="button"
+                  aria-label="Открыть список пород и шпона"
+                ></button>
+              </div>
+
+              <div
+                class="searchable-select__dropdown is-hidden"
+                id="speciesDropdown"
+                role="listbox"
+              ></div>
+            </div>
+
+            <span class="field__note">
+              Начните вводить название или откройте полный список.
+              Справа указан тип материала.
+            </span>
+          </label>
+
+          <label class="field">
+            <span class="field__label">
+              Толщина верхнего слоя
+            </span>
+
+            <select
+              id="topLayerSelect"
+              required
+              disabled
+            >
+              <option value="">
+                Сначала выберите породу / шпон
+              </option>
+            </select>
+
+            <span class="field__note">
+              Цена определяется выбранным материалом,
+              породой или шпоном и толщиной верхнего слоя.
+            </span>
+          </label>
+        </div>
+
+        <!-- Раскладка и площадь -->
+        <div class="form-block">
+          <h2>Раскладка и площадь</h2>
+
+          <label class="field">
+            <span class="field__label">
+              Тип раскладки
+            </span>
+
+            <select
+              id="patternSelect"
+              required
+            >
+              <option value="">
+                Выберите тип раскладки
+              </option>
+            </select>
+
+            <span class="field__note">
+              Процент технологического запаса
+              подставляется автоматически.
+            </span>
+          </label>
+
+          <label class="field">
+            <span class="field__label">
+              Площадь помещения, м²
+            </span>
+
+            <input
+              id="roomAreaInput"
+              type="number"
+              min="0.01"
+              step="0.01"
+              placeholder="Например, 35"
+              required
+            />
+
+            <span class="field__note">
+              Укажите площадь помещения без технологического запаса.
+            </span>
+          </label>
+
+          <div
+            class="option-info-box"
+            id="areaInfoBox"
+          >
+            <p id="areaInfoText">
+              После выбора раскладки и ввода площади
+              здесь появится площадь с запасом.
+            </p>
+          </div>
+        </div>
+
+        <!-- Покрытие -->
+        <div class="form-block">
+          <h2>Покрытие</h2>
+
+          <div class="fixed-option-card">
+            <div class="fixed-option-card__mark">
+              ✓
+            </div>
+
+            <div class="fixed-option-card__content">
+              <strong>
+                Лаковое покрытие включено
+              </strong>
+
+              <p>
+                Паркетный лак, блеск 10%.
+              </p>
+            </div>
+
+            <span class="fixed-option-card__badge">
+              Задано
+            </span>
+          </div>
+
+          <p class="field__note fixed-option-note">
+            В кратком режиме покрытие задано заранее
+            и не может быть изменено.
+          </p>
+        </div>
+
+        <!-- Данные для связи -->
+        <div class="form-block">
+          <h2>Данные для связи</h2>
+
+          <div class="field-grid field-grid--two">
+            <label class="field">
+              <span class="field__label">
+                Имя
+              </span>
+
+              <input
+                id="nameInput"
+                type="text"
+                autocomplete="name"
+                placeholder="Ваше имя"
+              />
+            </label>
+
+            <label class="field">
+              <span class="field__label">
+                Номер телефона *
+              </span>
+
+              <input
+                id="phoneInput"
+                type="tel"
+                autocomplete="tel"
+                placeholder="+7 900 000-00-00"
+              />
+            </label>
+          </div>
+
+          <div class="service-list contact-manager-option">
+            <label class="service-card">
+              <input
+                id="managerContactInput"
+                type="checkbox"
+              />
+
+              <span>
+                <strong>
+                  Попросить менеджера связаться со мной
+                </strong>
+
+                <span>
+                  Менеджер проверит параметры расчёта
+                  и поможет уточнить заказ.
+                </span>
+              </span>
+            </label>
+          </div>
+
+          <label class="field">
+            <span class="field__label">
+              Комментарий
+            </span>
+
+            <textarea
+              id="commentInput"
+              rows="4"
+              placeholder="Дополнительные требования к изделию"
+            ></textarea>
+
+            <span class="field__note">
+              Комментарий будет добавлен
+              в предварительную спецификацию.
+            </span>
+          </label>
+
+          <label class="field file-upload-box">
+            <span class="field__label">
+              Файлы
+            </span>
+
+            <input
+              id="filesInput"
+              type="file"
+              multiple
+            />
+
+            <span class="field__note">
+              Можно приложить план помещения,
+              схему раскладки, изображение
+              или техническое задание.
+            </span>
+
+            <div
+              class="uploaded-files"
+              id="selectedFiles"
+            >
+              Файлы не выбраны
+            </div>
+          </label>
+
+          <div class="service-list privacy-option">
+            <label class="service-card">
+              <input
+                id="privacyInput"
+                type="checkbox"
+              />
+
+              <span>
+                <strong>
+                  Согласие на обработку персональных данных
+                </strong>
+
+                <span>
+                  Я соглашаюсь на обработку
+                  указанных персональных данных.
+                </span>
+              </span>
+            </label>
+          </div>
+        </div>
+      </form>
+
+      <!-- Предварительная спецификация -->
+      <aside class="spec-panel">
+        <div class="spec-panel__inner">
+          <p class="kicker">
+            Предварительная спецификация
+          </p>
+
+          <h2 class="spec-title">
+            Инженерная доска
+          </h2>
+
+          <div
+            class="empty-spec"
+            id="emptySpec"
+          >
+            Выберите породу или шпон, толщину верхнего слоя,
+            раскладку и укажите площадь.
+          </div>
+
+          <div
+            class="spec-content is-hidden"
+            id="specContent"
+          >
+            <dl class="spec-list">
+              <div>
+                <dt>Тип материала</dt>
+                <dd id="specMaterialType">—</dd>
+              </div>
+
+              <div>
+                <dt>Порода / шпон</dt>
+                <dd id="specSpecies">—</dd>
+              </div>
+
+              <div>
+                <dt>Верхний слой</dt>
+                <dd id="specTopLayer">—</dd>
+              </div>
+
+              <div>
+                <dt>Цена за м²</dt>
+                <dd id="specPrice">—</dd>
+              </div>
+
+              <div>
+                <dt>Раскладка</dt>
+                <dd id="specPattern">—</dd>
+              </div>
+
+              <div>
+                <dt>Площадь помещения</dt>
+                <dd id="specRoomArea">—</dd>
+              </div>
+
+              <div>
+                <dt>Запас</dt>
+                <dd id="specWaste">—</dd>
+              </div>
+
+              <div>
+                <dt>Площадь с запасом</dt>
+                <dd id="specAreaWithWaste">—</dd>
+              </div>
+
+              <div>
+                <dt>Площадь к оплате</dt>
+                <dd id="specPaidArea">—</dd>
+              </div>
+
+              <div>
+                <dt>Покрытие</dt>
+                <dd>
+                  Паркетный лак, блеск 10%
+                </dd>
+              </div>
+            </dl>
+
+            <div class="formula-box">
+              <span>
+                Формула
+              </span>
+
+              <p>
+                Стоимость = площадь к оплате × цена выбранной позиции за м²
+              </p>
+            </div>
+
+            <div class="total-box">
+              <span>
+                Предварительная стоимость
+              </span>
+
+              <strong id="specTotal">
+                —
+              </strong>
+
+              <small id="specVat">
+                В том числе НДС: —
+              </small>
+            </div>
+
+            <p
+              class="spec-note"
+              id="minAreaNote"
+            >
+              Минимальная партия — 20 м².
+            </p>
+
+            <p class="spec-note">
+              Стоимость предварительная.
+              Окончательные параметры и наличие материала
+              подтверждаются менеджером Woodstock.
+            </p>
+
+            <div class="quick-spec-actions">
+              <button
+                class="next-step-button"
+                id="downloadSpecBtn"
+                type="button"
+              >
+                Скачать спецификацию PDF
+              </button>
+
+              <a
+                class="next-step-link is-hidden"
+                id="anotherProductBtn"
+                href="quick-product-type.html"
+              >
+                Рассчитать другое изделие
+              </a>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.10/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.10/vfs_fonts.js"></script>
+
+  <script src="../js/quick-flooring.js"></script>
+</body>
+</html>

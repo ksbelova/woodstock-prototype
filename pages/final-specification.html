@@ -2,12 +2,24 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Woodstock — финальная спецификация</title>
-  <link rel="stylesheet" href="../css/main.css" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>
+    Woodstock — финальная спецификация
+  </title>
+
+  <link
+    rel="stylesheet"
+    href="../css/main.css"
+  />
+
   <style>
     .final-table {
-      min-width: 1680px;
+      min-width: 1880px;
     }
 
     @media print {
@@ -17,63 +29,63 @@
 
       .final-table th,
       .final-table td {
-        font-size: 7px !important;
-        padding: 4px 3px !important;
+        font-size: 6.5px !important;
+        padding: 4px 2px !important;
       }
 
       .final-table th:nth-child(1),
       .final-table td:nth-child(1) {
-        width: 2.5%;
+        width: 2%;
       }
 
       .final-table th:nth-child(2),
       .final-table td:nth-child(2) {
-        width: 8%;
+        width: 7%;
       }
 
       .final-table th:nth-child(3),
       .final-table td:nth-child(3) {
-        width: 10%;
+        width: 8%;
       }
 
       .final-table th:nth-child(4),
       .final-table td:nth-child(4) {
-        width: 11%;
+        width: 9%;
       }
 
       .final-table th:nth-child(5),
       .final-table td:nth-child(5) {
-        width: 12%;
+        width: 10%;
       }
 
       .final-table th:nth-child(6),
       .final-table td:nth-child(6) {
-        width: 12%;
+        width: 11%;
       }
 
       .final-table th:nth-child(7),
       .final-table td:nth-child(7) {
-        width: 4.5%;
+        width: 4%;
       }
 
       .final-table th:nth-child(8),
       .final-table td:nth-child(8) {
-        width: 5%;
+        width: 4.5%;
       }
 
       .final-table th:nth-child(9),
       .final-table td:nth-child(9) {
-        width: 6%;
+        width: 5%;
       }
 
       .final-table th:nth-child(10),
       .final-table td:nth-child(10) {
-        width: 6%;
+        width: 5%;
       }
 
       .final-table th:nth-child(11),
       .final-table td:nth-child(11) {
-        width: 7%;
+        width: 6%;
       }
 
       .final-table th:nth-child(12),
@@ -83,36 +95,65 @@
 
       .final-table th:nth-child(13),
       .final-table td:nth-child(13) {
-        width: 5%;
+        width: 6%;
       }
 
       .final-table th:nth-child(14),
       .final-table td:nth-child(14) {
+        width: 4.5%;
+      }
+
+      .final-table th:nth-child(15),
+      .final-table td:nth-child(15) {
+        width: 5%;
+      }
+
+      .final-table th:nth-child(16),
+      .final-table td:nth-child(16) {
         width: 6%;
       }
     }
   </style>
 </head>
+
 <body>
   <main class="start-page calc-page final-page">
     <section class="calc-head final-page__head">
       <div>
-        <p class="kicker">WOODSTOCK · Финальная спецификация</p>
+        <p class="kicker">
+          WOODSTOCK · Финальная спецификация
+        </p>
+
         <h1>Итоговая заявка</h1>
+
         <p class="lead">
-          Проверьте финальную спецификацию заказа, данные клиента, услуги и итоговую стоимость.
+          Проверьте финальную спецификацию заказа, данные клиента,
+          услуги и итоговую стоимость.
         </p>
       </div>
 
-      <a class="back-link no-print" href="order-details.html">Назад к данным заказа</a>
+      <a
+        class="back-link no-print"
+        href="order-details.html"
+      >
+        Назад к данным заказа
+      </a>
     </section>
 
     <section class="final-actions no-print">
-      <button class="secondary-button" id="printBtn" type="button">
+      <button
+        class="secondary-button"
+        id="printBtn"
+        type="button"
+      >
         Печать / сохранить PDF
       </button>
 
-      <button class="secondary-button" id="newOrderBtn" type="button">
+      <button
+        class="secondary-button"
+        id="newOrderBtn"
+        type="button"
+      >
         Начать новый расчёт
       </button>
     </section>
@@ -120,8 +161,14 @@
     <section class="final-document">
       <section class="final-card final-card--header">
         <div>
-          <p class="kicker">Спецификация</p>
-          <h2>Расчёт <span id="orderNumber">—</span></h2>
+          <p class="kicker">
+            Спецификация
+          </p>
+
+          <h2>
+            Расчёт
+            <span id="orderNumber">—</span>
+          </h2>
         </div>
 
         <div class="final-status">
@@ -131,21 +178,26 @@
 
       <section class="final-grid">
         <div class="final-card">
-          <p class="kicker">Данные расчёта</p>
+          <p class="kicker">
+            Данные расчёта
+          </p>
 
           <dl class="final-list">
             <div>
               <dt>Номер расчёта</dt>
               <dd id="metaOrderNumber">—</dd>
             </div>
+
             <div>
               <dt>Дата</dt>
               <dd id="metaOrderDate">—</dd>
             </div>
+
             <div>
               <dt>Статус</dt>
               <dd id="metaOrderStatus">—</dd>
             </div>
+
             <div>
               <dt>Позиций</dt>
               <dd id="metaItemsCount">—</dd>
@@ -154,13 +206,16 @@
         </div>
 
         <div class="final-card">
-          <p class="kicker">Менеджер</p>
+          <p class="kicker">
+            Менеджер
+          </p>
 
           <dl class="final-list">
             <div>
               <dt>Ответственный</dt>
               <dd id="managerName">—</dd>
             </div>
+
             <div>
               <dt>Филиал</dt>
               <dd id="managerBranch">—</dd>
@@ -169,29 +224,36 @@
         </div>
 
         <div class="final-card">
-          <p class="kicker">Клиент</p>
+          <p class="kicker">
+            Клиент
+          </p>
 
           <dl class="final-list">
             <div>
               <dt>Клиент</dt>
               <dd id="clientName">—</dd>
             </div>
+
             <div>
               <dt>Тип клиента</dt>
               <dd id="clientType">—</dd>
             </div>
+
             <div>
               <dt>Телефон</dt>
               <dd id="clientPhone">—</dd>
             </div>
+
             <div>
               <dt>Email</dt>
               <dd id="clientEmail">—</dd>
             </div>
+
             <div id="companyRow">
               <dt>Компания</dt>
               <dd id="clientCompany">—</dd>
             </div>
+
             <div id="innRow">
               <dt>ИНН</dt>
               <dd id="clientInn">—</dd>
@@ -203,7 +265,10 @@
       <section class="final-card">
         <div class="final-card__head">
           <div>
-            <p class="kicker">Позиции заказа</p>
+            <p class="kicker">
+              Позиции заказа
+            </p>
+
             <h2>Состав заказа</h2>
           </div>
         </div>
@@ -222,7 +287,9 @@
                 <th>Кол-во м²</th>
                 <th>Цена за шт.</th>
                 <th>Цена за м²</th>
-                <th>Сумма за детали</th>
+                <th>До скидки</th>
+                <th>Скидка</th>
+                <th>Итого</th>
                 <th>Объём м³</th>
                 <th>Вес</th>
                 <th>Срок</th>
@@ -236,25 +303,31 @@
 
       <section class="final-grid final-grid--two">
         <div class="final-card">
-          <p class="kicker">Технические параметры</p>
+          <p class="kicker">
+            Технические параметры
+          </p>
 
           <dl class="final-list">
             <div>
               <dt>Общая площадь</dt>
               <dd id="technicalArea">—</dd>
             </div>
+
             <div>
               <dt>Объём</dt>
               <dd id="technicalVolume">—</dd>
             </div>
+
             <div>
               <dt>Вес нетто</dt>
               <dd id="technicalNetWeight">—</dd>
             </div>
+
             <div>
               <dt>Вес брутто</dt>
               <dd id="technicalGrossWeight">—</dd>
             </div>
+
             <div>
               <dt>Срок изготовления</dt>
               <dd id="technicalProductionTerm">—</dd>
@@ -262,63 +335,99 @@
           </dl>
 
           <p class="final-note">
-            Объём считается как площадь × толщина. Вес брутто учитывает упаковку, если она добавлена на странице параметров заказа.
+            Объём считается как площадь × толщина. Вес брутто учитывает
+            упаковку, если она добавлена на странице параметров заказа.
           </p>
         </div>
 
         <div class="final-card">
-          <p class="kicker">Упаковка</p>
+          <p class="kicker">
+            Упаковка
+          </p>
 
           <dl class="final-list">
             <div>
               <dt>Тип</dt>
               <dd id="packagingName">—</dd>
             </div>
+
             <div>
               <dt>Площадь</dt>
               <dd id="packagingArea">—</dd>
             </div>
+
             <div>
               <dt>Тариф</dt>
               <dd id="packagingRate">—</dd>
             </div>
+
             <div>
               <dt>Коэффициент</dt>
               <dd id="packagingMultiplier">—</dd>
             </div>
+
             <div>
               <dt>Стоимость</dt>
               <dd id="packagingTotal">—</dd>
             </div>
           </dl>
 
-          <p class="final-note" id="packagingNote">—</p>
+          <p
+            class="final-note"
+            id="packagingNote"
+          >
+            —
+          </p>
         </div>
       </section>
 
       <section class="final-grid final-grid--two">
         <div class="final-card">
-          <p class="kicker">Сервисные услуги</p>
+          <p class="kicker">
+            Сервисные услуги
+          </p>
 
-          <div class="final-services" id="servicesList">
+          <div
+            class="final-services"
+            id="servicesList"
+          >
             Услуги не выбраны.
           </div>
 
-          <p class="final-note" id="servicesComment">—</p>
+          <p
+            class="final-note"
+            id="servicesComment"
+          >
+            —
+          </p>
         </div>
 
         <div class="final-card">
-          <p class="kicker">Файлы и требования</p>
+          <p class="kicker">
+            Файлы и требования
+          </p>
 
           <dl class="final-list">
             <div>
-              <dt>Файлы</dt>
+              <dt>Файлы к позициям</dt>
+              <dd id="itemFilesList">—</dd>
+            </div>
+
+            <div>
+              <dt>Файлы к заказу</dt>
               <dd id="filesList">—</dd>
             </div>
+
+            <div>
+              <dt>Комментарии к позициям</dt>
+              <dd id="itemCommentsList">—</dd>
+            </div>
+
             <div>
               <dt>Требования</dt>
               <dd id="orderRequirements">—</dd>
             </div>
+
             <div>
               <dt>Комментарий менеджера</dt>
               <dd id="managerComment">—</dd>
@@ -330,41 +439,62 @@
       <section class="final-grid final-grid--two">
         <div class="final-card final-card--notice">
           <p>
-            Сроки изготовления обновлены по новым материалам: стандартные панели — 7–9 рабочих дней,
-            нестандартные панели — 12–15 рабочих дней, изделия с финишем — от 20 рабочих дней,
-            панели или фасады с дополнительными операциями — от 25 рабочих дней.
-            Для инженерной доски применяется срок 1,5 месяца.
+            Сроки изготовления обновлены по новым материалам:
+            стандартные панели — 7–9 рабочих дней,
+            нестандартные панели — 12–15 рабочих дней,
+            изделия с финишем — от 20 рабочих дней,
+            панели или фасады с дополнительными операциями —
+            от 25 рабочих дней. Для инженерной доски применяется
+            срок 1,5 месяца.
           </p>
         </div>
 
         <div class="final-card final-card--total">
-          <p class="kicker">Итог</p>
+          <p class="kicker">
+            Итог
+          </p>
 
           <dl class="final-total-list">
             <div>
               <dt>Средняя цена за 1 шт.</dt>
               <dd id="averageUnitPrice">—</dd>
             </div>
+
             <div>
               <dt>Средняя цена за 1 м²</dt>
               <dd id="averageM2Price">—</dd>
             </div>
+
+            <div>
+              <dt>Стоимость деталей до скидки</dt>
+              <dd id="itemsTotalBeforeDiscount">—</dd>
+            </div>
+
+            <div>
+              <dt>Скидка по позициям</dt>
+              <dd id="itemsDiscountTotal">—</dd>
+            </div>
+
             <div>
               <dt>Стоимость деталей</dt>
               <dd id="itemsTotal">—</dd>
             </div>
+
             <div>
               <dt>Упаковка</dt>
               <dd id="summaryPackagingTotal">—</dd>
             </div>
+
             <div>
               <dt>Сервисные услуги</dt>
               <dd id="summaryServicesTotal">—</dd>
             </div>
+
             <div>
               <dt>Итого с НДС</dt>
               <dd id="finalTotal">—</dd>
             </div>
+
             <div>
               <dt>В том числе НДС</dt>
               <dd id="finalVat">—</dd>
@@ -375,10 +505,12 @@
 
       <section class="final-card final-card--notice">
         <p>
-          Цена в спецификации является предварительной. Окончательная стоимость товара
-          согласовывается менеджером перед оплатой. Сервисные услуги с демонстрационным
-          тарифом 1 000 ₽ используются в прототипе для проверки влияния услуги на итоговую стоимость.
-          Для стрейч, лёгкой и глухой упаковки тариф не подтверждён в предоставленных материалах.
+          Цена в спецификации является предварительной. Окончательная
+          стоимость товара согласовывается менеджером перед оплатой.
+          Сервисные услуги с демонстрационным тарифом 1 000 ₽ используются
+          в прототипе для проверки влияния услуги на итоговую стоимость.
+          Для стрейч, лёгкой и глухой упаковки тариф не подтверждён
+          в предоставленных материалах.
         </p>
       </section>
     </section>

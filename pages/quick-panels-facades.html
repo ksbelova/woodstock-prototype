@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>
+    Woodstock — краткий расчёт панелей и фасадов
+  </title>
+
+  <link
+    rel="stylesheet"
+    href="../css/main.css"
+  />
+</head>
+
+<body>
+  <main class="start-page calc-page quick-panels-facades-page">
+    <section class="calc-head">
+      <div>
+        <p class="kicker">
+          WOODSTOCK · КРАТКИЙ РАСЧЁТ
+        </p>
+
+        <h1 id="pageTitle">
+          Интерьерные панели
+        </h1>
+
+        <p
+          class="lead"
+          id="pageLead"
+        >
+          Предварительный расчёт стоимости по основным параметрам изделия.
+        </p>
+      </div>
+
+      <a
+        class="back-link"
+        href="quick-product-type.html"
+      >
+        Назад к выбору изделия
+      </a>
+    </section>
+
+    <section class="calc-layout">
+      <form
+        class="calc-form"
+        id="quickPanelsFacadesForm"
+        novalidate
+      >
+        <!-- Основа -->
+        <div class="form-block">
+          <h2>Основа</h2>
+
+          <div class="quick-choice-list">
+            <label class="quick-choice-card">
+              <input
+                type="radio"
+                name="base"
+                value="mdf"
+                checked
+              />
+
+              <span class="quick-choice-card__content">
+                <strong>МДФ</strong>
+
+                <small>
+                  Основной вариант для интерьерных панелей
+                  и мебельных фасадов.
+                </small>
+              </span>
+            </label>
+
+            <label class="quick-choice-card">
+              <input
+                type="radio"
+                name="base"
+                value="gsp"
+              />
+
+              <span class="quick-choice-card__content">
+                <strong>
+                  Противопожарная плита
+                </strong>
+
+                <small>
+                  Гипсостружечная плита для проектов
+                  с повышенными требованиями
+                  к пожарной безопасности.
+                </small>
+              </span>
+            </label>
+          </div>
+
+          <label class="field">
+            <span class="field__label">
+              Толщина основы, мм
+            </span>
+
+            <select
+              id="thicknessSelect"
+              required
+            >
+              <option value="">
+                Загрузка доступных толщин
+              </option>
+            </select>
+
+            <span
+              class="field__note"
+              id="baseNote"
+            >
+              Доступные значения зависят от выбранной основы.
+            </span>
+          </label>
+        </div>
+
+        <!-- Фанеровка -->
+        <div class="form-block">
+          <h2>Фанеровка</h2>
+
+          <label class="field">
+            <span class="field__label">
+              Шпон
+            </span>
+
+            <div
+              class="searchable-select"
+              id="veneerCombobox"
+            >
+              <select
+                class="searchable-select__native"
+                id="veneerSelect"
+                required
+                tabindex="-1"
+                aria-hidden="true"
+              >
+                <option value="">
+                  Выберите шпон
+                </option>
+              </select>
+
+              <div class="searchable-select__control">
+                <input
+                  class="searchable-select__input"
+                  id="veneerSearch"
+                  type="text"
+                  autocomplete="off"
+                  placeholder="Выберите шпон"
+                  role="combobox"
+                  aria-autocomplete="list"
+                  aria-expanded="false"
+                  aria-controls="veneerDropdown"
+                />
+
+                <button
+                  class="searchable-select__toggle"
+                  type="button"
+                  aria-label="Открыть список шпона"
+                ></button>
+              </div>
+
+              <div
+                class="searchable-select__dropdown is-hidden"
+                id="veneerDropdown"
+                role="listbox"
+              ></div>
+            </div>
+
+            <span class="field__note">
+              Начните вводить название или откройте полный список.
+            </span>
+          </label>
+
+          <div class="field-grid">
+            <label class="field">
+              <span class="field__label">
+                Направление волокон
+              </span>
+
+              <select id="fiberDirectionSelect">
+                <option value="length">
+                  По длине
+                </option>
+
+                <option value="width">
+                  По ширине
+                </option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span class="field__label">
+                Расклад шпона
+              </span>
+
+              <select id="veneerLayoutSelect">
+                <option value="book">
+                  Книжка
+                </option>
+
+                <option value="straight">
+                  Прямая
+                </option>
+
+                <option value="straight_shifted">
+                  Прямая с перекладкой
+                </option>
+
+                <option value="mixed">
+                  Смешанная / микс
+                </option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span class="field__label">
+                Переход текстуры
+              </span>
+
+              <select id="textureTransitionSelect">
+                <option value="no">
+                  Нет
+                </option>
+
+                <option value="yes">
+                  Да
+                </option>
+              </select>
+
+              <span class="field__note">
+                Переход текстуры увеличивает стоимость производственных работ.
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Размер и количество -->
+        <div class="form-block">
+          <h2>Размер и количество</h2>
+
+          <div class="standard-size-list">
+            <span class="field__label">
+              Стандартные размеры выбранной основы
+            </span>
+
+            <p
+              class="field__note"
+              id="standardSizeNote"
+            >
+              Сначала выберите основу. Стандартные размеры зависят от материала.
+            </p>
+
+            <div
+              class="standard-size-values"
+              id="standardSizeValues"
+              aria-label="Стандартные размеры"
+            >
+              <span>Загрузка размеров</span>
+            </div>
+          </div>
+
+          <div class="size-rows-head">
+            <span>
+              Размеры изделий
+            </span>
+
+            <small>
+              Каждый размер будет рассчитан отдельной позицией.
+            </small>
+          </div>
+
+          <div
+            class="size-rows"
+            id="sizeRows"
+          >
+            <div
+              class="size-row"
+              data-size-row
+            >
+              <div class="field-grid field-grid--size-row">
+                <label class="field">
+                  <span class="field__label">
+                    Длина, мм
+                  </span>
+
+                  <input
+                    data-size-length
+                    type="number"
+                    min="1"
+                    step="1"
+                    placeholder="Например, 2440"
+                  />
+                </label>
+
+                <label class="field">
+                  <span class="field__label">
+                    Ширина, мм
+                  </span>
+
+                  <input
+                    data-size-width
+                    type="number"
+                    min="1"
+                    step="1"
+                    placeholder="Например, 1220"
+                  />
+                </label>
+
+                <label class="field">
+                  <span class="field__label">
+                    Количество, шт.
+                  </span>
+
+                  <input
+                    data-size-quantity
+                    type="number"
+                    min="1"
+                    step="1"
+                    placeholder="Например, 2"
+                  />
+                </label>
+
+                <div class="size-row__actions">
+                  <button
+                    class="size-row__remove"
+                    data-remove-size-row
+                    type="button"
+                    aria-label="Удалить размер"
+                    disabled
+                  >
+                    Удалить
+                  </button>
+                </div>
+              </div>
+
+              <div
+                class="field-status is-hidden"
+                data-size-status
+              ></div>
+            </div>
+          </div>
+
+          <button
+            class="secondary-button add-size-row-button"
+            id="addSizeRowBtn"
+            type="button"
+          >
+            Добавить ещё один размер
+          </button>
+
+          <p class="field__note size-note">
+            Стандартный размер считается по таблице стандартных цен.
+            Нестандартный размер считается по формуле нестандартных панелей,
+            и система автоматически добавляет раскрой по периметру.
+          </p>
+        </div>
+
+        <!-- Кромка -->
+        <div class="form-block">
+          <h2>Кромка</h2>
+
+          <div class="fixed-option-card">
+            <div class="fixed-option-card__mark">
+              ✓
+            </div>
+
+            <div class="fixed-option-card__content">
+              <strong>
+                Кромка включена в расчёт
+              </strong>
+
+              <p>
+                По всему периметру изделия, толщина кромки — 1 мм.
+              </p>
+            </div>
+
+            <span class="fixed-option-card__badge">
+              Задано
+            </span>
+          </div>
+
+          <p class="field__note fixed-option-note">
+            В кратком режиме параметры кромки фиксированы и не могут быть изменены.
+          </p>
+        </div>
+
+        <!-- Финиш -->
+        <div class="form-block">
+          <h2>Финиш</h2>
+
+          <div class="fixed-option-card">
+            <div class="fixed-option-card__mark">
+              ✓
+            </div>
+
+            <div class="fixed-option-card__content">
+              <strong>
+                Лаковое покрытие включено
+              </strong>
+
+              <p>
+                Акриловый лак, блеск 10%, покрытие одной стороны.
+              </p>
+            </div>
+
+            <span class="fixed-option-card__badge">
+              Задано
+            </span>
+          </div>
+
+          <p class="field__note fixed-option-note">
+            Для предварительного расчёта используются фиксированные параметры финиша.
+          </p>
+        </div>
+
+       <!-- Только для фасадов -->
+        <div
+        class="form-block is-hidden"
+        id="facadeOptionsBlock"
+        >
+        <h2>Фурнитура</h2>
+
+        <label class="quick-checkbox-card">
+            <input
+            id="hardwarePreparationInput"
+            type="checkbox"
+            checked
+            />
+
+            <span class="quick-checkbox-card__control"></span>
+
+            <span class="quick-checkbox-card__content">
+            <strong>
+                Нужна фрезеровка и присадка под фурнитуру
+            </strong>
+
+            <small>
+                В прототипе применяется предварительный тариф
+                1 000 ₽ за каждую размерную позицию.
+                Точная стоимость зависит от технического задания.
+            </small>
+            </span>
+        </label>
+        </div>
+
+        <!-- Данные для связи -->
+        <div class="form-block">
+          <h2>Данные для связи</h2>
+
+          <div class="field-grid field-grid--two">
+            <label class="field">
+              <span class="field__label">
+                Имя
+              </span>
+
+              <input
+                id="nameInput"
+                type="text"
+                autocomplete="name"
+                placeholder="Ваше имя"
+              />
+            </label>
+
+            <label class="field">
+              <span class="field__label">
+                Номер телефона *
+              </span>
+
+              <input
+                id="phoneInput"
+                type="tel"
+                autocomplete="tel"
+                placeholder="+7 900 000-00-00"
+              />
+            </label>
+          </div>
+
+          <div class="service-list contact-manager-option">
+            <label class="service-card">
+              <input
+                id="managerContactInput"
+                type="checkbox"
+              />
+
+              <span>
+                <strong>
+                  Попросить менеджера связаться со мной
+                </strong>
+
+                <span>
+                  Менеджер проверит параметры расчёта
+                  и поможет уточнить заказ.
+                </span>
+              </span>
+            </label>
+          </div>
+
+          <label class="field">
+            <span class="field__label">
+              Комментарий
+            </span>
+
+            <textarea
+              id="commentInput"
+              rows="4"
+              placeholder="Дополнительные требования к изделию"
+            ></textarea>
+
+            <span class="field__note">
+              Комментарий будет добавлен в предварительную спецификацию.
+            </span>
+          </label>
+
+          <label class="field file-upload-box">
+            <span class="field__label">
+              Файлы
+            </span>
+
+            <input
+              id="filesInput"
+              type="file"
+              multiple
+            />
+
+            <span class="field__note">
+              Можно приложить чертёж, эскиз,
+              изображение или техническое задание.
+            </span>
+
+            <div
+              class="uploaded-files"
+              id="selectedFiles"
+            >
+              Файлы не выбраны
+            </div>
+          </label>
+
+          <div class="service-list privacy-option">
+            <label class="service-card">
+              <input
+                id="privacyInput"
+                type="checkbox"
+              />
+
+              <span>
+                <strong>
+                  Согласие на обработку персональных данных
+                </strong>
+
+                <span>
+                  Я соглашаюсь на обработку указанных персональных данных.
+                </span>
+              </span>
+            </label>
+          </div>
+        </div>
+
+      </form>
+
+      <!-- Предварительная спецификация -->
+      <aside class="spec-panel">
+        <div class="spec-panel__inner">
+          <p class="kicker">
+            Предварительная спецификация
+          </p>
+
+          <h2
+            class="spec-title"
+            id="specTitle"
+          >
+            Интерьерные панели
+          </h2>
+
+          <div
+            class="empty-spec"
+            id="emptySpec"
+          >
+            Укажите основу, толщину, размеры и шпон,
+            чтобы увидеть расчёт.
+          </div>
+
+          <div
+            class="spec-content is-hidden"
+            id="specContent"
+          >
+            <dl class="spec-list">
+              <div>
+                <dt>Изделие</dt>
+                <dd id="specProduct">—</dd>
+              </div>
+
+              <div>
+                <dt>Основа</dt>
+                <dd id="specBase">—</dd>
+              </div>
+
+              <div>
+                <dt>Размеры</dt>
+                <dd id="specSizes">—</dd>
+              </div>
+
+              <div>
+                <dt>Количество</dt>
+                <dd id="specQuantity">—</dd>
+              </div>
+
+              <div>
+                <dt>Площадь</dt>
+                <dd id="specArea">—</dd>
+              </div>
+
+              <div>
+                <dt>Шпон</dt>
+                <dd id="specVeneer">—</dd>
+              </div>
+
+              <div>
+                <dt>Направление</dt>
+                <dd id="specDirection">—</dd>
+              </div>
+
+              <div>
+                <dt>Расклад</dt>
+                <dd id="specLayout">—</dd>
+              </div>
+
+              <div>
+                <dt>Переход текстуры</dt>
+                <dd id="specTransition">—</dd>
+              </div>
+
+              <div>
+                <dt>Кромка</dt>
+                <dd>
+                  По всему периметру, 1 мм
+                </dd>
+              </div>
+
+              <div>
+                <dt>Финиш</dt>
+                <dd>
+                  Акриловый лак, блеск 10%, одна сторона
+                </dd>
+              </div>
+
+              <div
+                class="is-hidden"
+                id="specHardwareRow"
+              >
+                <dt>Фурнитура</dt>
+                <dd id="specHardware">—</dd>
+              </div>
+            </dl>
+
+            <div
+              class="breakdown-list"
+              id="specBreakdown"
+            ></div>
+
+            <div class="total-box">
+              <span>
+                Предварительная стоимость
+              </span>
+
+              <strong id="specTotal">
+                —
+              </strong>
+
+              <small id="specVat">
+                В том числе НДС: —
+              </small>
+            </div>
+
+            <p class="spec-note">
+              Стоимость предварительная. Менеджер проверит
+              параметры, наличие выбранного шпона
+              и производственные особенности заказа.
+            </p>
+
+            <div class="quick-spec-actions">
+              <button
+                class="next-step-button"
+                id="downloadSpecBtn"
+                type="button"
+              >
+                Скачать спецификацию PDF
+              </button>
+
+              <a
+                class="next-step-link is-hidden"
+                id="anotherProductBtn"
+                href="quick-product-type.html"
+              >
+                Рассчитать другое изделие
+              </a>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.10/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.10/vfs_fonts.js"></script>
+
+  <script src="../js/quick-panels-facades.js"></script>
+</body>
+</html>

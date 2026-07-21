@@ -47,13 +47,175 @@
         </div>
 
         <div class="form-block">
+          <h2>Фанеровка</h2>
+
+          <label class="field">
+            <span class="field__label">Количество фанерованных сторон</span>
+            <select id="veneeredSidesSelect">
+              <option value="1">1 сторона</option>
+              <option value="2">2 стороны</option>
+            </select>
+            <span class="field__note">
+              Для стандартных панелей количество сторон влияет на выбор цены из таблицы стандартных размеров.
+            </span>
+          </label>
+
+          <div class="field">
+            <label class="field__label" for="veneerASearch">Шпон — сторона А</label>
+
+            <div
+              class="searchable-select"
+              id="veneerACombobox"
+              data-searchable-select
+              data-placeholder="Выберите шпон"
+            >
+              <div class="searchable-select__control">
+                <input
+                  class="searchable-select__input"
+                  id="veneerASearch"
+                  type="text"
+                  placeholder="Выберите шпон"
+                  autocomplete="off"
+                  role="combobox"
+                  aria-autocomplete="list"
+                  aria-expanded="false"
+                  aria-controls="veneerAOptions"
+                  required
+                />
+
+                <button
+                  class="searchable-select__toggle"
+                  type="button"
+                  aria-label="Открыть список шпона для стороны А"
+                  tabindex="-1"
+                ></button>
+              </div>
+
+              <div
+                class="searchable-select__dropdown is-hidden"
+                id="veneerAOptions"
+                role="listbox"
+              ></div>
+
+              <select
+                class="searchable-select__native"
+                id="veneerASelect"
+                tabindex="-1"
+                aria-hidden="true"
+              >
+                <option value="">Выберите шпон</option>
+              </select>
+            </div>
+
+            <span class="field__note">
+              Откройте список стрелкой или начните вводить название шпона. Если цена шпона выше 1 000 ₽/м², для нестандартных панелей применяется повышающий коэффициент к работе со шпоном.
+            </span>
+          </div>
+
+          <label class="field" id="sideBModeField">
+            <span class="field__label">Сторона Б</span>
+            <select id="sideBModeSelect">
+              <option value="reverse">Не фанеруется / обратная сторона</option>
+              <option value="same">Такой же шпон, как сторона А</option>
+              <option value="other">Другой шпон</option>
+            </select>
+          </label>
+
+          <label class="field" id="reverseSideField">
+            <span class="field__label">Тип обратной стороны Б</span>
+            <select id="reverseSideSelect"></select>
+          </label>
+
+          <div class="field is-hidden" id="veneerBField">
+            <label class="field__label" for="veneerBSearch">Шпон — сторона Б</label>
+
+            <div
+              class="searchable-select"
+              id="veneerBCombobox"
+              data-searchable-select
+              data-placeholder="Выберите шпон стороны Б"
+            >
+              <div class="searchable-select__control">
+                <input
+                  class="searchable-select__input"
+                  id="veneerBSearch"
+                  type="text"
+                  placeholder="Выберите шпон стороны Б"
+                  autocomplete="off"
+                  role="combobox"
+                  aria-autocomplete="list"
+                  aria-expanded="false"
+                  aria-controls="veneerBOptions"
+                />
+
+                <button
+                  class="searchable-select__toggle"
+                  type="button"
+                  aria-label="Открыть список шпона для стороны Б"
+                  tabindex="-1"
+                ></button>
+              </div>
+
+              <div
+                class="searchable-select__dropdown is-hidden"
+                id="veneerBOptions"
+                role="listbox"
+              ></div>
+
+              <select
+                class="searchable-select__native"
+                id="veneerBSelect"
+                tabindex="-1"
+                aria-hidden="true"
+              >
+                <option value="">Выберите шпон стороны Б</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field-grid">
+            <label class="field">
+              <span class="field__label">Направление волокон</span>
+              <select id="fiberDirectionSelect">
+                <option value="length">По длине</option>
+                <option value="width">По ширине</option>
+                <option value="custom">По ТЗ</option>
+              </select>
+              <span class="field__note">В бланке заказа длина определяет направление волокон.</span>
+            </label>
+
+            <label class="field">
+              <span class="field__label">Раскладка шпона</span>
+              <select id="veneerLayoutSelect">
+                <option value="not_set">Не задана</option>
+                <option value="book">Книжка</option>
+                <option value="straight">Прямая</option>
+                <option value="straight_shifted">Прямая с перекладкой</option>
+                <option value="mixed">Смешанная / микс</option>
+                <option value="custom">По ТЗ</option>
+              </select>
+              <span class="field__note">Формулировки приведены к бланку заказа и спецификации.</span>
+            </label>
+
+            <label class="field">
+              <span class="field__label">Переход текстуры</span>
+              <select id="textureTransitionSelect">
+                <option value="no">Нет</option>
+                <option value="yes">Да</option>
+              </select>
+              <span class="field__note">Для перехода текстуры применяется повышающий коэффициент.</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-block">
           <h2>Размер и количество</h2>
 
           <div class="standard-size-list">
             <span class="field__label">Стандартные размеры выбранной основы</span>
 
             <p class="field__note" id="standardSizeNote">
-              Сначала выберите основу. Стандартные размеры теперь зависят от материала: МДФ, ДСП, ГСП, столярная плита и фанера имеют разные стандартные форматы.
+              Сначала выберите основу. После выбора основы нажмите на подходящий стандартный размер — длина и ширина подставятся автоматически.
             </p>
 
             <div class="standard-size-values" id="standardSizeValues" aria-label="Стандартные размеры">
@@ -104,86 +266,6 @@
           <p class="field__note size-note">
             Стандартный размер считается по таблице стандартных цен. Нестандартный размер считается по формуле нестандартных панелей, и система автоматически добавляет раскрой по периметру.
           </p>
-        </div>
-
-        <div class="form-block">
-          <h2>Фанеровка</h2>
-
-          <label class="field">
-            <span class="field__label">Количество фанерованных сторон</span>
-            <select id="veneeredSidesSelect">
-              <option value="1">1 сторона</option>
-              <option value="2">2 стороны</option>
-            </select>
-            <span class="field__note">
-              Для стандартных панелей количество сторон влияет на выбор цены из таблицы стандартных размеров.
-            </span>
-          </label>
-
-          <label class="field">
-            <span class="field__label">Шпон — сторона А</span>
-            <select id="veneerASelect" required>
-              <option value="">Выберите шпон</option>
-            </select>
-            <span class="field__note">
-              Если цена шпона выше 1 000 ₽/м², для нестандартных панелей применяется повышающий коэффициент к работе со шпоном.
-            </span>
-          </label>
-
-          <label class="field">
-            <span class="field__label">Сторона Б</span>
-            <select id="sideBModeSelect">
-              <option value="reverse">Не фанеруется / обратная сторона</option>
-              <option value="same">Такой же шпон, как сторона А</option>
-              <option value="other">Другой шпон</option>
-            </select>
-          </label>
-
-          <label class="field" id="reverseSideField">
-            <span class="field__label">Тип обратной стороны Б</span>
-            <select id="reverseSideSelect"></select>
-          </label>
-
-          <label class="field is-hidden" id="veneerBField">
-            <span class="field__label">Шпон — сторона Б</span>
-            <select id="veneerBSelect">
-              <option value="">Выберите шпон стороны Б</option>
-            </select>
-          </label>
-
-          <div class="field-grid">
-            <label class="field">
-              <span class="field__label">Направление волокон</span>
-              <select id="fiberDirectionSelect">
-                <option value="length">По длине</option>
-                <option value="width">По ширине</option>
-                <option value="custom">По ТЗ</option>
-              </select>
-              <span class="field__note">В бланке заказа длина определяет направление волокон.</span>
-            </label>
-
-            <label class="field">
-              <span class="field__label">Раскладка шпона</span>
-              <select id="veneerLayoutSelect">
-                <option value="not_set">Не задана</option>
-                <option value="book">Книжка</option>
-                <option value="straight">Прямая</option>
-                <option value="straight_shifted">Прямая с перекладкой</option>
-                <option value="mixed">Смешанная / микс</option>
-                <option value="custom">По ТЗ</option>
-              </select>
-              <span class="field__note">Формулировки приведены к бланку заказа и спецификации.</span>
-            </label>
-
-            <label class="field">
-              <span class="field__label">Переход текстуры</span>
-              <select id="textureTransitionSelect">
-                <option value="no">Нет</option>
-                <option value="yes">Да</option>
-              </select>
-              <span class="field__note">Для перехода текстуры применяется повышающий коэффициент.</span>
-            </label>
-          </div>
         </div>
 
         <div class="form-block">
@@ -274,7 +356,6 @@
               Финиш обновлён по бланку заказа: лак, глянец 100%, эмаль, тонировка или параметры по ТЗ.
             </span>
           </label>
-
           <div id="finishFields" class="conditional-block is-hidden">
             <div class="field-grid" id="lacquerFields">
               <label class="field">
@@ -339,17 +420,6 @@
           <h2>Дополнительные опции для панелей</h2>
 
           <label class="field">
-            <span class="field__label">КМ1 нужен?</span>
-            <select id="km1Select">
-              <option value="no">Нет</option>
-              <option value="yes">Да</option>
-            </select>
-            <span class="field__note">
-              КМ1 влияет на цену, но отдельный тариф в новых материалах не найден. Позиция будет помечена для проверки менеджером.
-            </span>
-          </label>
-
-          <label class="field">
             <span class="field__label">Радиусная панель?</span>
             <select id="radiusPanelSelect">
               <option value="no">Нет</option>
@@ -400,6 +470,56 @@
           <label class="field">
             <span class="field__label">Опции по ТЗ</span>
             <textarea id="facadeOperationsInput" rows="3" placeholder="Например: паз, бортик, шпонка, запил, отверстия"></textarea>
+          </label>
+        </div>
+
+        <div class="form-block">
+          <h2>Дополнительные данные расчёта</h2>
+
+          <label class="field">
+            <span class="field__label">Комментарий</span>
+            <textarea
+              id="orderCommentInput"
+              rows="4"
+              placeholder="Укажите дополнительные требования к расчёту"
+            ></textarea>
+            <span class="field__note">
+              Комментарий будет добавлен в итоговую спецификацию.
+            </span>
+          </label>
+
+          <label class="field file-upload-box">
+            <span class="field__label">Файлы</span>
+            <input
+              id="orderFilesInput"
+              type="file"
+              multiple
+            />
+            <span class="field__note">
+              Можно приложить несколько файлов: чертежи, эскизы, изображения, спецификации или техническое задание.
+            </span>
+            <div
+              class="uploaded-files"
+              id="selectedOrderFiles"
+            >
+              Файлы не выбраны
+            </div>
+          </label>
+
+          <label class="field">
+            <span class="field__label">Скидка, %</span>
+            <input
+              id="discountInput"
+              type="number"
+              min="0"
+              max="100"
+              step="0.1"
+              value="0"
+              placeholder="0"
+            />
+            <span class="field__note">
+              Скидка применяется к итоговой стоимости позиции и будет отражена в итоговой спецификации.
+            </span>
           </label>
         </div>
       </form>

@@ -3,54 +3,88 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>Woodstock — прототип калькулятора</title>
+
   <link rel="stylesheet" href="css/main.css" />
 </head>
+
 <body>
   <main class="start-page">
     <section class="start-hero">
-      <p class="kicker">WOODSTOCK · Демо-версия</p>
+      <p class="kicker">
+        WOODSTOCK · Демо-версия
+      </p>
 
-      <h1>Калькулятор стоимости изделий</h1>
+      <h1>
+        Калькулятор стоимости изделий
+      </h1>
 
       <p class="lead">
-        Прототип внутреннего инструмента для проверки подробного расчёта
+        Прототип калькулятора для предварительного и подробного расчёта
         панелей, фасадов и инженерной доски.
       </p>
 
       <p class="note">
-        Расчёт использует цены и коэффициенты, перенесённые из предоставленных материалов и открытого каталога Woodstock. Прототип нужен,
-        чтобы проверить состав параметров, логику ветвлений, итоговую стоимость и формат
-        спецификации.
+        Расчёт использует текущие данные, цены и коэффициенты, перенесённые
+        из предоставленных материалов и открытого каталога Woodstock.
+        Выберите краткий расчёт для быстрой оценки или подробный — для работы
+        со всеми производственными параметрами и спецификацией.
       </p>
     </section>
 
-    <section class="mode-section" aria-labelledby="modeTitle">
-      <h2 id="modeTitle">Режим расчёта</h2>
+    <section
+      class="mode-section"
+      aria-labelledby="modeTitle"
+    >
+      <h2 id="modeTitle">
+        Режим расчёта
+      </h2>
 
       <div class="mode-list">
-        <a class="mode-card mode-card--active" href="pages/product-type.html">
+        <!-- Подробный расчёт -->
+        <a
+          class="mode-card mode-card--active"
+          href="pages/product-type.html"
+          data-mode="detailed"
+        >
           <span class="mode-card__body">
-            <span class="mode-card__title">Подробный расчёт</span>
+            <span class="mode-card__title">
+              Подробный расчёт
+            </span>
+
             <span class="mode-card__text">
               Для менеджера. Полный набор производственных параметров,
               несколько позиций в заказе и формирование спецификации.
             </span>
           </span>
 
-          <span class="mode-card__action">Выбрать</span>
+          <span class="mode-card__action">
+            Выбрать
+          </span>
         </a>
 
-        <div class="mode-card mode-card--disabled">
+        <!-- Краткий расчёт -->
+        <a
+          class="mode-card mode-card--active"
+          href="pages/quick-product-type.html"
+          data-mode="quick"
+        >
           <span class="mode-card__body">
-            <span class="mode-card__title">Краткий расчёт</span>
+            <span class="mode-card__title">
+              Краткий расчёт
+            </span>
+
             <span class="mode-card__text">
-              Для клиента на сайте. Быстрая предварительная оценка стоимости.
+              Для клиента на сайте. Быстрая предварительная оценка стоимости
+              по основным параметрам изделия.
             </span>
           </span>
 
-          <span class="mode-card__action">Позже</span>
-        </div>
+          <span class="mode-card__action">
+            Выбрать
+          </span>
+        </a>
       </div>
     </section>
   </main>

@@ -469,6 +469,30 @@ select:disabled {
   display: none;
 }
 
+.standard-size-values [data-standard-size] {
+  cursor: pointer;
+  transition:
+    border-color 0.16s ease,
+    background-color 0.16s ease,
+    transform 0.16s ease;
+}
+
+.standard-size-values [data-standard-size]:hover {
+  border-color: var(--black);
+  background: #fbfbfb;
+  transform: translateY(-1px);
+}
+
+.standard-size-values [data-standard-size]:focus-visible {
+  outline: 2px solid var(--black);
+  outline-offset: 2px;
+  border-color: var(--black);
+}
+
+.standard-size-values [data-standard-size]:active {
+  transform: translateY(0);
+}
+
 .size-rows-head {
   margin: 0 0 16px;
   display: grid;
@@ -1455,20 +1479,66 @@ select:disabled {
   }
 }
 
-/* Order details page */
+/* ========================================
+   Единая загрузка и отображение файлов
+   Панели, фасады, доска и краткий расчёт
+======================================== */
 
 .file-upload-box {
   margin-bottom: 20px;
 }
 
-.uploaded-files {
+input[type="file"] {
+  min-height: 48px;
+  padding: 7px 10px;
+  overflow: hidden;
+  color: var(--text);
+  background: #fbfbfb;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  cursor: pointer;
+}
+
+input[type="file"]:hover {
+  border-color: var(--line-dark);
+}
+
+input[type="file"]:focus {
+  border-color: var(--black);
+  background: var(--white);
+}
+
+input[type="file"]::file-selector-button {
+  min-height: 32px;
+  margin: 0 10px 0 0;
+  padding: 6px 11px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 13px;
+  line-height: 1.2;
+  color: var(--text);
+  background: var(--white);
+  border: 1px solid var(--line-dark);
+  border-radius: 8px;
+  cursor: pointer;
+  transition:
+    border-color 0.16s ease,
+    background-color 0.16s ease;
+}
+
+input[type="file"]::file-selector-button:hover {
+  border-color: var(--black);
+  background: var(--soft);
+}
+
+.uploaded-files,
+.quick-file-list {
+  min-height: 48px;
   margin-top: 10px;
   padding: 14px;
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  min-height: 48px;
   align-items: center;
+  gap: 8px;
   font-size: 13px;
   line-height: 1.4;
   color: var(--muted);
@@ -1477,12 +1547,42 @@ select:disabled {
   border-radius: 14px;
 }
 
-.uploaded-files span {
+.uploaded-files span,
+.quick-file-list span {
+  max-width: 100%;
   padding: 7px 10px;
+  overflow: hidden;
   color: var(--text);
   background: var(--white);
   border: 1px solid var(--line);
   border-radius: 999px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 760px) {
+  input[type="file"] {
+    padding: 7px 8px;
+  }
+
+  input[type="file"]::file-selector-button {
+    margin-right: 7px;
+    padding-right: 9px;
+    padding-left: 9px;
+  }
+
+  .uploaded-files,
+  .quick-file-list {
+    padding: 12px;
+  }
+
+  .uploaded-files span,
+  .quick-file-list span {
+    width: 100%;
+    border-radius: 10px;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
 }
 
 /* Final specification page */
@@ -1579,8 +1679,9 @@ select:disabled {
 .final-list div {
   padding: 12px 0;
   display: grid;
-  grid-template-columns: 0.8fr 1.2fr;
+  grid-template-columns: minmax(130px, 0.7fr) minmax(0, 1.3fr);
   gap: 16px;
+  align-items: start;
   border-bottom: 1px solid var(--line);
 }
 
@@ -1595,12 +1696,14 @@ select:disabled {
 }
 
 .final-list dd {
+  min-width: 0;
   margin: 0;
   font-size: 13px;
   line-height: 1.45;
   color: var(--text);
   text-align: right;
-  word-break: break-word;
+  overflow-wrap: anywhere;
+  word-break: normal;
 }
 
 .final-table-wrap {
@@ -1995,5 +2098,565 @@ select:disabled {
 
   .total-box strong {
     font-size: 22px;
+  }
+}
+
+/* Final specification: item files and comments */
+
+#itemFilesList,
+#itemCommentsList {
+  display: grid;
+  gap: 8px;
+  text-align: left;
+}
+
+#itemFilesList .final-service-row,
+#itemCommentsList .final-service-row {
+  padding: 10px 12px;
+  display: block;
+  min-width: 0;
+  background: #fbfbfb;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  text-align: left;
+}
+
+#itemFilesList .final-service-row span,
+#itemCommentsList .final-service-row span {
+  display: block;
+  min-width: 0;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--text);
+  text-align: left;
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+#itemFilesList .final-service-row strong,
+#itemCommentsList .final-service-row strong {
+  display: block;
+  margin-top: 5px;
+  min-width: 0;
+  font-size: 13px;
+  line-height: 1.45;
+  font-weight: 400;
+  color: var(--text);
+  text-align: left;
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+#itemFilesList .final-service-row small {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  line-height: 1.35;
+  color: var(--muted);
+  text-align: left;
+}
+
+#itemFilesList,
+#filesList,
+#itemCommentsList,
+#orderRequirements,
+#managerComment {
+  max-width: 100%;
+  text-align: left;
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+@media (max-width: 760px) {
+  .final-list div {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .final-list dd,
+  #itemFilesList,
+  #filesList,
+  #itemCommentsList,
+  #orderRequirements,
+  #managerComment {
+    text-align: left;
+  }
+}
+
+@media print {
+  #itemFilesList .final-service-row,
+  #itemCommentsList .final-service-row {
+    padding: 5px 6px;
+    border-radius: 0;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  #itemFilesList .final-service-row span,
+  #itemFilesList .final-service-row small,
+  #itemCommentsList .final-service-row span,
+  #itemCommentsList .final-service-row strong {
+    font-size: 9px;
+    line-height: 1.3;
+  }
+}
+
+/* Поисковый выпадающий список шпона */
+.searchable-select {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+}
+
+.searchable-select__control {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+}
+
+/* Поле полностью повторяет базовые стили input/select проекта */
+.searchable-select__input {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  min-height: 48px;
+  padding: 12px 44px 12px 14px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 15px;
+  line-height: normal;
+  color: var(--text);
+  background: #fbfbfb;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  outline: none;
+}
+
+.searchable-select__input::placeholder {
+  color: var(--text);
+  opacity: 1;
+}
+
+.searchable-select__input:hover {
+  border-color: var(--line-dark);
+}
+
+.searchable-select__input:focus,
+.searchable-select.is-open .searchable-select__input {
+  border-color: var(--black);
+  background: var(--white);
+  box-shadow: none;
+}
+
+.searchable-select__toggle {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  right: 0;
+  width: 44px;
+  height: 48px;
+  padding: 0;
+  border: 0;
+  border-radius: 0 14px 14px 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.searchable-select__toggle::before,
+.searchable-select__toggle::after {
+  content: "";
+  position: absolute;
+  top: 23px;
+  width: 7px;
+  height: 1px;
+  background: var(--black);
+  transition: transform 0.15s ease;
+}
+
+.searchable-select__toggle::before {
+  left: 15px;
+  transform: rotate(45deg);
+}
+
+.searchable-select__toggle::after {
+  right: 15px;
+  transform: rotate(-45deg);
+}
+
+.searchable-select.is-open .searchable-select__toggle::before {
+  transform: rotate(-45deg);
+}
+
+.searchable-select.is-open .searchable-select__toggle::after {
+  transform: rotate(45deg);
+}
+
+.searchable-select__dropdown {
+  position: absolute;
+  z-index: 40;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  max-height: 320px;
+  overflow-y: auto;
+  padding: 6px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--white);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+}
+
+.searchable-select__option {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  width: 100%;
+  padding: 10px 12px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+}
+
+.searchable-select__option:hover,
+.searchable-select__option.is-highlighted {
+  background: var(--soft);
+}
+
+.searchable-select__option[aria-selected="true"] {
+  background: #e8e8e4;
+}
+
+.searchable-select__option-name {
+  min-width: 0;
+  overflow: hidden;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.35;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.searchable-select__option-meta {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.35;
+  white-space: nowrap;
+}
+
+.searchable-select__empty,
+.searchable-select__more {
+  padding: 10px 12px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.searchable-select__more {
+  margin-top: 4px;
+  border-top: 1px solid var(--line);
+}
+
+.searchable-select__native {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+@media (max-width: 760px) {
+  .searchable-select__input {
+    min-height: 48px;
+    padding: 12px 44px 12px 14px;
+    font-size: 15px;
+  }
+
+  .searchable-select__toggle {
+    height: 48px;
+  }
+
+  .searchable-select__dropdown {
+    max-height: 280px;
+  }
+
+  .searchable-select__option {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+
+  .searchable-select__option-meta {
+    white-space: normal;
+  }
+}
+
+/* ========================================
+   Краткий расчёт панелей и фасадов
+   Только уникальные элементы
+======================================== */
+
+.quick-panels-facades-page {
+  width: 100%;
+}
+
+/* Универсальная сетка из двух колонок */
+
+.field-grid--two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* Выбор основы */
+
+.quick-choice-list {
+  margin-bottom: 20px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.quick-choice-card {
+  position: relative;
+  min-height: 96px;
+  padding: 16px;
+  display: grid;
+  align-content: start;
+  color: var(--text);
+  background: #fbfbfb;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  cursor: pointer;
+  transition:
+    border-color 0.16s ease,
+    background-color 0.16s ease;
+}
+
+.quick-choice-card:hover,
+.quick-choice-card:focus-within {
+  border-color: var(--black);
+}
+
+.quick-choice-card:has(input:checked) {
+  background: var(--soft);
+  border-color: var(--black);
+}
+
+.quick-choice-card input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  min-height: 0;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.quick-choice-card__content {
+  display: grid;
+  gap: 5px;
+}
+
+.quick-choice-card__content strong {
+  font-size: 16px;
+  line-height: 1.25;
+  font-weight: 500;
+}
+
+.quick-choice-card__content small {
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+/* Фиксированная кромка и финиш */
+
+.fixed-option-card {
+  padding: 18px;
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: start;
+  background: var(--soft);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+}
+
+.fixed-option-card__mark {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  font-size: 13px;
+  line-height: 1;
+  color: var(--white);
+  background: var(--black);
+  border-radius: 50%;
+}
+
+.fixed-option-card__content {
+  min-width: 0;
+}
+
+.fixed-option-card__content strong {
+  display: block;
+  margin: 1px 0 4px;
+  font-size: 15px;
+  line-height: 1.3;
+  font-weight: 500;
+}
+
+.fixed-option-card__content p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+.fixed-option-card__badge {
+  padding: 7px 10px;
+  font-size: 12px;
+  line-height: 1;
+  color: var(--muted);
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.fixed-option-note {
+  margin: 12px 0 0;
+}
+
+/* Фурнитура фасадов */
+
+.quick-checkbox-card {
+  position: relative;
+  padding: 16px;
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr);
+  gap: 12px;
+  align-items: flex-start;
+  background: #fbfbfb;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  cursor: pointer;
+  transition:
+    border-color 0.16s ease,
+    background-color 0.16s ease;
+}
+
+.quick-checkbox-card:hover {
+  border-color: var(--black);
+}
+
+.quick-checkbox-card:has(input:checked) {
+  background: var(--soft);
+  border-color: var(--line-dark);
+}
+
+.quick-checkbox-card input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  min-height: 0;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.quick-checkbox-card__control {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  background: var(--white);
+  border: 1px solid var(--line-dark);
+  border-radius: 4px;
+}
+
+.quick-checkbox-card input:checked
++ .quick-checkbox-card__control {
+  background: var(--black);
+  border-color: var(--black);
+}
+
+.quick-checkbox-card input:checked
++ .quick-checkbox-card__control::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 5px;
+  width: 5px;
+  height: 9px;
+  border-right: 2px solid var(--white);
+  border-bottom: 2px solid var(--white);
+  transform: rotate(45deg);
+}
+
+.quick-checkbox-card__content {
+  min-width: 0;
+  display: grid;
+  gap: 4px;
+}
+
+.quick-checkbox-card__content strong {
+  font-size: 15px;
+  line-height: 1.3;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.quick-checkbox-card__content small {
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+/* Данные для связи используют общие стили подробного расчёта */
+
+.contact-manager-option {
+  margin-bottom: 20px;
+}
+
+.privacy-option {
+  margin-top: 20px;
+}
+
+/* Действия спецификации */
+
+.quick-spec-actions {
+  margin-top: 18px;
+  display: grid;
+  gap: 10px;
+}
+
+.quick-spec-actions .next-step-button,
+.quick-spec-actions .next-step-link {
+  margin-top: 0;
+}
+
+@media (max-width: 760px) {
+  .field-grid--two,
+  .quick-choice-list {
+    grid-template-columns: 1fr;
+  }
+
+  .fixed-option-card {
+    grid-template-columns: 30px minmax(0, 1fr);
+  }
+
+  .fixed-option-card__badge {
+    grid-column: 2;
+    justify-self: start;
   }
 }

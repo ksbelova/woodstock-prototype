@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Woodstock — выбор изделия для краткого расчёта</title>
+
+  <link rel="stylesheet" href="../css/main.css" />
+</head>
+
+<body>
+  <main class="start-page product-page">
+    <section class="start-hero">
+    <p class="kicker">
+        WOODSTOCK · КРАТКИЙ РАСЧЁТ
+    </p>
+
+    <h1>
+        Выберите тип изделия
+    </h1>
+
+    <p class="lead">
+        От выбора изделия зависит набор параметров и логика расчёта.
+    </p>
+
+    <p class="note">
+        Панели и фасады рассчитываются по основным параметрам изделия.
+        Инженерная доска считается отдельно: по породе, площади,
+        рисунку укладки и параметрам покрытия.
+    </p>
+    </section>
+
+    <section
+    class="mode-section product-section"
+    aria-labelledby="productTitle"
+    >
+    <h2 id="productTitle">
+        Тип изделия
+    </h2>
+
+    <div class="product-list">
+        <a
+        class="product-card"
+        href="quick-panels-facades.html?type=panels"
+        data-product="panels"
+        >
+        <span class="product-card__number">
+            01
+        </span>
+
+        <span class="product-card__body">
+            <span class="product-card__title">
+            Интерьерные панели
+            </span>
+
+            <span class="product-card__text">
+            Расчёт по основе, толщине, размеру, количеству, шпону,
+            направлению, раскладу и переходу рисунка.
+            </span>
+        </span>
+
+        <span class="product-card__action">
+            Выбрать
+        </span>
+        </a>
+
+        <a
+        class="product-card"
+        href="quick-panels-facades.html?type=facades"
+        data-product="facades"
+        >
+        <span class="product-card__number">
+            02
+        </span>
+
+        <span class="product-card__body">
+            <span class="product-card__title">
+            Мебельные фасады
+            </span>
+
+            <span class="product-card__text">
+            Расчёт по основе, толщине, размеру, количеству, шпону,
+            направлению и раскладу, с учётом присадки под фурнитуру.
+            </span>
+        </span>
+
+        <span class="product-card__action">
+            Выбрать
+        </span>
+        </a>
+
+        <a
+        class="product-card"
+        href="quick-flooring.html"
+        data-product="flooring"
+        >
+        <span class="product-card__number">
+            03
+        </span>
+
+        <span class="product-card__body">
+            <span class="product-card__title">
+            Инженерная доска
+            </span>
+
+            <span class="product-card__text">
+            Отдельный расчёт по породе, толщине, площади,
+            рисунку укладки и параметрам покрытия.
+            </span>
+        </span>
+
+        <span class="product-card__action">
+            Выбрать
+        </span>
+        </a>
+    </div>
+    </section>
+
+    <nav class="page-nav">
+      <a href="../index.html">
+        Назад к выбору режима
+      </a>
+    </nav>
+  </main>
+
+  <script src="../js/product-type.js"></script>
+</body>
+</html>

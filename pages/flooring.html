@@ -72,7 +72,14 @@
 
           <label class="field">
             <span class="field__label">Площадь помещения, м²</span>
-            <input id="roomAreaInput" type="number" min="0" step="0.01" placeholder="Введите площадь" required />
+            <input
+              id="roomAreaInput"
+              type="number"
+              min="0"
+              step="0.01"
+              placeholder="Введите площадь"
+              required
+            />
             <span class="field__note">
               Введите площадь помещения без запаса. Запас рассчитывается автоматически.
             </span>
@@ -80,7 +87,14 @@
 
           <label class="field">
             <span class="field__label">Процент отходов, %</span>
-            <input id="wasteInput" type="number" min="0" step="0.1" placeholder="Заполнится после выбора раскладки" required />
+            <input
+              id="wasteInput"
+              type="number"
+              min="0"
+              step="0.1"
+              placeholder="Заполнится после выбора раскладки"
+              required
+            />
             <span class="field__note">
               По умолчанию: палубная — 5%, равной длины — 7%, французская/венгерская ёлка — 12%.
             </span>
@@ -93,20 +107,45 @@
           <div class="field-grid">
             <label class="field">
               <span class="field__label">Длина, мм</span>
-              <input id="lengthInput" type="number" min="1" max="2400" step="1" placeholder="До 2400" />
-              <span class="field__note">До 2400 мм. Не влияет на стоимость.</span>
+              <input
+                id="lengthInput"
+                type="number"
+                min="1"
+                max="2400"
+                step="1"
+                placeholder="До 2400"
+              />
+              <span class="field__note">
+                До 2400 мм. Не влияет на стоимость.
+              </span>
             </label>
 
             <label class="field">
               <span class="field__label">Ширина, мм</span>
-              <input id="widthInput" type="number" min="1" max="230" step="1" placeholder="До 230" />
-              <span class="field__note">До 230 мм. Не влияет на стоимость.</span>
+              <input
+                id="widthInput"
+                type="number"
+                min="1"
+                max="230"
+                step="1"
+                placeholder="До 230"
+              />
+              <span class="field__note">
+                До 230 мм. Не влияет на стоимость.
+              </span>
             </label>
 
             <label class="field">
               <span class="field__label">Толщина, мм</span>
-              <input id="thicknessInput" type="number" value="14" disabled />
-              <span class="field__note">Фиксированная толщина изделия.</span>
+              <input
+                id="thicknessInput"
+                type="number"
+                value="14"
+                disabled
+              />
+              <span class="field__note">
+                Фиксированная толщина изделия.
+              </span>
             </label>
           </div>
 
@@ -127,10 +166,55 @@
               Покрытие отображается в спецификации, но не влияет на стоимость.
             </span>
           </label>
+        </div>
+
+        <div class="form-block">
+          <h2>Дополнительные данные расчёта</h2>
 
           <label class="field">
-            <span class="field__label">Комментарий / ТЗ</span>
-            <textarea id="commentInput" rows="4" placeholder="Например: уточнить партию шпона, направление раскладки, пожелания по покрытию"></textarea>
+            <span class="field__label">Комментарий</span>
+            <textarea
+              id="commentInput"
+              rows="4"
+              placeholder="Укажите дополнительные требования"
+            ></textarea>
+            <span class="field__note">
+              Комментарий будет добавлен в итоговую спецификацию.
+            </span>
+          </label>
+
+          <label class="field file-upload-box">
+            <span class="field__label">Файлы</span>
+            <input
+              id="filesInput"
+              type="file"
+              multiple
+            />
+            <span class="field__note">
+              Можно приложить несколько файлов: план помещения, схему раскладки, изображения, чертежи или техническое задание.
+            </span>
+            <div
+              class="uploaded-files"
+              id="selectedFiles"
+            >
+              Файлы не выбраны
+            </div>
+          </label>
+
+          <label class="field">
+            <span class="field__label">Скидка, %</span>
+            <input
+              id="discountInput"
+              type="number"
+              min="0"
+              max="100"
+              step="0.1"
+              value="0"
+              placeholder="0"
+            />
+            <span class="field__note">
+              Скидка применяется к итоговой стоимости инженерной доски и будет отражена в итоговой спецификации.
+            </span>
           </label>
         </div>
       </form>
@@ -205,8 +289,12 @@
 
             <div class="formula-box">
               <span>Формула</span>
-              <p>Цена = площадь к оплате × цена выбранной позиции за м²</p>
+              <p id="specFormula">
+                Цена = площадь к оплате × цена выбранной позиции за м²
+              </p>
             </div>
+
+            <div class="breakdown-list" id="specBreakdown"></div>
 
             <div class="total-box">
               <span>Итого с НДС</span>
