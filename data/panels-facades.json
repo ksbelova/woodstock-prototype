@@ -11,55 +11,190 @@
     "veneerReserveMultiplier": 2,
     "edgeThresholdMeters": 35,
     "defaultCuttingMode": "machine",
-    "note": "Расчёт обновлён по новым материалам: стандартные панели считаются по таблице стандартных цен; нестандартные панели считаются по тарифам нестандартного расчёта с раскроем, кромкой, шлифовкой и финишем. Упаковка считается отдельно на странице параметров заказа."
+    "note": "Расчёт обновлён по новым материалам: стандартные панели считаются по таблице стандартных цен; нестандартные панели считаются по тарифам нестандартного расчёта с раскроем, кромкой, шлифовкой и финишем. Упаковка считается отдельно на странице параметров заказа.",
+    "veneerCatalogSource": "https://www.woodstock.su/prod/paneli-i-fasady/catalog.html",
+    "veneerCatalogUpdated": "2026-07-27",
+    "veneerCatalogNote": "Для выбора шпона используются товарные позиции стандартных панелей с указанной толщиной. В списке показываются только позиции, толщина которых совпадает с выбранной толщиной основы."
   },
   "standardSizesByBase": {
     "mdf": [
-      { "length": 2440, "width": 610, "name": "2440 × 610 мм" },
-      { "length": 2440, "width": 910, "name": "2440 × 910 мм" },
-      { "length": 2440, "width": 1830, "name": "2440 × 1830 мм" },
-      { "length": 2800, "width": 686, "name": "2800 × 686 мм" },
-      { "length": 2800, "width": 1032, "name": "2800 × 1032 мм" },
-      { "length": 2800, "width": 1220, "name": "2800 × 1220 мм" },
-      { "length": 2800, "width": 2070, "name": "2800 × 2070 мм" },
-      { "length": 3050, "width": 1220, "name": "3050 × 1220 мм" }
+      {
+        "length": 2440,
+        "width": 610,
+        "name": "2440 × 610 мм"
+      },
+      {
+        "length": 2440,
+        "width": 910,
+        "name": "2440 × 910 мм"
+      },
+      {
+        "length": 2440,
+        "width": 1830,
+        "name": "2440 × 1830 мм"
+      },
+      {
+        "length": 2800,
+        "width": 686,
+        "name": "2800 × 686 мм"
+      },
+      {
+        "length": 2800,
+        "width": 1032,
+        "name": "2800 × 1032 мм"
+      },
+      {
+        "length": 2800,
+        "width": 1220,
+        "name": "2800 × 1220 мм"
+      },
+      {
+        "length": 2800,
+        "width": 2070,
+        "name": "2800 × 2070 мм"
+      },
+      {
+        "length": 3050,
+        "width": 1220,
+        "name": "3050 × 1220 мм"
+      }
     ],
     "chipboard": [
-      { "length": 2440, "width": 610, "name": "2440 × 610 мм" },
-      { "length": 2440, "width": 910, "name": "2440 × 910 мм" },
-      { "length": 2440, "width": 1830, "name": "2440 × 1830 мм" },
-      { "length": 2750, "width": 610, "name": "2750 × 610 мм" },
-      { "length": 2750, "width": 910, "name": "2750 × 910 мм" },
-      { "length": 2750, "width": 1830, "name": "2750 × 1830 мм" },
-      { "length": 2800, "width": 686, "name": "2800 × 686 мм" },
-      { "length": 2800, "width": 1032, "name": "2800 × 1032 мм" },
-      { "length": 2800, "width": 2070, "name": "2800 × 2070 мм" }
+      {
+        "length": 2440,
+        "width": 610,
+        "name": "2440 × 610 мм"
+      },
+      {
+        "length": 2440,
+        "width": 910,
+        "name": "2440 × 910 мм"
+      },
+      {
+        "length": 2440,
+        "width": 1830,
+        "name": "2440 × 1830 мм"
+      },
+      {
+        "length": 2750,
+        "width": 610,
+        "name": "2750 × 610 мм"
+      },
+      {
+        "length": 2750,
+        "width": 910,
+        "name": "2750 × 910 мм"
+      },
+      {
+        "length": 2750,
+        "width": 1830,
+        "name": "2750 × 1830 мм"
+      },
+      {
+        "length": 2800,
+        "width": 686,
+        "name": "2800 × 686 мм"
+      },
+      {
+        "length": 2800,
+        "width": 1032,
+        "name": "2800 × 1032 мм"
+      },
+      {
+        "length": 2800,
+        "width": 2070,
+        "name": "2800 × 2070 мм"
+      }
     ],
     "gsp": [
-      { "length": 2500, "width": 1220, "name": "2500 × 1220 мм" },
-      { "length": 1220, "width": 2500, "name": "1220 × 2500 мм" },
-      { "length": 3000, "width": 1220, "name": "3000 × 1220 мм" },
-      { "length": 1220, "width": 3000, "name": "1220 × 3000 мм" }
+      {
+        "length": 2500,
+        "width": 1220,
+        "name": "2500 × 1220 мм"
+      },
+      {
+        "length": 1220,
+        "width": 2500,
+        "name": "1220 × 2500 мм"
+      },
+      {
+        "length": 3000,
+        "width": 1220,
+        "name": "3000 × 1220 мм"
+      },
+      {
+        "length": 1220,
+        "width": 3000,
+        "name": "1220 × 3000 мм"
+      }
     ],
     "blockboard": [
-      { "length": 2500, "width": 1250, "name": "2500 × 1250 мм" },
-      { "length": 2600, "width": 2050, "name": "2600 × 2050 мм" },
-      { "length": 2800, "width": 2070, "name": "2800 × 2070 мм" }
+      {
+        "length": 2500,
+        "width": 1250,
+        "name": "2500 × 1250 мм"
+      },
+      {
+        "length": 2600,
+        "width": 2050,
+        "name": "2600 × 2050 мм"
+      },
+      {
+        "length": 2800,
+        "width": 2070,
+        "name": "2800 × 2070 мм"
+      }
     ],
     "plywood_waterproof": [
-      { "length": 2440, "width": 1220, "name": "2440 × 1220 мм" },
-      { "length": 2500, "width": 1250, "name": "2500 × 1250 мм" },
-      { "length": 3000, "width": 1500, "name": "3000 × 1500 мм" }
+      {
+        "length": 2440,
+        "width": 1220,
+        "name": "2440 × 1220 мм"
+      },
+      {
+        "length": 2500,
+        "width": 1250,
+        "name": "2500 × 1250 мм"
+      },
+      {
+        "length": 3000,
+        "width": 1500,
+        "name": "3000 × 1500 мм"
+      }
     ],
     "plywood_light": [
-      { "length": 2440, "width": 1220, "name": "2440 × 1220 мм" },
-      { "length": 2500, "width": 1250, "name": "2500 × 1250 мм" },
-      { "length": 3000, "width": 1500, "name": "3000 × 1500 мм" }
+      {
+        "length": 2440,
+        "width": 1220,
+        "name": "2440 × 1220 мм"
+      },
+      {
+        "length": 2500,
+        "width": 1250,
+        "name": "2500 × 1250 мм"
+      },
+      {
+        "length": 3000,
+        "width": 1500,
+        "name": "3000 × 1500 мм"
+      }
     ],
     "plywood_flexible": [
-      { "length": 2440, "width": 1220, "name": "2440 × 1220 мм" },
-      { "length": 2500, "width": 1250, "name": "2500 × 1250 мм" },
-      { "length": 3000, "width": 1500, "name": "3000 × 1500 мм" }
+      {
+        "length": 2440,
+        "width": 1220,
+        "name": "2440 × 1220 мм"
+      },
+      {
+        "length": 2500,
+        "width": 1250,
+        "name": "2500 × 1250 мм"
+      },
+      {
+        "length": 3000,
+        "width": 1500,
+        "name": "3000 × 1500 мм"
+      }
     ]
   },
   "standardPanelPrices": {
@@ -507,26 +642,146 @@
       "name": "МДФ",
       "note": "Для МДФ заведены тарифы нестандартного расчёта и таблица стандартных цен.",
       "thicknesses": [
-        { "value": "3", "label": "3 мм", "numericThickness": 3, "oneSideRate": 1331.55, "twoSideRate": 1628.55 },
-        { "value": "6", "label": "6 мм", "numericThickness": 6, "oneSideRate": 1493.25, "twoSideRate": 1790.25 },
-        { "value": "8", "label": "8 мм", "numericThickness": 8, "oneSideRate": 1597.2, "twoSideRate": 1894.2 },
-        { "value": "10", "label": "10 мм", "numericThickness": 10, "oneSideRate": 1686.3, "twoSideRate": 1983.3 },
-        { "value": "12", "label": "12 мм", "numericThickness": 12, "oneSideRate": 1775.4, "twoSideRate": 2072.4 },
-        { "value": "16", "label": "16 мм", "numericThickness": 16, "oneSideRate": 1955.25, "twoSideRate": 2252.25 },
-        { "value": "18", "label": "18 мм", "numericThickness": 18, "oneSideRate": 2079, "twoSideRate": 2376 },
-        { "value": "22", "label": "22 мм", "numericThickness": 22, "oneSideRate": 2479.95, "twoSideRate": 2776.95 },
-        { "value": "24", "label": "24 мм", "numericThickness": 24, "oneSideRate": 2823.98, "twoSideRate": 3120.98 },
-        { "value": "25", "label": "25 мм", "numericThickness": 25, "oneSideRate": 2968.35, "twoSideRate": 3265.35 },
-        { "value": "32", "label": "32 мм", "numericThickness": 32, "oneSideRate": 3300, "twoSideRate": 4405.5 },
-        { "value": "35", "label": "35 мм", "numericThickness": 35, "oneSideRate": 4049.1, "twoSideRate": 5156.25 },
-        { "value": "36", "label": "36 мм", "numericThickness": 36, "oneSideRate": 3786.75, "twoSideRate": 4900.5 },
-        { "value": "38", "label": "38 мм", "numericThickness": 38, "oneSideRate": 4202.55, "twoSideRate": 5309.7 },
-        { "value": "39", "label": "39 мм", "numericThickness": 39, "oneSideRate": 4290, "twoSideRate": 5403.75 },
-        { "value": "40", "label": "40 мм", "numericThickness": 40, "oneSideRate": 4301.55, "twoSideRate": 5408.7 },
-        { "value": "44", "label": "44 мм", "numericThickness": 44, "oneSideRate": 4819.65, "twoSideRate": 5949.9 },
-        { "value": "48", "label": "48 мм", "numericThickness": 48, "oneSideRate": 5138.1, "twoSideRate": 6245.25 },
-        { "value": "50", "label": "50 мм", "numericThickness": 50, "oneSideRate": 5880.6, "twoSideRate": 7172.55 },
-        { "value": "6+6", "label": "6+6 мм", "numericThickness": 12, "oneSideRate": 2148.3, "twoSideRate": 3232.35 }
+        {
+          "value": "3",
+          "label": "3 мм",
+          "numericThickness": 3,
+          "oneSideRate": 1331.55,
+          "twoSideRate": 1628.55
+        },
+        {
+          "value": "6",
+          "label": "6 мм",
+          "numericThickness": 6,
+          "oneSideRate": 1493.25,
+          "twoSideRate": 1790.25
+        },
+        {
+          "value": "8",
+          "label": "8 мм",
+          "numericThickness": 8,
+          "oneSideRate": 1597.2,
+          "twoSideRate": 1894.2
+        },
+        {
+          "value": "10",
+          "label": "10 мм",
+          "numericThickness": 10,
+          "oneSideRate": 1686.3,
+          "twoSideRate": 1983.3
+        },
+        {
+          "value": "12",
+          "label": "12 мм",
+          "numericThickness": 12,
+          "oneSideRate": 1775.4,
+          "twoSideRate": 2072.4
+        },
+        {
+          "value": "16",
+          "label": "16 мм",
+          "numericThickness": 16,
+          "oneSideRate": 1955.25,
+          "twoSideRate": 2252.25
+        },
+        {
+          "value": "18",
+          "label": "18 мм",
+          "numericThickness": 18,
+          "oneSideRate": 2079,
+          "twoSideRate": 2376
+        },
+        {
+          "value": "22",
+          "label": "22 мм",
+          "numericThickness": 22,
+          "oneSideRate": 2479.95,
+          "twoSideRate": 2776.95
+        },
+        {
+          "value": "24",
+          "label": "24 мм",
+          "numericThickness": 24,
+          "oneSideRate": 2823.98,
+          "twoSideRate": 3120.98
+        },
+        {
+          "value": "25",
+          "label": "25 мм",
+          "numericThickness": 25,
+          "oneSideRate": 2968.35,
+          "twoSideRate": 3265.35
+        },
+        {
+          "value": "32",
+          "label": "32 мм",
+          "numericThickness": 32,
+          "oneSideRate": 3300,
+          "twoSideRate": 4405.5
+        },
+        {
+          "value": "35",
+          "label": "35 мм",
+          "numericThickness": 35,
+          "oneSideRate": 4049.1,
+          "twoSideRate": 5156.25
+        },
+        {
+          "value": "36",
+          "label": "36 мм",
+          "numericThickness": 36,
+          "oneSideRate": 3786.75,
+          "twoSideRate": 4900.5
+        },
+        {
+          "value": "38",
+          "label": "38 мм",
+          "numericThickness": 38,
+          "oneSideRate": 4202.55,
+          "twoSideRate": 5309.7
+        },
+        {
+          "value": "39",
+          "label": "39 мм",
+          "numericThickness": 39,
+          "oneSideRate": 4290,
+          "twoSideRate": 5403.75
+        },
+        {
+          "value": "40",
+          "label": "40 мм",
+          "numericThickness": 40,
+          "oneSideRate": 4301.55,
+          "twoSideRate": 5408.7
+        },
+        {
+          "value": "44",
+          "label": "44 мм",
+          "numericThickness": 44,
+          "oneSideRate": 4819.65,
+          "twoSideRate": 5949.9
+        },
+        {
+          "value": "48",
+          "label": "48 мм",
+          "numericThickness": 48,
+          "oneSideRate": 5138.1,
+          "twoSideRate": 6245.25
+        },
+        {
+          "value": "50",
+          "label": "50 мм",
+          "numericThickness": 50,
+          "oneSideRate": 5880.6,
+          "twoSideRate": 7172.55
+        },
+        {
+          "value": "6+6",
+          "label": "6+6 мм",
+          "numericThickness": 12,
+          "oneSideRate": 2148.3,
+          "twoSideRate": 3232.35
+        }
       ]
     },
     {
@@ -534,9 +789,27 @@
       "name": "ДСП",
       "note": "Для ДСП заведены тарифы по 16, 32 и 48 мм.",
       "thicknesses": [
-        { "value": "16", "label": "16 мм", "numericThickness": 16, "oneSideRate": 1930.5, "twoSideRate": 2227.5 },
-        { "value": "32", "label": "32 мм", "numericThickness": 32, "oneSideRate": 3250.5, "twoSideRate": 4356 },
-        { "value": "48", "label": "48 мм", "numericThickness": 48, "oneSideRate": 5063.85, "twoSideRate": 6171 }
+        {
+          "value": "16",
+          "label": "16 мм",
+          "numericThickness": 16,
+          "oneSideRate": 1930.5,
+          "twoSideRate": 2227.5
+        },
+        {
+          "value": "32",
+          "label": "32 мм",
+          "numericThickness": 32,
+          "oneSideRate": 3250.5,
+          "twoSideRate": 4356
+        },
+        {
+          "value": "48",
+          "label": "48 мм",
+          "numericThickness": 48,
+          "oneSideRate": 5063.85,
+          "twoSideRate": 6171
+        }
       ]
     },
     {
@@ -583,86 +856,841 @@
     }
   ],
   "veneers": [
-    { "id": "beech_bookmatch_3", "name": "Бук BookMatch 3 мм", "species": "Бук", "layout": "BookMatch", "pricePerM2": 1397 },
-    { "id": "beech_mixmatch_3", "name": "Бук MixMatch 3 мм", "species": "Бук", "layout": "MixMatch", "pricePerM2": 1577 },
-    { "id": "oak_bookmatch_3", "name": "Дуб BookMatch 3 мм", "species": "Дуб", "layout": "BookMatch", "pricePerM2": 2172 },
-    { "id": "oak_mixmatch_3", "name": "Дуб MixMatch 3 мм", "species": "Дуб", "layout": "MixMatch", "pricePerM2": 2253 },
-    { "id": "walnut_bookmatch_3", "name": "Орех BookMatch 3 мм", "species": "Орех", "layout": "BookMatch", "pricePerM2": 2538 },
-    { "id": "walnut_mixmatch_3", "name": "Орех MixMatch 3 мм", "species": "Орех", "layout": "MixMatch", "pricePerM2": 2719 },
-    { "id": "ash_bookmatch_3", "name": "Ясень белый BookMatch 3 мм", "species": "Ясень белый", "layout": "BookMatch", "pricePerM2": 1684 },
-    { "id": "ash_mixmatch_3", "name": "Ясень белый MixMatch 3 мм", "species": "Ясень белый", "layout": "MixMatch", "pricePerM2": 1804 },
-    { "id": "american_walnut_radial_mix", "name": "Орех Американский Радиал Микс", "species": "Орех Американский", "layout": "Радиал Микс", "pricePerM2": 999 }
+    {
+      "id": "beech_bookmatch_3",
+      "name": "Бук BookMatch 3 мм",
+      "species": "Бук",
+      "layout": "BookMatch",
+      "thickness": 3,
+      "pricePerM2": 1397
+    },
+    {
+      "id": "beech_mixmatch_3",
+      "name": "Бук MixMatch 3 мм",
+      "species": "Бук",
+      "layout": "MixMatch",
+      "thickness": 3,
+      "pricePerM2": 1577
+    },
+    {
+      "id": "oak_bookmatch_3",
+      "name": "Дуб BookMatch 3 мм",
+      "species": "Дуб",
+      "layout": "BookMatch",
+      "thickness": 3,
+      "pricePerM2": 2172
+    },
+    {
+      "id": "oak_mixmatch_3",
+      "name": "Дуб MixMatch 3 мм",
+      "species": "Дуб",
+      "layout": "MixMatch",
+      "thickness": 3,
+      "pricePerM2": 2253
+    },
+    {
+      "id": "walnut_bookmatch_3",
+      "name": "Орех BookMatch 3 мм",
+      "species": "Орех",
+      "layout": "BookMatch",
+      "thickness": 3,
+      "pricePerM2": 2538
+    },
+    {
+      "id": "walnut_mixmatch_3",
+      "name": "Орех MixMatch 3 мм",
+      "species": "Орех",
+      "layout": "MixMatch",
+      "thickness": 3,
+      "pricePerM2": 2719
+    },
+    {
+      "id": "ash_bookmatch_3",
+      "name": "Ясень белый BookMatch 3 мм",
+      "species": "Ясень белый",
+      "layout": "BookMatch",
+      "thickness": 3,
+      "pricePerM2": 1684
+    },
+    {
+      "id": "ash_mixmatch_3",
+      "name": "Ясень белый MixMatch 3 мм",
+      "species": "Ясень белый",
+      "layout": "MixMatch",
+      "thickness": 3,
+      "pricePerM2": 1804
+    },
+    {
+      "id": "beech_bookmatch_6",
+      "name": "Бук BookMatch 6 мм",
+      "species": "Бук",
+      "layout": "BookMatch",
+      "thickness": 6,
+      "pricePerM2": 1490
+    },
+    {
+      "id": "beech_mixmatch_6",
+      "name": "Бук MixMatch 6 мм",
+      "species": "Бук",
+      "layout": "MixMatch",
+      "thickness": 6,
+      "pricePerM2": 1666
+    },
+    {
+      "id": "oak_bookmatch_6",
+      "name": "Дуб BookMatch 6 мм",
+      "species": "Дуб",
+      "layout": "BookMatch",
+      "thickness": 6,
+      "pricePerM2": 2306
+    },
+    {
+      "id": "oak_mixmatch_6",
+      "name": "Дуб MixMatch 6 мм",
+      "species": "Дуб",
+      "layout": "MixMatch",
+      "thickness": 6,
+      "pricePerM2": 2358
+    },
+    {
+      "id": "walnut_bookmatch_6",
+      "name": "Орех BookMatch 6 мм",
+      "species": "Орех",
+      "layout": "BookMatch",
+      "thickness": 6,
+      "pricePerM2": 2636
+    },
+    {
+      "id": "walnut_mixmatch_6",
+      "name": "Орех MixMatch 6 мм",
+      "species": "Орех",
+      "layout": "MixMatch",
+      "thickness": 6,
+      "pricePerM2": 2824
+    },
+    {
+      "id": "ash_bookmatch_6",
+      "name": "Ясень белый BookMatch 6 мм",
+      "species": "Ясень белый",
+      "layout": "BookMatch",
+      "thickness": 6,
+      "pricePerM2": 1782
+    },
+    {
+      "id": "ash_mixmatch_6",
+      "name": "Ясень белый MixMatch 6 мм",
+      "species": "Ясень белый",
+      "layout": "MixMatch",
+      "thickness": 6,
+      "pricePerM2": 1909
+    },
+    {
+      "id": "beech_bookmatch_8",
+      "name": "Бук BookMatch 8 мм",
+      "species": "Бук",
+      "layout": "BookMatch",
+      "thickness": 8,
+      "pricePerM2": 1537
+    },
+    {
+      "id": "beech_mixmatch_8",
+      "name": "Бук MixMatch 8 мм",
+      "species": "Бук",
+      "layout": "MixMatch",
+      "thickness": 8,
+      "pricePerM2": 1700
+    },
+    {
+      "id": "oak_bookmatch_8",
+      "name": "Дуб BookMatch 8 мм",
+      "species": "Дуб",
+      "layout": "BookMatch",
+      "thickness": 8,
+      "pricePerM2": 2341
+    },
+    {
+      "id": "oak_mixmatch_8",
+      "name": "Дуб MixMatch 8 мм",
+      "species": "Дуб",
+      "layout": "MixMatch",
+      "thickness": 8,
+      "pricePerM2": 2433
+    },
+    {
+      "id": "walnut_bookmatch_8",
+      "name": "Орех BookMatch 8 мм",
+      "species": "Орех",
+      "layout": "BookMatch",
+      "thickness": 8,
+      "pricePerM2": 2706
+    },
+    {
+      "id": "walnut_mixmatch_8",
+      "name": "Орех MixMatch 8 мм",
+      "species": "Орех",
+      "layout": "MixMatch",
+      "thickness": 8,
+      "pricePerM2": 2899
+    },
+    {
+      "id": "ash_bookmatch_8",
+      "name": "Ясень белый BookMatch 8 мм",
+      "species": "Ясень белый",
+      "layout": "BookMatch",
+      "thickness": 8,
+      "pricePerM2": 1852
+    },
+    {
+      "id": "ash_mixmatch_8",
+      "name": "Ясень белый MixMatch 8 мм",
+      "species": "Ясень белый",
+      "layout": "MixMatch",
+      "thickness": 8,
+      "pricePerM2": 1984
+    },
+    {
+      "id": "beech_bookmatch_10",
+      "name": "Бук BookMatch 10 мм",
+      "species": "Бук",
+      "layout": "BookMatch",
+      "thickness": 10,
+      "pricePerM2": 1593
+    },
+    {
+      "id": "beech_mixmatch_10",
+      "name": "Бук MixMatch 10 мм",
+      "species": "Бук",
+      "layout": "MixMatch",
+      "thickness": 10,
+      "pricePerM2": 1751
+    },
+    {
+      "id": "oak_bookmatch_10",
+      "name": "Дуб BookMatch 10 мм",
+      "species": "Дуб",
+      "layout": "BookMatch",
+      "thickness": 10,
+      "pricePerM2": 2403
+    },
+    {
+      "id": "oak_mixmatch_10",
+      "name": "Дуб MixMatch 10 мм",
+      "species": "Дуб",
+      "layout": "MixMatch",
+      "thickness": 10,
+      "pricePerM2": 2499
+    },
+    {
+      "id": "walnut_bookmatch_10",
+      "name": "Орех BookMatch 10 мм",
+      "species": "Орех",
+      "layout": "BookMatch",
+      "thickness": 10,
+      "pricePerM2": 2768
+    },
+    {
+      "id": "walnut_mixmatch_10",
+      "name": "Орех MixMatch 10 мм",
+      "species": "Орех",
+      "layout": "MixMatch",
+      "thickness": 10,
+      "pricePerM2": 2966
+    },
+    {
+      "id": "ash_bookmatch_10",
+      "name": "Ясень белый BookMatch 10 мм",
+      "species": "Ясень белый",
+      "layout": "BookMatch",
+      "thickness": 10,
+      "pricePerM2": 1914
+    },
+    {
+      "id": "ash_mixmatch_10",
+      "name": "Ясень белый MixMatch 10 мм",
+      "species": "Ясень белый",
+      "layout": "MixMatch",
+      "thickness": 10,
+      "pricePerM2": 2051
+    },
+    {
+      "id": "beech_bookmatch_12",
+      "name": "Бук BookMatch 12 мм",
+      "species": "Бук",
+      "layout": "BookMatch",
+      "thickness": 12,
+      "pricePerM2": 1655
+    },
+    {
+      "id": "beech_mixmatch_12",
+      "name": "Бук MixMatch 12 мм",
+      "species": "Бук",
+      "layout": "MixMatch",
+      "thickness": 12,
+      "pricePerM2": 1816
+    },
+    {
+      "id": "oak_bookmatch_12",
+      "name": "Дуб BookMatch 12 мм",
+      "species": "Дуб",
+      "layout": "BookMatch",
+      "thickness": 12,
+      "pricePerM2": 2571
+    },
+    {
+      "id": "oak_mixmatch_12",
+      "name": "Дуб MixMatch 12 мм",
+      "species": "Дуб",
+      "layout": "MixMatch",
+      "thickness": 12,
+      "pricePerM2": 2680
+    },
+    {
+      "id": "walnut_bookmatch_12",
+      "name": "Орех BookMatch 12 мм",
+      "species": "Орех",
+      "layout": "BookMatch",
+      "thickness": 12,
+      "pricePerM2": 2936
+    },
+    {
+      "id": "walnut_mixmatch_12",
+      "name": "Орех MixMatch 12 мм",
+      "species": "Орех",
+      "layout": "MixMatch",
+      "thickness": 12,
+      "pricePerM2": 3146
+    },
+    {
+      "id": "ash_bookmatch_12",
+      "name": "Ясень белый BookMatch 12 мм",
+      "species": "Ясень белый",
+      "layout": "BookMatch",
+      "thickness": 12,
+      "pricePerM2": 2082
+    },
+    {
+      "id": "ash_mixmatch_12",
+      "name": "Ясень белый MixMatch 12 мм",
+      "species": "Ясень белый",
+      "layout": "MixMatch",
+      "thickness": 12,
+      "pricePerM2": 2231
+    },
+    {
+      "id": "beech_bookmatch_16",
+      "name": "Бук BookMatch 16 мм",
+      "species": "Бук",
+      "layout": "BookMatch",
+      "thickness": 16,
+      "pricePerM2": 1733
+    },
+    {
+      "id": "beech_mixmatch_16",
+      "name": "Бук MixMatch 16 мм",
+      "species": "Бук",
+      "layout": "MixMatch",
+      "thickness": 16,
+      "pricePerM2": 1898
+    },
+    {
+      "id": "oak_bookmatch_16",
+      "name": "Дуб BookMatch 16 мм",
+      "species": "Дуб",
+      "layout": "BookMatch",
+      "thickness": 16,
+      "pricePerM2": 3178
+    },
+    {
+      "id": "oak_mixmatch_16",
+      "name": "Дуб MixMatch 16 мм",
+      "species": "Дуб",
+      "layout": "MixMatch",
+      "thickness": 16,
+      "pricePerM2": 2757
+    },
+    {
+      "id": "walnut_bookmatch_16",
+      "name": "Орех BookMatch 16 мм",
+      "species": "Орех",
+      "layout": "BookMatch",
+      "thickness": 16,
+      "pricePerM2": 3008
+    },
+    {
+      "id": "walnut_mixmatch_16",
+      "name": "Орех MixMatch 16 мм",
+      "species": "Орех",
+      "layout": "MixMatch",
+      "thickness": 16,
+      "pricePerM2": 3223
+    },
+    {
+      "id": "ash_bookmatch_16",
+      "name": "Ясень белый BookMatch 16 мм",
+      "species": "Ясень белый",
+      "layout": "BookMatch",
+      "thickness": 16,
+      "pricePerM2": 2154
+    },
+    {
+      "id": "ash_mixmatch_16",
+      "name": "Ясень белый MixMatch 16 мм",
+      "species": "Ясень белый",
+      "layout": "MixMatch",
+      "thickness": 16,
+      "pricePerM2": 2308
+    },
+    {
+      "id": "beech_bookmatch_18",
+      "name": "Бук BookMatch 18 мм",
+      "species": "Бук",
+      "layout": "BookMatch",
+      "thickness": 18,
+      "pricePerM2": 1798
+    },
+    {
+      "id": "beech_mixmatch_18",
+      "name": "Бук MixMatch 18 мм",
+      "species": "Бук",
+      "layout": "MixMatch",
+      "thickness": 18,
+      "pricePerM2": 2006
+    },
+    {
+      "id": "oak_bookmatch_18",
+      "name": "Дуб BookMatch 18 мм",
+      "species": "Дуб",
+      "layout": "BookMatch",
+      "thickness": 18,
+      "pricePerM2": 2738
+    },
+    {
+      "id": "oak_mixmatch_18",
+      "name": "Дуб MixMatch 18 мм",
+      "species": "Дуб",
+      "layout": "MixMatch",
+      "thickness": 18,
+      "pricePerM2": 2858
+    },
+    {
+      "id": "walnut_bookmatch_18",
+      "name": "Орех BookMatch 18 мм",
+      "species": "Орех",
+      "layout": "BookMatch",
+      "thickness": 18,
+      "pricePerM2": 3103
+    },
+    {
+      "id": "walnut_mixmatch_18",
+      "name": "Орех MixMatch 18 мм",
+      "species": "Орех",
+      "layout": "MixMatch",
+      "thickness": 18,
+      "pricePerM2": 3325
+    },
+    {
+      "id": "ash_bookmatch_18",
+      "name": "Ясень белый BookMatch 18 мм",
+      "species": "Ясень белый",
+      "layout": "BookMatch",
+      "thickness": 18,
+      "pricePerM2": 2249
+    },
+    {
+      "id": "ash_mixmatch_18",
+      "name": "Ясень белый MixMatch 18 мм",
+      "species": "Ясень белый",
+      "layout": "MixMatch",
+      "thickness": 18,
+      "pricePerM2": 2410
+    },
+    {
+      "id": "beech_bookmatch_22",
+      "name": "Бук BookMatch 22 мм",
+      "species": "Бук",
+      "layout": "BookMatch",
+      "thickness": 22,
+      "pricePerM2": 2031
+    },
+    {
+      "id": "beech_mixmatch_22",
+      "name": "Бук MixMatch 22 мм",
+      "species": "Бук",
+      "layout": "MixMatch",
+      "thickness": 22,
+      "pricePerM2": 2211
+    },
+    {
+      "id": "oak_bookmatch_22",
+      "name": "Дуб BookMatch 22 мм",
+      "species": "Дуб",
+      "layout": "BookMatch",
+      "thickness": 22,
+      "pricePerM2": 2964
+    },
+    {
+      "id": "oak_mixmatch_22",
+      "name": "Дуб MixMatch 22 мм",
+      "species": "Дуб",
+      "layout": "MixMatch",
+      "thickness": 22,
+      "pricePerM2": 3100
+    },
+    {
+      "id": "walnut_bookmatch_22",
+      "name": "Орех BookMatch 22 мм",
+      "species": "Орех",
+      "layout": "BookMatch",
+      "thickness": 22,
+      "pricePerM2": 3329
+    },
+    {
+      "id": "walnut_mixmatch_22",
+      "name": "Орех MixMatch 22 мм",
+      "species": "Орех",
+      "layout": "MixMatch",
+      "thickness": 22,
+      "pricePerM2": 3567
+    },
+    {
+      "id": "ash_bookmatch_22",
+      "name": "Ясень белый BookMatch 22 мм",
+      "species": "Ясень белый",
+      "layout": "BookMatch",
+      "thickness": 22,
+      "pricePerM2": 2475
+    },
+    {
+      "id": "ash_mixmatch_22",
+      "name": "Ясень белый MixMatch 22 мм",
+      "species": "Ясень белый",
+      "layout": "MixMatch",
+      "thickness": 22,
+      "pricePerM2": 2652
+    },
+    {
+      "id": "beech_bookmatch_24",
+      "name": "Бук BookMatch 24 мм",
+      "species": "Бук",
+      "layout": "BookMatch",
+      "thickness": 24,
+      "pricePerM2": 2052
+    },
+    {
+      "id": "beech_mixmatch_24",
+      "name": "Бук MixMatch 24 мм",
+      "species": "Бук",
+      "layout": "MixMatch",
+      "thickness": 24,
+      "pricePerM2": 2233
+    },
+    {
+      "id": "beech_bookmatch_25",
+      "name": "Бук BookMatch 25 мм",
+      "species": "Бук",
+      "layout": "BookMatch",
+      "thickness": 25,
+      "pricePerM2": 2127
+    },
+    {
+      "id": "beech_mixmatch_25",
+      "name": "Бук MixMatch 25 мм",
+      "species": "Бук",
+      "layout": "MixMatch",
+      "thickness": 25,
+      "pricePerM2": 2311
+    },
+    {
+      "id": "oak_bookmatch_25",
+      "name": "Дуб BookMatch 25 мм",
+      "species": "Дуб",
+      "layout": "BookMatch",
+      "thickness": 25,
+      "pricePerM2": 3264
+    },
+    {
+      "id": "oak_mixmatch_25",
+      "name": "Дуб MixMatch 25 мм",
+      "species": "Дуб",
+      "layout": "MixMatch",
+      "thickness": 25,
+      "pricePerM2": 3422
+    },
+    {
+      "id": "walnut_bookmatch_25",
+      "name": "Орех BookMatch 25 мм",
+      "species": "Орех",
+      "layout": "BookMatch",
+      "thickness": 25,
+      "pricePerM2": 3630
+    },
+    {
+      "id": "walnut_mixmatch_25",
+      "name": "Орех MixMatch 25 мм",
+      "species": "Орех",
+      "layout": "MixMatch",
+      "thickness": 25,
+      "pricePerM2": 3889
+    },
+    {
+      "id": "ash_bookmatch_25",
+      "name": "Ясень белый BookMatch 25 мм",
+      "species": "Ясень белый",
+      "layout": "BookMatch",
+      "thickness": 25,
+      "pricePerM2": 2776
+    },
+    {
+      "id": "ash_mixmatch_25",
+      "name": "Ясень белый MixMatch 25 мм",
+      "species": "Ясень белый",
+      "layout": "MixMatch",
+      "thickness": 25,
+      "pricePerM2": 2974
+    }
   ],
   "reverseSides": [
-    { "id": "none", "name": "Не фанеруется / без обратной стороны", "pricePerM2": 0 },
-    { "id": "black_veneer", "name": "Черновой шпон", "pricePerM2": 250 },
-    { "id": "paper", "name": "Бумага", "pricePerM2": 50 }
+    {
+      "id": "none",
+      "name": "Не фанеруется / без обратной стороны",
+      "pricePerM2": 0
+    },
+    {
+      "id": "black_veneer",
+      "name": "Черновой шпон",
+      "pricePerM2": 250
+    },
+    {
+      "id": "paper",
+      "name": "Бумага",
+      "pricePerM2": 50
+    }
   ],
   "cuttingModes": [
-    { "id": "machine", "name": "На станке" },
-    { "id": "manual", "name": "Вручную" }
+    {
+      "id": "machine",
+      "name": "На станке"
+    },
+    {
+      "id": "manual",
+      "name": "Вручную"
+    }
   ],
   "cuttingRates": [
-    { "maxThickness": 18, "manualRatePerMeter": 70, "machineRatePerMeter": 60 },
-    { "maxThickness": 25, "manualRatePerMeter": 80, "machineRatePerMeter": 70 },
-    { "maxThickness": 35, "manualRatePerMeter": 90, "machineRatePerMeter": 80 },
-    { "maxThickness": 40, "manualRatePerMeter": 95, "machineRatePerMeter": 85 },
-    { "maxThickness": 45, "manualRatePerMeter": 100, "machineRatePerMeter": 90 },
-    { "maxThickness": 50, "manualRatePerMeter": 110, "machineRatePerMeter": 100 },
-    { "maxThickness": 53, "manualRatePerMeter": 115.5, "machineRatePerMeter": 105 },
-    { "maxThickness": 57, "manualRatePerMeter": 121, "machineRatePerMeter": 110 },
-    { "maxThickness": 60, "manualRatePerMeter": 126.5, "machineRatePerMeter": 115 }
+    {
+      "maxThickness": 18,
+      "manualRatePerMeter": 70,
+      "machineRatePerMeter": 60
+    },
+    {
+      "maxThickness": 25,
+      "manualRatePerMeter": 80,
+      "machineRatePerMeter": 70
+    },
+    {
+      "maxThickness": 35,
+      "manualRatePerMeter": 90,
+      "machineRatePerMeter": 80
+    },
+    {
+      "maxThickness": 40,
+      "manualRatePerMeter": 95,
+      "machineRatePerMeter": 85
+    },
+    {
+      "maxThickness": 45,
+      "manualRatePerMeter": 100,
+      "machineRatePerMeter": 90
+    },
+    {
+      "maxThickness": 50,
+      "manualRatePerMeter": 110,
+      "machineRatePerMeter": 100
+    },
+    {
+      "maxThickness": 53,
+      "manualRatePerMeter": 115.5,
+      "machineRatePerMeter": 105
+    },
+    {
+      "maxThickness": 57,
+      "manualRatePerMeter": 121,
+      "machineRatePerMeter": 110
+    },
+    {
+      "maxThickness": 60,
+      "manualRatePerMeter": 126.5,
+      "machineRatePerMeter": 115
+    }
   ],
   "edge": {
     "thicknesses": [
-      { "value": 0.5, "type": "thin", "name": "0,5 мм" },
-      { "value": 1, "type": "thin", "name": "1 мм" },
-      { "value": 1.5, "type": "thick", "name": "1,5 мм" },
-      { "value": 2, "type": "thick", "name": "2 мм" }
+      {
+        "value": 0.5,
+        "type": "thin",
+        "name": "0,5 мм"
+      },
+      {
+        "value": 1,
+        "type": "thin",
+        "name": "1 мм"
+      },
+      {
+        "value": 1.5,
+        "type": "thick",
+        "name": "1,5 мм"
+      },
+      {
+        "value": 2,
+        "type": "thick",
+        "name": "2 мм"
+      }
     ],
     "rates": {
       "thin": [
-        { "maxThickness": 19, "rateBeforeThreshold": 184, "rateAfterThreshold": 92 },
-        { "maxThickness": 21, "rateBeforeThreshold": 196, "rateAfterThreshold": 98 },
-        { "maxThickness": 25, "rateBeforeThreshold": 210, "rateAfterThreshold": 105 },
-        { "maxThickness": 31, "rateBeforeThreshold": 220, "rateAfterThreshold": 110 },
-        { "maxThickness": 35, "rateBeforeThreshold": 230, "rateAfterThreshold": 115 },
-        { "maxThickness": 41, "rateBeforeThreshold": 260, "rateAfterThreshold": 130 },
-        { "maxThickness": 45, "rateBeforeThreshold": 270, "rateAfterThreshold": 135 },
-        { "maxThickness": 60, "rateBeforeThreshold": 290, "rateAfterThreshold": 145 }
+        {
+          "maxThickness": 19,
+          "rateBeforeThreshold": 184,
+          "rateAfterThreshold": 92
+        },
+        {
+          "maxThickness": 21,
+          "rateBeforeThreshold": 196,
+          "rateAfterThreshold": 98
+        },
+        {
+          "maxThickness": 25,
+          "rateBeforeThreshold": 210,
+          "rateAfterThreshold": 105
+        },
+        {
+          "maxThickness": 31,
+          "rateBeforeThreshold": 220,
+          "rateAfterThreshold": 110
+        },
+        {
+          "maxThickness": 35,
+          "rateBeforeThreshold": 230,
+          "rateAfterThreshold": 115
+        },
+        {
+          "maxThickness": 41,
+          "rateBeforeThreshold": 260,
+          "rateAfterThreshold": 130
+        },
+        {
+          "maxThickness": 45,
+          "rateBeforeThreshold": 270,
+          "rateAfterThreshold": 135
+        },
+        {
+          "maxThickness": 60,
+          "rateBeforeThreshold": 290,
+          "rateAfterThreshold": 145
+        }
       ],
       "thick": [
-        { "maxThickness": 21, "rateBeforeThreshold": 250, "rateAfterThreshold": 125 },
-        { "maxThickness": 31, "rateBeforeThreshold": 270, "rateAfterThreshold": 135 },
-        { "maxThickness": 35, "rateBeforeThreshold": 320, "rateAfterThreshold": 160 },
-        { "maxThickness": 43, "rateBeforeThreshold": 350, "rateAfterThreshold": 175 },
-        { "maxThickness": 49, "rateBeforeThreshold": 370, "rateAfterThreshold": 185 },
-        { "maxThickness": 60, "rateBeforeThreshold": 400, "rateAfterThreshold": 200 }
+        {
+          "maxThickness": 21,
+          "rateBeforeThreshold": 250,
+          "rateAfterThreshold": 125
+        },
+        {
+          "maxThickness": 31,
+          "rateBeforeThreshold": 270,
+          "rateAfterThreshold": 135
+        },
+        {
+          "maxThickness": 35,
+          "rateBeforeThreshold": 320,
+          "rateAfterThreshold": 160
+        },
+        {
+          "maxThickness": 43,
+          "rateBeforeThreshold": 350,
+          "rateAfterThreshold": 175
+        },
+        {
+          "maxThickness": 49,
+          "rateBeforeThreshold": 370,
+          "rateAfterThreshold": 185
+        },
+        {
+          "maxThickness": 60,
+          "rateBeforeThreshold": 400,
+          "rateAfterThreshold": 200
+        }
       ]
     }
   },
   "sanding": [
-    { "id": "one", "name": "1 сторона", "sides": 1, "ratePerM2": 60 },
-    { "id": "two", "name": "2 стороны", "sides": 2, "ratePerM2": 120 }
+    {
+      "id": "one",
+      "name": "1 сторона",
+      "sides": 1,
+      "ratePerM2": 60
+    },
+    {
+      "id": "two",
+      "name": "2 стороны",
+      "sides": 2,
+      "ratePerM2": 120
+    }
   ],
   "finish": {
     "types": [
-      { "id": "none", "name": "Нет", "autoPrice": true },
-      { "id": "lacquer", "name": "Лак", "autoPrice": true },
-      { "id": "gloss_100", "name": "Глянец 100%", "autoPrice": true },
-      { "id": "enamel", "name": "Эмаль", "autoPrice": true },
-      { "id": "toning", "name": "Тонировка", "autoPrice": true },
-      { "id": "custom", "name": "По ТЗ", "autoPrice": false }
+      {
+        "id": "none",
+        "name": "Нет",
+        "autoPrice": true
+      },
+      {
+        "id": "lacquer",
+        "name": "Лак",
+        "autoPrice": true
+      },
+      {
+        "id": "gloss_100",
+        "name": "Глянец 100%",
+        "autoPrice": true
+      },
+      {
+        "id": "enamel",
+        "name": "Эмаль",
+        "autoPrice": true
+      },
+      {
+        "id": "toning",
+        "name": "Тонировка",
+        "autoPrice": true
+      },
+      {
+        "id": "custom",
+        "name": "По ТЗ",
+        "autoPrice": false
+      }
     ],
     "lacquers": [
       {
         "id": "acrylic",
         "name": "Акрил",
         "gloss": [
-          { "id": "acrylic_3", "name": "3%" },
-          { "id": "acrylic_10", "name": "10%" },
-          { "id": "acrylic_30", "name": "30%" },
-          { "id": "acrylic_70", "name": "70%" }
+          {
+            "id": "acrylic_3",
+            "name": "3%"
+          },
+          {
+            "id": "acrylic_10",
+            "name": "10%"
+          },
+          {
+            "id": "acrylic_30",
+            "name": "30%"
+          },
+          {
+            "id": "acrylic_70",
+            "name": "70%"
+          }
         ],
         "rates": {
           "one": 3000,
@@ -673,9 +1701,18 @@
         "id": "polyurethane",
         "name": "Полиуретан",
         "gloss": [
-          { "id": "pu_10", "name": "10%" },
-          { "id": "pu_20", "name": "20%" },
-          { "id": "pu_40", "name": "40%" }
+          {
+            "id": "pu_10",
+            "name": "10%"
+          },
+          {
+            "id": "pu_20",
+            "name": "20%"
+          },
+          {
+            "id": "pu_40",
+            "name": "40%"
+          }
         ],
         "rates": {
           "one": 3000,

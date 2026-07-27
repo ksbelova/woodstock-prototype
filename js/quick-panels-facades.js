@@ -233,13 +233,14 @@ function createSearchableSelect({
     ".searchable-select__toggle"
   );
 
-  let filteredItems = [...items];
+  let sourceItems = [...items];
+  let filteredItems = [...sourceItems];
   let highlightedIndex = -1;
   let isOpen = false;
 
   function getSelectedItem() {
     return (
-      items.find(
+      sourceItems.find(
         (item) => item.id === nativeSelect.value
       ) || null
     );
@@ -358,12 +359,12 @@ function createSearchableSelect({
       normalizeSearchValue(query);
 
     filteredItems = normalizedQuery
-      ? items.filter((item) =>
+      ? sourceItems.filter((item) =>
           normalizeSearchValue(
             item.name
           ).includes(normalizedQuery)
         )
-      : [...items];
+      : [...sourceItems];
 
     highlightedIndex =
       filteredItems.length ? 0 : -1;
@@ -538,7 +539,7 @@ function createSearchableSelect({
           return;
         }
 
-        const exactMatch = items.find(
+        const exactMatch = sourceItems.find(
           (item) =>
             normalizeSearchValue(
               item.name
@@ -601,12 +602,36 @@ function createSearchableSelect({
     }
   );
 
+  function setItems(nextItems, { preserveSelection = false } = {}) {
+    sourceItems = Array.isArray(nextItems)
+      ? [...nextItems]
+      : [];
+
+    const selectedStillExists = sourceItems.some(
+      (item) => item.id === nativeSelect.value
+    );
+
+    if (!preserveSelection || !selectedStillExists) {
+      nativeSelect.value = "";
+    }
+
+    filteredItems = [...sourceItems];
+    highlightedIndex = filteredItems.length ? 0 : -1;
+
+    syncFromNative();
+
+    if (isOpen) {
+      renderOptions();
+    }
+  }
+
   syncFromNative();
 
   return {
     syncFromNative,
     openDropdown,
-    closeDropdown
+    closeDropdown,
+    setItems
   };
 }
 
@@ -687,6 +712,20 @@ function getSelectedThickness() {
   );
 }
 
+function getAvailableVeneers() {
+  const thickness = getSelectedThickness();
+
+  if (!thickness) {
+    return [];
+  }
+
+  return calcData.veneers.filter(
+    (item) =>
+      String(item.thickness) ===
+      String(thickness.value)
+  );
+}
+
 function getSelectedVeneer() {
   return (
     calcData?.veneers.find(
@@ -746,20 +785,31 @@ function populateThicknesses() {
     "Доступные значения зависят от выбранной основы.";
 
   renderStandardSizes();
+  populateVeneers();
   calculate();
 }
 
-function populateVeneers() {
+function populateVeneers({ preserveSelection = false } = {}) {
+  const thickness = getSelectedThickness();
+  const availableVeneers = getAvailableVeneers();
+  const previousValue = preserveSelection
+    ? elements.veneerSelect.value
+    : "";
+
   elements.veneerSelect.innerHTML = "";
 
+  const hasVeneers = availableVeneers.length > 0;
+  const placeholder = !thickness
+    ? "Сначала выберите толщину"
+    : hasVeneers
+      ? "Выберите шпон"
+      : `Для ${thickness.label} позиции не найдены`;
+
   elements.veneerSelect.append(
-    createOption(
-      "",
-      "Выберите шпон"
-    )
+    createOption("", placeholder)
   );
 
-  calcData.veneers.forEach((veneer) => {
+  availableVeneers.forEach((veneer) => {
     elements.veneerSelect.append(
       createOption(
         veneer.id,
@@ -770,15 +820,37 @@ function populateVeneers() {
     );
   });
 
-  veneerComboboxController =
-    createSearchableSelect({
-      root: elements.veneerCombobox,
-      nativeSelect:
-        elements.veneerSelect,
-      input: elements.veneerSearch,
-      items: calcData.veneers,
-      placeholder: "Выберите шпон"
-    });
+  elements.veneerSelect.disabled = !hasVeneers;
+  elements.veneerSearch.disabled = !hasVeneers;
+  elements.veneerSearch.placeholder = placeholder;
+
+  if (
+    preserveSelection &&
+    availableVeneers.some(
+      (item) => item.id === previousValue
+    )
+  ) {
+    elements.veneerSelect.value = previousValue;
+  }
+
+  if (!veneerComboboxController) {
+    veneerComboboxController =
+      createSearchableSelect({
+        root: elements.veneerCombobox,
+        nativeSelect:
+          elements.veneerSelect,
+        input: elements.veneerSearch,
+        items: availableVeneers,
+        placeholder
+      });
+  } else {
+    veneerComboboxController.setItems(
+      availableVeneers,
+      { preserveSelection: true }
+    );
+  }
+
+  veneerComboboxController?.syncFromNative();
 }
 
 function getStandardSizes() {
@@ -2562,6 +2634,11 @@ function downloadSpecification() {
   );
 }
 
+function handleThicknessChange() {
+  populateVeneers();
+  calculate();
+}
+
 function bindEvents() {
   elements.baseInputs.forEach(
     (input) => {
@@ -2572,8 +2649,12 @@ function bindEvents() {
     }
   );
 
+  elements.thicknessSelect.addEventListener(
+    "change",
+    handleThicknessChange
+  );
+
   [
-    elements.thicknessSelect,
     elements.veneerSelect,
     elements.fiberDirectionSelect,
     elements.veneerLayoutSelect,
@@ -2742,7 +2823,6 @@ async function init() {
 
     calcData = await response.json();
 
-    populateVeneers();
     populateThicknesses();
 
     setActiveSizeRow(

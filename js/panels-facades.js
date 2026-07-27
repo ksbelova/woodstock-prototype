@@ -159,13 +159,14 @@ function createSearchableSelect({
     ".searchable-select__toggle"
   );
 
-  let filteredItems = [...items];
+  let sourceItems = [...items];
+  let filteredItems = [...sourceItems];
   let highlightedIndex = -1;
   let isOpen = false;
 
   function getSelectedItem() {
     return (
-      items.find(
+      sourceItems.find(
         (item) => item.id === nativeSelect.value
       ) || null
     );
@@ -250,12 +251,12 @@ function createSearchableSelect({
       normalizeSearchValue(query);
 
     filteredItems = normalizedQuery
-      ? items.filter((item) =>
+      ? sourceItems.filter((item) =>
           normalizeSearchValue(item.name).includes(
             normalizedQuery
           )
         )
-      : [...items];
+      : [...sourceItems];
 
     highlightedIndex = filteredItems.length
       ? 0
@@ -379,7 +380,7 @@ function createSearchableSelect({
   input.addEventListener("blur", () => {
     window.setTimeout(() => {
       if (!root.contains(document.activeElement)) {
-        const exactMatch = items.find(
+        const exactMatch = sourceItems.find(
           (item) =>
             normalizeSearchValue(item.name) ===
             normalizeSearchValue(input.value)
@@ -422,12 +423,36 @@ function createSearchableSelect({
     }
   });
 
+  function setItems(nextItems, { preserveSelection = false } = {}) {
+    sourceItems = Array.isArray(nextItems)
+      ? [...nextItems]
+      : [];
+
+    const selectedStillExists = sourceItems.some(
+      (item) => item.id === nativeSelect.value
+    );
+
+    if (!preserveSelection || !selectedStillExists) {
+      nativeSelect.value = "";
+    }
+
+    filteredItems = [...sourceItems];
+    highlightedIndex = filteredItems.length ? 0 : -1;
+
+    syncFromNative();
+
+    if (isOpen) {
+      renderOptions();
+    }
+  }
+
   syncFromNative();
 
   return {
     syncFromNative,
     openDropdown,
-    closeDropdown
+    closeDropdown,
+    setItems
   };
 }
 
@@ -437,7 +462,7 @@ function initVeneerComboboxes() {
       root: form.veneerACombobox,
       nativeSelect: form.veneerASelect,
       input: form.veneerASearch,
-      items: calcData.veneers,
+      items: getAvailableVeneers(),
       placeholder: "Выберите шпон"
     });
 
@@ -446,7 +471,7 @@ function initVeneerComboboxes() {
       root: form.veneerBCombobox,
       nativeSelect: form.veneerBSelect,
       input: form.veneerBSearch,
-      items: calcData.veneers,
+      items: getAvailableVeneers(),
       placeholder: "Выберите шпон стороны Б"
     });
 }
@@ -610,6 +635,20 @@ function getSelectedThickness() {
       (item) =>
         String(item.value) === form.thicknessSelect.value
     ) || null
+  );
+}
+
+function getAvailableVeneers() {
+  const thickness = getSelectedThickness();
+
+  if (!thickness) {
+    return [];
+  }
+
+  return calcData.veneers.filter(
+    (item) =>
+      String(item.thickness) ===
+      String(thickness.value)
   );
 }
 
@@ -959,7 +998,6 @@ function getActiveSizeRow() {
   if (firstRow) {
     setActiveSizeRow(firstRow);
   }
-
   return firstRow;
 }
 
@@ -1959,7 +1997,6 @@ function calculateSizeItem(sizeItem) {
       sizeItem.length,
       sizeItem.width
     );
-
   const isStandard =
     Boolean(standardSize);
 
@@ -3134,37 +3171,90 @@ function fillThicknessSelect() {
     false;
 }
 
-function fillVeneerSelects() {
+function fillVeneerSelects({ preserveSelection = false } = {}) {
+  const thickness = getSelectedThickness();
+  const availableVeneers = getAvailableVeneers();
+
+  const previousA = preserveSelection
+    ? form.veneerASelect.value
+    : "";
+
+  const previousB = preserveSelection
+    ? form.veneerBSelect.value
+    : "";
+
+  const hasVeneers = availableVeneers.length > 0;
+  const placeholder = !thickness
+    ? "Сначала выберите толщину"
+    : hasVeneers
+      ? "Выберите шпон"
+      : `Для ${thickness.label} позиции не найдены`;
+
   resetSelect(
     form.veneerASelect,
-    "Выберите шпон"
+    placeholder,
+    !hasVeneers
   );
 
   resetSelect(
     form.veneerBSelect,
-    "Выберите шпон стороны Б"
+    hasVeneers
+      ? "Выберите шпон стороны Б"
+      : placeholder,
+    !hasVeneers
   );
 
-  calcData.veneers.forEach(
-    (item) => {
-      const label =
-        `${item.name} — ${formatMoney(
-          item.pricePerM2
-        )} / м²`;
+  availableVeneers.forEach((item) => {
+    const label =
+      `${item.name} — ${formatMoney(
+        item.pricePerM2
+      )} / м²`;
 
-      addOption(
-        form.veneerASelect,
-        item.id,
-        label
-      );
+    addOption(
+      form.veneerASelect,
+      item.id,
+      label
+    );
 
-      addOption(
-        form.veneerBSelect,
-        item.id,
-        label
-      );
-    }
+    addOption(
+      form.veneerBSelect,
+      item.id,
+      label
+    );
+  });
+
+  if (
+    preserveSelection &&
+    availableVeneers.some((item) => item.id === previousA)
+  ) {
+    form.veneerASelect.value = previousA;
+  }
+
+  if (
+    preserveSelection &&
+    availableVeneers.some((item) => item.id === previousB)
+  ) {
+    form.veneerBSelect.value = previousB;
+  }
+
+  form.veneerASearch.disabled = !hasVeneers;
+  form.veneerBSearch.disabled = !hasVeneers;
+  form.veneerASearch.placeholder = placeholder;
+  form.veneerBSearch.placeholder = hasVeneers
+    ? "Выберите шпон стороны Б"
+    : placeholder;
+
+  veneerAComboboxController?.setItems(
+    availableVeneers,
+    { preserveSelection: true }
   );
+
+  veneerBComboboxController?.setItems(
+    availableVeneers,
+    { preserveSelection: true }
+  );
+
+  syncVeneerComboboxes();
 }
 
 function fillReverseSideSelect() {
@@ -3368,6 +3458,8 @@ function applyEditMode() {
   form.thicknessSelect.value =
     item.thicknessValue || "";
 
+  fillVeneerSelects();
+
   form.veneeredSidesSelect.value =
     item.veneeredSides || "1";
 
@@ -3493,6 +3585,12 @@ function applyEditMode() {
 
 function handleBaseChange() {
   fillThicknessSelect();
+  fillVeneerSelects();
+  renderSpecification();
+}
+
+function handleThicknessChange() {
+  fillVeneerSelects();
   renderSpecification();
 }
 
@@ -3513,7 +3611,7 @@ function initEvents() {
 
   form.thicknessSelect.addEventListener(
     "change",
-    renderSpecification
+    handleThicknessChange
   );
 
   form.addSizeRowBtn.addEventListener(
