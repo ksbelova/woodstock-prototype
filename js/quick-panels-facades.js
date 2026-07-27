@@ -854,11 +854,41 @@ function populateVeneers({ preserveSelection = false } = {}) {
 }
 
 function getStandardSizes() {
-  return (
-    calcData.standardSizesByBase?.[
-      getSelectedBaseId()
-    ] || []
+  const base = getSelectedBase();
+  const thickness = getSelectedThickness();
+
+  if (!base || !thickness) {
+    return [];
+  }
+
+  const allSizes =
+    calcData.standardSizesByBase?.[base.id] || [];
+
+  const priceRows =
+    calcData.standardPanelPrices?.[base.id] || [];
+
+  const priceRow = priceRows.find(
+    (item) =>
+      String(item.thickness) ===
+      String(thickness.value)
   );
+
+  if (!priceRow) {
+    return [];
+  }
+
+  return allSizes.filter((size) => {
+    const sizeKey =
+      `${size.length}x${size.width}`;
+
+    const oneSidePrice =
+      Number(priceRow.one?.[sizeKey]);
+
+    return (
+      Number.isFinite(oneSidePrice) &&
+      oneSidePrice > 0
+    );
+  });
 }
 
 function normalizeSizePair(length, width) {
@@ -2636,6 +2666,7 @@ function downloadSpecification() {
 
 function handleThicknessChange() {
   populateVeneers();
+  renderStandardSizes();
   calculate();
 }
 

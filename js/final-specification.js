@@ -889,10 +889,19 @@ function getItemExtrasText(item) {
       item.finishType !== "none"
     )
   ) {
-    parts.push(
-      item.finishLabel ||
-      "Финиш"
-    );
+    let finishText =
+  item.finishLabel ||
+  item.finishTypeLabel ||
+  "Финиш";
+
+if (
+  item.isolator === "yes" &&
+  !finishText.toLowerCase().includes("изолятор")
+) {
+  finishText += ", изолятор добавлен";
+}
+
+parts.push(finishText);
   }
 
   if (

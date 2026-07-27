@@ -26,6 +26,14 @@ const packagingLabels = {
   closed: "Глухая"
 };
 
+const packagingCoefficients = {
+  no: 0,
+  stretch: 1,
+  light: 1.3,
+  hard: 1.5,
+  closed: 2
+};
+
 const serviceLabels = {
   delivery: "Доставка",
   installation: "Монтаж",
@@ -56,7 +64,6 @@ const elements = {
   finalTotal: document.querySelector("#finalTotal"),
   finalVat: document.querySelector("#finalVat"),
 
-  saveOptionsBtn: document.querySelector("#saveOptionsBtn"),
   nextStepLink: document.querySelector("#nextStepLink")
 };
 
@@ -143,6 +150,13 @@ function getItemsArea(items) {
 function getPackagingRate(area) {
   const matchedRate = packagingRates.find((item) => area <= item.maxArea);
   return matchedRate ? matchedRate.ratePerM2 : 0;
+}
+
+function setDefaultPackagingCoefficient() {
+  const type = elements.packagingSelect.value;
+  const coefficient = packagingCoefficients[type] ?? 1;
+
+  elements.packagingCoefficientInput.value = coefficient;
 }
 
 function getPackagingCoefficient(type) {
@@ -295,6 +309,7 @@ function applySavedOptions() {
   const savedOptions = getSavedOptions();
 
   if (!savedOptions) {
+    setDefaultPackagingCoefficient();
     return;
   }
 
@@ -307,9 +322,10 @@ function applySavedOptions() {
     savedOptions.packaging?.multiplier !== undefined &&
     savedOptions.packaging?.multiplier !== null
   ) {
-    elements.packagingCoefficientInput.value = savedOptions.packaging.multiplier;
+    elements.packagingCoefficientInput.value =
+      savedOptions.packaging.multiplier;
   } else {
-    elements.packagingCoefficientInput.value = 1;
+    setDefaultPackagingCoefficient();
   }
 
   if (savedOptions.services?.items?.length) {
@@ -320,24 +336,27 @@ function applySavedOptions() {
     });
   }
 
-  elements.servicesCommentInput.value = savedOptions.services?.comment || "";
+  elements.servicesCommentInput.value =
+    savedOptions.services?.comment || "";
 }
 
-function handleSaveOptions() {
-  saveOptions(currentCalculation);
-  elements.nextStepLink.classList.remove("is-disabled");
+function handlePackagingTypeChange() {
+  setDefaultPackagingCoefficient();
+  renderPage();
 }
 
 function initEvents() {
-  elements.packagingSelect.addEventListener("change", renderPage);
+  elements.packagingSelect.addEventListener(
+  "change",
+  handlePackagingTypeChange
+);
+
   elements.packagingCoefficientInput.addEventListener("input", renderPage);
   elements.servicesCommentInput.addEventListener("input", renderPage);
 
   elements.serviceCheckboxes.forEach((checkbox) => {
     checkbox.addEventListener("change", renderPage);
   });
-
-  elements.saveOptionsBtn.addEventListener("click", handleSaveOptions);
 }
 
 applySavedOptions();

@@ -702,8 +702,27 @@ function getItemExtrasText(item) {
       parts.push("Шлифовка");
     }
 
-    if (item.lacquerCost > 0) {
-      parts.push("Лак / финиш");
+    if (
+      item.finishCost > 0 ||
+      item.lacquerCost > 0 ||
+      (
+        item.finishType &&
+        item.finishType !== "none"
+      )
+    ) {
+      let finishText =
+        item.finishLabel ||
+        item.finishTypeLabel ||
+        "Финиш";
+
+      if (
+        item.isolator === "yes" &&
+        !finishText.toLowerCase().includes("изолятор")
+      ) {
+        finishText += ", изолятор добавлен";
+      }
+
+      parts.push(`Финиш: ${finishText}`);
     }
 
     if (

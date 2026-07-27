@@ -732,12 +732,45 @@ function normalizeSizePair(length, width) {
 
 function getAvailableStandardSizes() {
   const base = getSelectedBase();
+  const thickness = getSelectedThickness();
 
-  if (!base) {
+  if (!base || !thickness) {
     return [];
   }
 
-  return calcData.standardSizesByBase?.[base.id] || [];
+  const allSizes =
+    calcData.standardSizesByBase?.[base.id] || [];
+
+  const priceRows =
+    calcData.standardPanelPrices?.[base.id] || [];
+
+  const priceRow = priceRows.find(
+    (item) =>
+      String(item.thickness) ===
+      String(thickness.value)
+  );
+
+  if (!priceRow) {
+    return [];
+  }
+
+  const sideKey =
+    form.veneeredSidesSelect.value === "2"
+      ? "two"
+      : "one";
+
+  return allSizes.filter((size) => {
+    const sizeKey =
+      `${size.length}x${size.width}`;
+
+    const price =
+      Number(priceRow[sideKey]?.[sizeKey]);
+
+    return (
+      Number.isFinite(price) &&
+      price > 0
+    );
+  });
 }
 
 function getMatchedStandardSize(length, width) {
@@ -3591,6 +3624,7 @@ function handleBaseChange() {
 
 function handleThicknessChange() {
   fillVeneerSelects();
+  renderStandardSizes();
   renderSpecification();
 }
 

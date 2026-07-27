@@ -342,20 +342,6 @@ function validateBeforeFinish() {
     missing.push("телефон клиента");
   }
 
-  if (!elements.clientEmailInput.value.trim()) {
-    missing.push("email клиента");
-  }
-
-  if (elements.clientTypeSelect.value === "company") {
-    if (!elements.companyNameInput.value.trim()) {
-      missing.push("компания");
-    }
-
-    if (!elements.clientInnInput.value.trim()) {
-      missing.push("ИНН");
-    }
-  }
-
   return missing;
 }
 
